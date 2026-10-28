@@ -38,45 +38,30 @@ jobs:
       - name: Sync web assets
         run: npx cap sync android
 
-      - name: Inject permissions using Python
+      - name: Inject permissions using Node.js
         run: |
-          python3 - <<'PY'
-          import os
-          import xml.etree.ElementTree as ET
+          node -e "
+          const fs = require('fs');
+          const path = 'android/app/src/main/AndroidManifest.xml';
+          let manifest = fs.readFileSync(path, 'utf8');
 
-          manifest_path = os.path.join('android', 'app', 'src', 'main', 'AndroidManifest.xml')
-          if not os.path.exists(manifest_path):
-              raise SystemExit(f'Not found: {manifest_path}')
+          // 1. Adiciona o namespace tools na tag <manifest> se não existir
+          if (!manifest.includes('xmlns:tools=\"http://schemas.android.com/tools\"')) {
+            manifest = manifest.replace('<manifest ', '<manifest xmlns:tools=\"http://schemas.android.com/tools\" ');
+          }
 
-          ET.register_namespace('android', 'http://schemas.android.com/apk/res/android')
-          ET.register_namespace('tools', 'http://schemas.android.com/tools')
+          // 2. Injeta as permissões antes da tag <application>
+          const permissions = '\n    <!-- Permissions for UsageStats -->\n' +
+                              '    <uses-permission android:name=\"android.permission.QUERY_ALL_PACKAGES\" tools:ignore=\"QueryAllPackagesPermission\" />\n' +
+                              '    <uses-permission android:name=\"android.permission.PACKAGE_USAGE_STATS\" tools:ignore=\"ProtectedPermissions\" />\n';
 
-          tree = ET.parse(manifest_path)
-          root = tree.getroot()
+          if (!manifest.includes('QUERY_ALL_PACKAGES')) {
+            manifest = manifest.replace('<application', permissions + '    <application');
+          }
 
-          ANDROID_NS = '{http://schemas.android.com/apk/res/android}'
-          TOOLS_NS = '{http://schemas.android.com/tools}'
-
-          def ensure_permission(name, ignore_attr):
-              for perm in root.findall('uses-permission'):
-                  if perm.get(ANDROID_NS + 'name') == name:
-                      if ignore_attr:
-                          perm.set(TOOLS_NS + 'ignore', ignore_attr)
-                      return
-              perm = ET.SubElement(root, 'uses-permission')
-              perm.set(ANDROID_NS + 'name', name)
-              if ignore_attr:
-                  perm.set(TOOLS_NS + 'ignore', ignore_attr)
-
-          ensure_permission('android.permission.QUERY_ALL_PACKAGES', 'QueryAllPackagesPermission')
-          ensure_permission('android.permission.PACKAGE_USAGE_STATS', 'ProtectedPermissions')
-
-          if 'xmlns:tools' not in (root.get('xmlns:tools') or ''):
-              root.set('xmlns:tools', 'http://schemas.android.com/tools')
-
-          tree.write(manifest_path, encoding='utf-8', xml_declaration=True)
-          print('Permissions injected OK')
-          PY
+          fs.writeFileSync(path, manifest);
+          console.log('✅ Permissoes injetadas com sucesso via Node.js');
+          "
 
       - name: Build Debug APK
         working-directory: android
@@ -88,4 +73,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: GameZone-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk'
+          path: android/app/build/outputs/apk/debug/app-debug.apk
