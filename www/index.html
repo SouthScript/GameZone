@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Central Top">
-<title>Central Top Mobile</title>
+<meta name="apple-mobile-web-app-title" content="GameZone">
+<title>GameZone</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 :root{
@@ -52,7 +52,7 @@ body::after{
   font-size:10px;letter-spacing:.14em;color:var(--green);border:1px solid rgba(0,255,180,.3);
   background:rgba(0,255,180,.07);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);
-  animation:pulse 1.5s ease-in-out infinite}
+  animation:pulse 1.5s ease-in-out infinite;display:inline-block}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
 main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(safe-area-inset-bottom));
   max-width:720px;margin:0 auto}
@@ -62,6 +62,9 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 14px}
 .section-title h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .section-title h2::before{content:'// ';color:var(--green)}
+.live-indicator{display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;
+  font-size:10px;letter-spacing:.14em;color:var(--green);border:1px solid rgba(0,255,180,.3);
+  background:rgba(0,255,180,.07)}
 .terminal{border-radius:18px;overflow:hidden;border:1px solid rgba(0,255,180,.28);
   background:linear-gradient(180deg,rgba(0,0,0,.82),rgba(0,0,0,.6));
   box-shadow:0 22px 48px -26px rgba(0,255,180,.55),inset 0 0 40px -20px rgba(0,255,180,.4);
@@ -74,7 +77,7 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .dot.g{background:#27c93f;box-shadow:0 0 8px #27c93f}
 .terminal-title{margin-left:8px;font-size:11px;letter-spacing:.08em;
   color:rgba(0,255,180,.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.terminal-body{height:170px;overflow-y:auto;overflow-x:hidden;padding:13px 14px;
+.terminal-body{height:150px;overflow-y:auto;overflow-x:hidden;padding:13px 14px;
   font-size:12px;line-height:1.7;color:var(--green);
   scrollbar-width:thin;scrollbar-color:rgba(0,255,180,.35) transparent;overscroll-behavior:contain}
 .terminal-body::-webkit-scrollbar{width:5px}
@@ -89,13 +92,20 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 @keyframes blink{50%{opacity:0}}
 .hw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .hw-card{padding:14px 12px;border-radius:16px;background:var(--panel);border:1px solid var(--brd);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:relative;overflow:hidden}
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:relative;overflow:hidden;
+  animation:paneIn .4s cubic-bezier(.22,.85,.25,1) backwards}
+.hw-card:nth-child(1){animation-delay:.03s}
+.hw-card:nth-child(2){animation-delay:.06s}
+.hw-card:nth-child(3){animation-delay:.09s}
+.hw-card:nth-child(4){animation-delay:.12s}
+.hw-card:nth-child(5){animation-delay:.15s}
+.hw-card:nth-child(6){animation-delay:.18s}
 .hw-card.full{grid-column:1/-1}
 .hw-k{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .hw-v{font-size:18px;font-weight:700;color:var(--green);text-shadow:0 0 14px rgba(0,255,180,.45);
   word-break:break-word;line-height:1.2}
 .hw-v small{font-size:10px;font-weight:400;color:var(--muted);margin-left:4px}
-.hw-sub{font-size:9.5px;color:rgba(125,133,144,.8);margin-top:5px;letter-spacing:.04em}
+.hw-sub{font-size:9.5px;color:rgba(125,133,144,.8);margin-top:5px;letter-spacing:.04em;line-height:1.4}
 .hw-bar{height:6px;border-radius:4px;background:rgba(255,255,255,.07);margin-top:9px;overflow:hidden;
   border:1px solid rgba(0,255,180,.15)}
 .hw-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:4px;
@@ -149,6 +159,7 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
   background:rgba(255,255,255,.05);color:var(--text);transition:background .2s;touch-action:manipulation}
 .btn-small:active{background:rgba(255,255,255,.15)}
 .btn-small.cyan{color:var(--cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.1)}
+.btn-small.green{color:var(--green);border-color:rgba(0,255,180,.3);background:rgba(0,255,180,.1)}
 .fab{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;
   cursor:pointer;border:1px solid rgba(0,255,180,.45);
   background:linear-gradient(135deg,rgba(0,255,180,.2),rgba(0,229,255,.14));
@@ -190,7 +201,9 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .game-fav-fallback{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
   font-size:22px;font-weight:700;color:#04120e;
   background:linear-gradient(135deg,var(--green),var(--cyan));
-  box-shadow:0 0 22px -6px var(--green)}
+  box-shadow:0 0 22px -6px var(--green);text-transform:uppercase}
+.game-fav-fallback.native{background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#fff;
+  box-shadow:0 0 22px -6px var(--cyan)}
 .game-name{font-size:12px;line-height:1.35;text-align:center;color:var(--text);
   word-break:break-word;max-width:100%;display:-webkit-box;
   -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -220,13 +233,27 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .modal-overlay.open{display:flex;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{width:100%;max-width:440px;border-radius:22px;padding:22px 20px calc(20px + env(safe-area-inset-bottom));
-  background:rgba(13,17,23,.95);border:1px solid rgba(0,255,180,.26);
+.modal{width:100%;max-width:460px;max-height:88vh;overflow-y:auto;border-radius:22px;
+  padding:22px 20px calc(20px + env(safe-area-inset-bottom));
+  background:rgba(13,17,23,.96);border:1px solid rgba(0,255,180,.26);
   box-shadow:0 0 70px -22px var(--green),inset 0 0 40px -28px var(--green);
-  animation:modalIn .32s cubic-bezier(.2,.9,.3,1)}
+  animation:modalIn .32s cubic-bezier(.2,.9,.3,1);
+  scrollbar-width:thin;scrollbar-color:rgba(0,255,180,.35) transparent}
+.modal::-webkit-scrollbar{width:5px}
+.modal::-webkit-scrollbar-thumb{background:rgba(0,255,180,.35);border-radius:4px}
 @keyframes modalIn{from{opacity:0;transform:translateY(38px) scale(.96)}to{opacity:1;transform:none}}
 .modal h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
 .modal .sub{font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.mode-selector{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 4px}
+.mode-btn{padding:13px 8px;border-radius:12px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:inherit;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .25s;
+  touch-action:manipulation;font-weight:600}
+.mode-btn.active{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));
+  border-color:transparent;box-shadow:0 0 20px -6px var(--green)}
+.mode-btn:active{transform:scale(.97)}
+.mode-pane{display:none;margin-top:6px}
+.mode-pane.active{display:block}
 .field{margin-top:14px}
 .field label{display:block;margin-bottom:7px;font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted)}
@@ -245,52 +272,10 @@ select.input{appearance:none;-webkit-appearance:none;
   font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
   transition:transform .14s;touch-action:manipulation}
 .btn-solid:active{transform:scale(.96)}
+.btn-solid:disabled{opacity:.4;pointer-events:none}
 .btn-solid.primary{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));
   box-shadow:0 0 28px -10px var(--green)}
 .btn-solid.ghost{color:var(--muted);background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1)}
-.search-row{display:flex;gap:10px;margin-top:6px}
-.search-row .input{flex:1 1 auto;min-width:0}
-.btn-search{flex:0 0 auto;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
-  cursor:pointer;border:1px solid rgba(0,229,255,.42);
-  background:linear-gradient(135deg,rgba(0,229,255,.22),rgba(0,255,180,.12));color:var(--cyan);
-  box-shadow:0 0 26px -10px var(--cyan);transition:transform .15s;touch-action:manipulation}
-.btn-search:active{transform:scale(.92)}
-.btn-search svg{width:20px;height:20px;stroke-width:2}
-.wx-result{margin-top:18px}
-.wx-main{position:relative;overflow:hidden;padding:26px 20px 22px;border-radius:22px;text-align:center;
-  background:linear-gradient(150deg,rgba(0,229,255,.16),rgba(0,255,180,.06) 48%,rgba(255,255,255,.02));
-  border:1px solid rgba(0,229,255,.28);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 26px 62px -34px var(--cyan);animation:paneIn .4s cubic-bezier(.22,.85,.25,1)}
-.wx-main::after{content:'';position:absolute;top:-40%;right:-20%;width:220px;height:220px;
-  border-radius:50%;background:radial-gradient(circle,rgba(0,255,180,.24),transparent 68%);
-  pointer-events:none}
-.wx-city{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.wx-city b{color:var(--cyan);font-weight:600}
-.wx-icon{font-size:38px;line-height:1;margin-bottom:6px}
-.wx-temp{font-size:66px;font-weight:700;line-height:1;letter-spacing:-.045em;
-  background:linear-gradient(180deg,#fff,var(--cyan));-webkit-background-clip:text;
-  background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(0,229,255,.5))}
-.wx-temp sup{font-size:24px;vertical-align:super;letter-spacing:0}
-.wx-desc{margin-top:10px;font-size:13px;color:var(--text);letter-spacing:.04em;text-transform:capitalize}
-.wx-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.wx-stat{padding:15px 8px;border-radius:16px;text-align:center;background:var(--panel);
-  border:1px solid var(--brd);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  animation:paneIn .45s cubic-bezier(.22,.85,.25,1) backwards}
-.wx-stat:nth-child(1){animation-delay:.06s}.wx-stat:nth-child(2){animation-delay:.12s}
-.wx-stat:nth-child(3){animation-delay:.18s}
-.wx-stat .k{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-.wx-stat .v{margin-top:7px;font-size:15.5px;font-weight:700;color:var(--green);
-  text-shadow:0 0 16px rgba(0,255,180,.45)}
-.wx-stat .v small{font-size:10px;font-weight:400;color:var(--muted)}
-.wx-extra{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;
-  padding:13px 16px;border-radius:14px;background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.07);font-size:10.5px;letter-spacing:.08em;color:var(--muted)}
-.wx-extra b{color:var(--cyan);font-weight:600}
-.wx-loading{display:flex;flex-direction:column;align-items:center;gap:14px;padding:46px 20px;
-  color:var(--muted);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
-.spinner{width:34px;height:34px;border-radius:50%;border:2px solid rgba(0,255,180,.15);
-  border-top-color:var(--green);box-shadow:0 0 20px -6px var(--green);animation:spin .85s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 .about-card{margin-top:8px;padding:26px 20px;border-radius:22px;
   background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
   border:1px solid var(--brd);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
@@ -306,7 +291,8 @@ select.input{appearance:none;-webkit-appearance:none;
 .divider{height:1px;margin:22px 0;
   background:linear-gradient(90deg,transparent,rgba(0,255,180,.35),transparent)}
 .about-text{margin:0 0 20px;font-size:12.5px;line-height:1.75;color:var(--muted)}
-.about-list{list-style:none;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+.about-list{list-style:none;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07);
+  text-align:left}
 .about-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:13px 15px;font-size:11.5px;background:rgba(255,255,255,.028)}
 .about-list li+li{border-top:1px solid rgba(255,255,255,.05)}
@@ -315,6 +301,7 @@ select.input{appearance:none;-webkit-appearance:none;
 .about-list li:nth-child(1) b{color:var(--green)}
 .about-list li:nth-child(2) b{color:var(--cyan)}
 .about-list li:nth-child(3) b{color:var(--magenta)}
+.about-list li:nth-child(4) b{color:var(--amber)}
 .ai-note{margin-top:20px;padding:16px 15px;border-radius:16px;text-align:left;
   border:1px solid rgba(255,209,102,.32);background:rgba(255,209,102,.07)}
 .ai-note strong{display:block;margin-bottom:8px;font-size:10px;letter-spacing:.18em;
@@ -334,27 +321,36 @@ select.input{appearance:none;-webkit-appearance:none;
 .notice-box{margin-top:12px;padding:13px 14px;border-radius:13px;font-size:11px;line-height:1.6;
   color:rgba(255,209,102,.9);background:rgba(255,209,102,.08);
   border:1px solid rgba(255,209,102,.28)}
-
-/* LISTA DE APPS INSTALADOS REAL */
-.app-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.app-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:52vh;overflow-y:auto;
+  padding-right:4px;scrollbar-width:thin;scrollbar-color:rgba(0,255,180,.35) transparent}
+.app-list::-webkit-scrollbar{width:5px}
+.app-list::-webkit-scrollbar-thumb{background:rgba(0,255,180,.35);border-radius:4px}
 .app-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;
-  background:var(--panel);border:1px solid var(--brd);}
-.app-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--magenta));
-  display:grid;place-items:center;font-size:18px;font-weight:bold;color:#fff;text-transform:uppercase;}
-.app-info{display:flex;flex-direction:column;flex:1;overflow:hidden;}
-.app-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.app-pkg{font-size:9.5px;color:var(--muted);letter-spacing:0.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  background:var(--panel);border:1px solid var(--brd);transition:border-color .2s,background .2s;
+  cursor:pointer}
+.app-item.selected{border-color:rgba(0,255,180,.6);background:rgba(0,255,180,.06)}
+.app-icon{width:38px;height:38px;flex:0 0 38px;border-radius:10px;
+  background:linear-gradient(135deg,var(--cyan),var(--magenta));
+  display:grid;place-items:center;font-size:16px;font-weight:bold;color:#fff;text-transform:uppercase}
+.app-info{display:flex;flex-direction:column;flex:1;overflow:hidden;min-width:0}
+.app-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-pkg{font-size:9.5px;color:var(--muted);letter-spacing:0.05em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.app-check{width:20px;height:20px;flex:0 0 20px;border-radius:6px;
+  border:2px solid rgba(0,255,180,.4);background:transparent;position:relative;
+  transition:all .2s}
+.app-item.selected .app-check{background:var(--green);border-color:var(--green);
+  box-shadow:0 0 12px -2px var(--green)}
+.app-item.selected .app-check::after{content:'✓';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);color:#04120e;font-weight:800;font-size:12px;line-height:1}
 
-/* ============================================================
-   📱 SUPORTE A TELA DEITADA (LANDSCAPE)
-   ============================================================ */
 @media (orientation: landscape) {
   :root { --nav-h: 66px; }
   main { max-width: 100%; padding: 0 12px calc(var(--nav-h) + 22px + env(safe-area-inset-bottom)); }
   .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; }
   .logo-mark { width: 36px; height: 36px; flex-basis: 36px; font-size: 17px; }
   .logo h1 { font-size: 13px; }
-  .terminal-body { height: 120px; }
+  .terminal-body { height: 110px; }
   .hw-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .hw-card.full { grid-column: span 1; }
   .hw-card { padding: 11px 9px; }
@@ -367,23 +363,16 @@ select.input{appearance:none;-webkit-appearance:none;
   .game-card { min-height: 118px; padding: 14px 8px 12px; gap: 7px; }
   .game-fav, .game-fav-fallback { width: 42px; height: 42px; border-radius: 11px; font-size: 18px; }
   .game-name { font-size: 10.5px; }
-  .wx-main { display: flex; align-items: center; justify-content: space-around; text-align: left; padding: 18px; }
-  .wx-icon { font-size: 28px; margin: 0; }
-  .wx-temp { font-size: 48px; }
-  .wx-city { margin-bottom: 0; }
-  .wx-desc { margin-top: 0; font-size: 12px; }
-  .wx-stats { grid-template-columns: repeat(6, 1fr); gap: 6px; }
-  .wx-stat { padding: 10px 4px; }
-  .wx-stat .v { font-size: 13px; }
-  .modal { max-width: 520px; }
+  .modal { max-width: 560px; }
   .field { margin-top: 9px; }
   .bottom-nav { padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
   .nav-btn { padding: 5px 4px; font-size: 8.5px; gap: 3px; }
   .nav-btn svg { width: 19px; height: 19px; }
   .nav-btn.active::after { top: 1px; height: 2px; }
+  .app-list { max-height: 40vh; }
 }
 @media (orientation: landscape) and (max-height: 380px) {
-  .terminal-body { height: 90px; }
+  .terminal-body { height: 80px; }
   .hw-v { font-size: 13px; }
   .btn { padding: 10px; }
   .app-header { padding-top: 6px; padding-bottom: 6px; }
@@ -399,98 +388,120 @@ select.input{appearance:none;-webkit-appearance:none;
   <div class="logo">
     <div class="logo-mark">◈</div>
     <div>
-      <h1>Central Top <span>Mobile</span></h1>
-      <p>sistema online</p>
+      <h1>Game<span>Zone</span></h1>
+      <p>system online</p>
     </div>
   </div>
   <div class="status-pill"><span class="pulse"></span>ONLINE</div>
 </header>
 
 <main>
-  <!-- ============ HARDWARE ============ -->
-  <section class="pane active" id="pane-manutencao">
-    <div class="section-title"><h2>Diagnóstico real do dispositivo</h2></div>
+  <!-- ============ ABA 1: APARELHO ============ -->
+  <section class="pane active" id="pane-aparelho">
+    <div class="section-title"><h2>Especificações do Aparelho</h2></div>
 
     <div class="terminal">
       <div class="terminal-bar">
         <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="terminal-title">root@central-top:~</span>
+        <span class="terminal-title">root@gamezone:~</span>
       </div>
       <div class="terminal-body" id="terminal"></div>
     </div>
 
-    <div class="hw-grid" id="hwGrid">
+    <div class="hw-grid">
       <div class="hw-card full">
-        <div class="hw-k">Armazenamento do app</div>
-        <div class="hw-v" id="hwStorage">—</div>
-        <div class="hw-sub" id="hwStorageSub">calculando...</div>
-        <div class="hw-bar"><div class="hw-bar-fill" id="hwStorageBar"></div></div>
+        <div class="hw-k">Modelo do Aparelho</div>
+        <div class="hw-v" id="specModel">—</div>
+        <div class="hw-sub" id="specManufacturer">fabricante</div>
       </div>
       <div class="hw-card cyan">
-        <div class="hw-k">RAM do dispositivo</div>
-        <div class="hw-v" id="hwRam">—</div>
-        <div class="hw-sub">estimativa do navegador</div>
-      </div>
-      <div class="hw-card amber">
-        <div class="hw-k">Bateria</div>
-        <div class="hw-v" id="hwBattery">—</div>
-        <div class="hw-sub" id="hwBatterySub">consultando</div>
-        <div class="hw-bar"><div class="hw-bar-fill" id="hwBatteryBar"></div></div>
+        <div class="hw-k">Processador (CPU)</div>
+        <div class="hw-v" id="specCpu">—</div>
+        <div class="hw-sub" id="specCpuSub">—</div>
       </div>
       <div class="hw-card magenta">
-        <div class="hw-k">Núcleos de CPU</div>
-        <div class="hw-v" id="hwCpu">—</div>
-        <div class="hw-sub">navigator.hardwareConcurrency</div>
+        <div class="hw-k">GPU</div>
+        <div class="hw-v" id="specGpu">—</div>
+        <div class="hw-sub" id="specGpuSub">renderer</div>
+      </div>
+      <div class="hw-card amber">
+        <div class="hw-k">RAM Total</div>
+        <div class="hw-v" id="specRam">—</div>
+        <div class="hw-sub">memória física</div>
       </div>
       <div class="hw-card green">
-        <div class="hw-k">Tela</div>
-        <div class="hw-v" id="hwScreen">—</div>
-        <div class="hw-sub" id="hwScreenSub">viewport</div>
+        <div class="hw-k">Armazenamento</div>
+        <div class="hw-v" id="specStorage">—</div>
+        <div class="hw-sub">total do dispositivo</div>
       </div>
       <div class="hw-card full">
-        <div class="hw-k">Rede</div>
-        <div class="hw-v" id="hwNet">—</div>
-        <div class="hw-sub" id="hwNetSub">detectando tipo</div>
+        <div class="hw-k">Versão do Android</div>
+        <div class="hw-v" id="specOs">—</div>
+        <div class="hw-sub" id="specOsSub">—</div>
       </div>
-    </div>
-
-    <div class="notice-box">
-      ⚠️ Dados lidos das APIs do navegador. No APK Android, os dados nativos
-      são reais via plugin.
     </div>
 
     <div class="actions">
-      <button class="btn green action-btn" id="btnRefresh">
+      <button class="btn green action-btn" id="btnRefreshSpecs">
         <span class="ico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>
           </svg>
         </span>
-        <span class="txt">Atualizar Dados<small>reler hardware agora</small></span>
+        <span class="txt">Reler Especificações<small>via plugin nativo</small></span>
       </button>
+    </div>
 
-      <button class="btn cyan action-btn" id="btnClearCache">
-        <span class="ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/>
-          </svg>
-        </span>
-        <span class="txt">Limpar Dados Locais<small>localStorage + Cache API</small></span>
-      </button>
-
-      <button class="btn magenta action-btn" id="btnInstalledGames">
-        <span class="ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="7" width="20" height="11" rx="4.5"/>
-            <path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/>
-          </svg>
-        </span>
-        <span class="txt">Jogos Instalados<small>ler apps reais (Android)</small></span>
-      </button>
+    <div class="notice-box">
+      ℹ️ Especificações estáticas lidas via <b>@capgo/capacitor-device-info</b>. Sem APIs do navegador.
     </div>
   </section>
 
-  <!-- ============ JOGOS ============ -->
+  <!-- ============ ABA 2: STATUS ============ -->
+  <section class="pane" id="pane-status">
+    <div class="section-title">
+      <h2>Monitor em Tempo Real</h2>
+      <div class="live-indicator"><span class="pulse"></span>LIVE</div>
+    </div>
+
+    <div class="hw-grid">
+      <div class="hw-card full">
+        <div class="hw-k">Uso de RAM</div>
+        <div class="hw-v" id="liveRam">—</div>
+        <div class="hw-sub" id="liveRamSub">aguardando plugin</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveRamBar"></div></div>
+      </div>
+      <div class="hw-card cyan">
+        <div class="hw-k">Uso da CPU</div>
+        <div class="hw-v" id="liveCpu">—</div>
+        <div class="hw-sub" id="liveCpuSub">—</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveCpuBar"></div></div>
+      </div>
+      <div class="hw-card amber">
+        <div class="hw-k">Bateria</div>
+        <div class="hw-v" id="liveBattery">—</div>
+        <div class="hw-sub" id="liveBatterySub">—</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveBatteryBar"></div></div>
+      </div>
+      <div class="hw-card magenta">
+        <div class="hw-k">Temperatura</div>
+        <div class="hw-v" id="liveTemp">—</div>
+        <div class="hw-sub" id="liveTempSub">térmico</div>
+      </div>
+      <div class="hw-card green full">
+        <div class="hw-k">Armazenamento Disponível</div>
+        <div class="hw-v" id="liveStorage">—</div>
+        <div class="hw-sub" id="liveStorageSub">—</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveStorageBar"></div></div>
+      </div>
+    </div>
+
+    <div class="notice-box">
+      🔄 Atualizando a cada 2 segundos via plugin nativo. Temperatura pode não estar disponível em todos os aparelhos.
+    </div>
+  </section>
+
+  <!-- ============ ABA 3: JOGOS ============ -->
   <section class="pane" id="pane-jogos">
     <div class="games-head">
       <div style="display:flex; align-items:center; gap:8px;">
@@ -516,7 +527,6 @@ select.input{appearance:none;-webkit-appearance:none;
     </div>
 
     <div class="chips" id="chips"></div>
-
     <div class="games-grid" id="gamesGrid"></div>
 
     <div class="empty" id="gamesEmpty">
@@ -524,67 +534,51 @@ select.input{appearance:none;-webkit-appearance:none;
       <p>Nenhum jogo ainda</p>
       <span>toque em + para adicionar</span>
     </div>
-
-    <!-- Tela de Jogos Instalados Real -->
-    <div id="appListContainer" style="display:none;">
-      <div class="section-title" style="margin-top:20px">
-        <h2>Apps Instalados</h2>
-        <button class="btn-small" id="btnBackToGames">Voltar</button>
-      </div>
-      <div class="app-list" id="appList">
-        <!-- Preenchido via JS com os apps reais -->
-      </div>
-    </div>
   </section>
 
-  <!-- ============ CLIMA ============ -->
-  <section class="pane" id="pane-clima">
-    <div class="section-title"><h2>Previsão do tempo</h2></div>
-    <div class="search-row">
-      <input class="input" id="cityInput" type="text" placeholder="Digite a cidade..." autocomplete="off">
-      <button class="btn-search" id="btnSearchWeather" aria-label="Buscar clima">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>
-        </svg>
-      </button>
-    </div>
-    <div class="wx-result" id="wxResult"></div>
-  </section>
-
-  <!-- ============ SOBRE ============ -->
+  <!-- ============ ABA 4: SOBRE ============ -->
   <section class="pane" id="pane-sobre">
     <div class="about-card">
       <div class="about-logo">◈</div>
-      <h2>Central Top <span>Mobile</span></h2>
-      <div class="ver">versão 2.2.0</div>
+      <h2>Game<span>Zone</span></h2>
+      <div class="ver">versão 3.0.0</div>
       <div class="divider"></div>
       <p class="about-text">
-        Central de hardware e biblioteca de jogos. Leitura real de apps instalados 
-        e suporte a modo paisagem automático.
+        Central de especificações, monitoramento em tempo real e biblioteca de jogos.
+        Todos os dados de hardware são lidos via plugins nativos do Capacitor — sem APIs do navegador.
       </p>
       <ul class="about-list">
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
-        <li><span>Plugin Nativo</span><b>UsageStatsManager</b></li>
-        <li><span>Orientação</span><b>Retrato + Paisagem Auto</b></li>
-        <li><span>Clima</span><b>wttr.in</b></li>
+        <li><span>Device Info</span><b>@capgo/capacitor-device-info</b></li>
+        <li><span>Apps</span><b>@capgo/capacitor-android-usagestatsmanager</b></li>
+        <li><span>Orientação</span><b>@capacitor/screen-orientation</b></li>
       </ul>
       <div class="ai-note">
         <strong>⚠ Aviso</strong>
         <p>
-          App gerado por IA. Para listar os apps, o APK pedirá permissão de uso do Android.
+          Para listar apps instalados, o APK precisa da permissão de uso do Android.
+          O build injeta automaticamente <code>QUERY_ALL_PACKAGES</code> e <code>PACKAGE_USAGE_STATS</code>
+          no AndroidManifest.xml.
         </p>
       </div>
-      <p class="footer-note">// feito para rodar no seu bolso //</p>
+      <p class="footer-note">// gamezone · feito para rodar no seu bolso //</p>
     </div>
   </section>
 </main>
 
 <nav class="bottom-nav">
-  <button class="nav-btn active" data-tab="manutencao">
+  <button class="nav-btn active" data-tab="aparelho">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      <rect x="5" y="2" width="14" height="20" rx="2"/>
+      <path d="M12 18h.01"/>
     </svg>
-    <span>Hardware</span>
+    <span>Aparelho</span>
+  </button>
+  <button class="nav-btn" data-tab="status">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 12h4l3-9 4 18 3-9h4"/>
+    </svg>
+    <span>Status</span>
   </button>
   <button class="nav-btn" data-tab="jogos">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -592,13 +586,6 @@ select.input{appearance:none;-webkit-appearance:none;
       <path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/>
     </svg>
     <span>Jogos</span>
-  </button>
-  <button class="nav-btn" data-tab="clima">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="4"/>
-      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
-    </svg>
-    <span>Clima</span>
   </button>
   <button class="nav-btn" data-tab="sobre">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -613,24 +600,44 @@ select.input{appearance:none;-webkit-appearance:none;
   <div class="modal">
     <h3>+ Novo Jogo</h3>
     <p class="sub">adicionar à biblioteca</p>
-    <div class="field">
-      <label for="gameName">Nome do jogo</label>
-      <input class="input" id="gameName" type="text" placeholder="Ex: Subway Surfers" maxlength="40" autocomplete="off">
+
+    <div class="mode-selector">
+      <button class="mode-btn active" data-mode="web">🌐 Web</button>
+      <button class="mode-btn" data-mode="installed">📱 Instalado</button>
     </div>
-    <div class="field">
-      <label for="gameUrl">Link (URL)</label>
-      <input class="input" id="gameUrl" type="url" placeholder="https://..." inputmode="url" autocomplete="off">
+
+    <!-- Modo Web -->
+    <div class="mode-pane active" id="modePane-web">
+      <div class="field">
+        <label for="gameName">Nome do jogo</label>
+        <input class="input" id="gameName" type="text" placeholder="Ex: Subway Surfers" maxlength="40" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="gameUrl">Link (URL)</label>
+        <input class="input" id="gameUrl" type="url" placeholder="https://..." inputmode="url" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="gameCat">Categoria</label>
+        <select class="input" id="gameCat">
+          <option>Ação</option><option>Aventura</option><option>Puzzle</option>
+          <option>Corrida</option><option>Tiro</option><option>RPG</option>
+          <option>Esporte</option><option>Estratégia</option><option>Outro</option>
+        </select>
+      </div>
     </div>
-    <div class="field">
-      <label for="gameCat">Categoria</label>
-      <select class="input" id="gameCat">
-        <option>Ação</option><option>Aventura</option><option>Puzzle</option>
-        <option>Corrida</option><option>Tiro</option><option>RPG</option>
-        <option>Esporte</option><option>Estratégia</option><option>Outro</option>
-      </select>
+
+    <!-- Modo Instalado -->
+    <div class="mode-pane" id="modePane-installed">
+      <p class="sub" style="margin-top:10px">Selecione apps instalados para adicionar</p>
+      <div class="app-list" id="modalAppList">
+        <div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">
+          Toque em "Instalado" para carregar
+        </div>
+      </div>
     </div>
+
     <div class="modal-actions">
-      <button class="btn-solid ghost" id="btnCancelGame">Cancelar</button>
+      <button class="btn-solid ghost" id="btnCancelGame">Fechar</button>
       <button class="btn-solid primary" id="btnSaveGame">Salvar</button>
     </div>
   </div>
@@ -641,346 +648,625 @@ select.input{appearance:none;-webkit-appearance:none;
 <script>
 (function(){
 'use strict';
-const $=(s,r=document)=>r.querySelector(s);
-const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
-const fmtBytes=b=>{if(!b||b<0)return '—';const u=['B','KB','MB','GB','TB'];let i=0,n=b;while(n>=1024&&i<u.length-1){n/=1024;i++}return n.toFixed(n>=100?0:n>=10?1:2)+' '+u[i]};
 
-// --------- TOAST ---------
-const toastEl=$('#toast');let toastT=null;
-function toast(m,t){toastEl.textContent=m;toastEl.className='toast show'+(t==='ok'?' ok':'');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),3200)}
+/* ============================================================
+   HELPERS
+   ============================================================ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch(e){} };
+const fmtBytes = b => {
+  if (b == null || isNaN(b) || b < 0) return '—';
+  const u = ['B','KB','MB','GB','TB'];
+  let i = 0, n = b;
+  while (n >= 1024 && i < u.length-1) { n /= 1024; i++; }
+  return n.toFixed(n >= 100 ? 0 : n >= 10 ? 1 : 2) + ' ' + u[i];
+};
+const fmtGB = b => {
+  if (b == null || isNaN(b) || b < 0) return '—';
+  return (b / (1024**3)).toFixed(2) + ' GB';
+};
 
-// --------- ORIENTAÇÃO DA TELA ---------
+/* ============================================================
+   TOAST
+   ============================================================ */
+const toastEl = $('#toast');
+let toastT = null;
+function toast(m, t) {
+  toastEl.textContent = m;
+  toastEl.className = 'toast show' + (t === 'ok' ? ' ok' : '');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => toastEl.classList.remove('show'), 3200);
+}
+
+/* ============================================================
+   CAPACITOR PLUGINS
+   ============================================================ */
+const isNative = () => !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+
+function getPlugin(name) {
+  if (!window.Capacitor || !window.Capacitor.Plugins) return null;
+  return window.Capacitor.Plugins[name] || null;
+}
+function getDeviceInfoPlugin() {
+  return getPlugin('DeviceInfo') || getPlugin('CapacitorDeviceInfo') || getPlugin('CapacitorDeviceInfoPlugin');
+}
+function getUsageStatsPlugin() {
+  return getPlugin('CapacitorAndroidUsageStatsManager') || getPlugin('UsageStatsManager');
+}
+function getDevicePlugin() { return getPlugin('Device'); }
+function getOrientationPlugin() { return getPlugin('ScreenOrientation'); }
+
+/* ============================================================
+   ORIENTAÇÃO (via plugin nativo + fallback navegador)
+   ============================================================ */
 async function lockLandscape() {
+  const so = getOrientationPlugin();
+  if (so && so.lock) {
+    try { await so.lock({ orientation: 'landscape' }); return; } catch(e) {}
+  }
   try {
     if (screen.orientation && screen.orientation.lock) {
       await screen.orientation.lock('landscape');
     }
-  } catch (e) {
-    console.warn('Não foi possível travar a tela:', e);
-  }
+  } catch(e) {}
 }
 async function unlockOrientation() {
+  const so = getOrientationPlugin();
+  if (so && so.unlock) {
+    try { await so.unlock(); return; } catch(e) {}
+  }
   try {
-    if (screen.orientation && screen.orientation.unlock) {
-      screen.orientation.unlock();
-    }
-  } catch (e) {}
+    if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+  } catch(e) {}
 }
 
-// --------- NAVEGAÇÃO ---------
-const navBtns=$$('.nav-btn'),panes=$$('.pane');
-function switchTab(t){
-  navBtns.forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
-  panes.forEach(p=>p.classList.toggle('active',p.id==='pane-'+t));
-  
-  if(t === 'jogos'){
-    lockLandscape();
+/* ============================================================
+   TERMINAL LOG
+   ============================================================ */
+const terminal = $('#terminal');
+function log(text, type) {
+  if (!terminal) return;
+  const line = document.createElement('div');
+  line.className = 'line' + (type ? ' ' + type : '');
+  const ts = document.createElement('span');
+  ts.className = 'ts';
+  const d = new Date();
+  ts.textContent =
+    String(d.getHours()).padStart(2,'0') + ':' +
+    String(d.getMinutes()).padStart(2,'0') + ':' +
+    String(d.getSeconds()).padStart(2,'0');
+  line.appendChild(ts);
+  line.appendChild(document.createTextNode(text));
+  terminal.appendChild(line);
+  terminal.scrollTop = terminal.scrollHeight;
+}
+function logCaret() {
+  if (!terminal) return;
+  const l = document.createElement('div');
+  l.className = 'line';
+  const c = document.createElement('span');
+  c.className = 'caret';
+  l.appendChild(c);
+  terminal.appendChild(l);
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+/* ============================================================
+   NAVEGAÇÃO
+   ============================================================ */
+const navBtns = $$('.nav-btn');
+const panes = $$('.pane');
+let currentTab = 'aparelho';
+
+async function switchTab(tab) {
+  currentTab = tab;
+  navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  panes.forEach(p => p.classList.toggle('active', p.id === 'pane-' + tab));
+
+  // Orientação: Jogos → landscape, resto → portrait
+  if (tab === 'jogos') {
+    await lockLandscape();
   } else {
-    unlockOrientation();
+    await unlockOrientation();
+  }
+
+  // Monitoramento em tempo real
+  if (tab === 'status') {
+    await startLiveStatus();
+  } else {
+    await stopLiveStatus();
+  }
+
+  // Carrega dados específicos da aba
+  if (tab === 'aparelho') {
+    await loadDeviceSpecs();
+  }
+  if (tab === 'jogos') {
+    renderGames();
   }
 
   buzz(8);
-  try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) { window.scrollTo(0,0); }
 }
-navBtns.forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+navBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
 
-$('#btnRotate').addEventListener('click', () => {
-  unlockOrientation();
+$('#btnRotate').addEventListener('click', async () => {
+  await unlockOrientation();
   toast('Gire o celular para ajustar', 'ok');
 });
 
-// --------- TERMINAL ---------
-const terminal=$('#terminal');
-function log(text,type){
-  const line=document.createElement('div');
-  line.className='line'+(type?' '+type:'');
-  const ts=document.createElement('span');ts.className='ts';
-  const d=new Date();
-  ts.textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');
-  line.appendChild(ts);line.appendChild(document.createTextNode(text));
-  terminal.appendChild(line);terminal.scrollTop=terminal.scrollHeight;
+/* ============================================================
+   ABA 1: APARELHO — ESPECIFICAÇÕES ESTÁTICAS
+   ============================================================ */
+async function loadDeviceSpecs() {
+  const di = getDeviceInfoPlugin();
+  const dev = getDevicePlugin();
+
+  if (!di && !dev) {
+    log('  plugins nativos indisponíveis (modo navegador)', 'warn');
+    $('#specModel').innerHTML = '<small>n/d</small>';
+    $('#specCpu').innerHTML = '<small>n/d</small>';
+    $('#specGpu').innerHTML = '<small>n/d</small>';
+    $('#specRam').innerHTML = '<small>n/d</small>';
+    $('#specStorage').innerHTML = '<small>n/d</small>';
+    $('#specOs').innerHTML = '<small>n/d</small>';
+    return;
+  }
+
+  log('> lendo especificações via plugin nativo...', 'info');
+
+  try {
+    // @capgo/capacitor-device-info: getInfo()
+    let info = null;
+    if (di && di.getInfo) {
+      try { info = await di.getInfo(); } catch(e) { log('  device-info erro: ' + e.message, 'warn'); }
+    }
+
+    // @capacitor/device: getInfo() (fallback + modelo/SO confiável)
+    let capInfo = null;
+    if (dev && dev.getInfo) {
+      try { capInfo = await dev.getInfo(); } catch(e) {}
+    }
+
+    // Modelo
+    const model = (capInfo && capInfo.model) ||
+                  (info && info.device && info.device.model) ||
+                  (info && info.model) || 'Desconhecido';
+    const manufacturer = (capInfo && capInfo.manufacturer) ||
+                         (info && info.device && info.device.manufacturer) || '';
+    $('#specModel').textContent = model;
+    $('#specManufacturer').textContent = manufacturer || 'fabricante';
+    log('  modelo: ' + model + (manufacturer ? ' · ' + manufacturer : ''), 'ok');
+
+    // CPU
+    const cpu = (info && info.cpu) || {};
+    const cpuModel = cpu.model || cpu.processor || '—';
+    const cpuCores = cpu.cores || cpu.coreCount || null;
+    $('#specCpu').textContent = cpuModel;
+    $('#specCpuSub').textContent = (cpuCores ? cpuCores + ' núcleos' : 'núcleos n/d') +
+      (cpu.architecture ? ' · ' + cpu.architecture : '');
+    log('  cpu: ' + cpuModel + (cpuCores ? ' (' + cpuCores + ' cores)' : ''), 'info');
+
+    // GPU
+    const gpu = (info && info.gpu) || {};
+    const gpuModel = gpu.renderer || gpu.model || gpu.vendor || '—';
+    $('#specGpu').textContent = gpuModel;
+    $('#specGpuSub').textContent = gpu.vendor && gpu.vendor !== gpuModel ? gpu.vendor : 'renderer';
+    log('  gpu: ' + gpuModel, 'info');
+
+    // RAM total
+    const mem = (info && info.memory) || {};
+    const ramTotal = mem.total || mem.totalMemory || null;
+    $('#specRam').innerHTML = ramTotal ? fmtGB(ramTotal) : '<small>n/d</small>';
+    log('  ram total: ' + (ramTotal ? fmtGB(ramTotal) : 'n/d'), 'info');
+
+    // Armazenamento total
+    const st = (info && info.storage) || {};
+    const stTotal = st.total || st.totalBytes || null;
+    $('#specStorage').innerHTML = stTotal ? fmtGB(stTotal) : '<small>n/d</small>';
+    log('  storage total: ' + (stTotal ? fmtGB(stTotal) : 'n/d'), 'info');
+
+    // SO
+    const os = (info && info.os) || {};
+    const osName = os.name || (capInfo && capInfo.platform) || 'Android';
+    const osVer = os.version || (capInfo && capInfo.osVersion) || '';
+    $('#specOs').textContent = (osName + ' ' + osVer).trim();
+    $('#specOsSub').textContent = (capInfo && capInfo.isVirtual) ? 'ambiente virtual' : 'dispositivo físico';
+    log('  so: ' + osName + ' ' + osVer, 'info');
+
+    log('✓ especificações carregadas', 'ok');
+    logCaret();
+  } catch(e) {
+    log('  erro ao ler especificações: ' + e.message, 'err');
+    logCaret();
+  }
 }
-function logCaret(){const l=document.createElement('div');l.className='line';const c=document.createElement('span');c.className='caret';l.appendChild(c);terminal.appendChild(l);terminal.scrollTop=terminal.scrollHeight}
 
-// --------- DADOS DE HARDWARE REAIS ---------
-async function loadHardware(){
-  try{
-    const est=await navigator.storage.estimate();
-    const used=est.usage||0,quota=est.quota||0;
-    const pct=quota?Math.min(100,(used/quota)*100):0;
-    $('#hwStorage').innerHTML=fmtBytes(used)+' <small>usados</small>';
-    $('#hwStorageSub').textContent='de '+fmtBytes(quota)+' disponíveis · '+pct.toFixed(2)+'%';
-    $('#hwStorageBar').style.width=pct.toFixed(2)+'%';
-    log('  storage: '+fmtBytes(used)+' / '+fmtBytes(quota),'info');
-  }catch(e){$('#hwStorage').textContent='n/d';$('#hwStorageSub').textContent='API não suportada'}
-
-  const ram=navigator.deviceMemory;
-  if(ram){
-    $('#hwRam').innerHTML=ram+' <small>GB</small>';
-    log('  RAM estimada: '+ram+' GB','info');
-  }else{
-    $('#hwRam').innerHTML='<small>n/d</small>';
-    log('  RAM: API não disponível','warn');
-  }
-
-  const cores=navigator.hardwareConcurrency||0;
-  $('#hwCpu').innerHTML=cores?'<span>'+cores+'</span> <small>cores</small>':'<small>n/d</small>';
-  log('  CPU cores: '+(cores||'n/d'),'info');
-
-  const dpr=window.devicePixelRatio||1;
-  $('#hwScreen').innerHTML=screen.width+'×'+screen.height;
-  $('#hwScreenSub').textContent='DPR '+dpr.toFixed(1)+' · viewport '+window.innerWidth+'×'+window.innerHeight;
-  log('  tela: '+screen.width+'x'+screen.height+' @'+dpr.toFixed(1)+'x','info');
-
-  if(typeof navigator.getBattery==='function'){
-    try{
-      const b=await navigator.getBattery();
-      const lvl=Math.round(b.level*100);
-      const chg=b.charging?'carregando':'descarregando';
-      $('#hwBattery').innerHTML=lvl+' <small>%</small>';
-      $('#hwBatterySub').textContent=chg;
-      $('#hwBatteryBar').style.width=lvl+'%';
-      $('#hwBatteryBar').style.background=lvl<20?'linear-gradient(90deg,#ff5d7a,#ff2fb9)':'linear-gradient(90deg,var(--green),var(--cyan))';
-      log('  bateria: '+lvl+'% ('+chg+')','ok');
-    }catch(e){$('#hwBattery').innerHTML='<small>n/d</small>';$('#hwBatterySub').textContent='falha na API'}
-  }else{
-    $('#hwBattery').innerHTML='<small>n/d</small>';
-    $('#hwBatterySub').textContent='API não suportada (iOS)';
-    log('  bateria: API indisponível','warn');
-  }
-
-  let net=navigator.onLine?'Online':'Offline';
-  let sub='';
-  if(navigator.connection){
-    const c=navigator.connection;
-    sub=[c.effectiveType,c.downlink&&c.downlink+'Mbps',c.rtt&&c.rtt+'ms'].filter(Boolean).join(' · ');
-    if(c.effectiveType)net+=' ('+c.effectiveType.toUpperCase()+')';
-  }
-  $('#hwNet').innerHTML=net;
-  $('#hwNetSub').textContent=sub||'tipo não informado';
-  log('  rede: '+net+(sub?' — '+sub:''),'info');
-}
-
-// --------- BOTÕES HARDWARE ---------
-const actionBtns=$$('.action-btn');let busy=false;
-function setBusy(s){busy=s;actionBtns.forEach(b=>b.disabled=s)}
-
-$('#btnRefresh').addEventListener('click',async()=>{
-  if(busy)return;setBusy(true);buzz(12);
-  log('> relendo hardware...','info');
-  await loadHardware();
-  log('✓ dados atualizados','ok');logCaret();
-  toast('Dados atualizados','ok');setBusy(false);
-});
-
-$('#btnClearCache').addEventListener('click',async()=>{
-  if(busy)return;setBusy(true);buzz(14);
-  log('> limpando dados locais...','info');
-  await sleep(300);
-  let count=0;try{count=localStorage.length}catch(e){}
-  log('  localStorage: '+count+' registro(s)','warn');
-  try{localStorage.clear()}catch(e){}
-  await sleep(300);
-  log('  localStorage: limpo','ok');
-  if('caches' in window){
-    try{
-      const keys=await caches.keys();
-      log('  cache api: '+keys.length+' cache(s)','warn');
-      for(const k of keys)await caches.delete(k);
-      log('  cache api: limpo','ok');
-    }catch(e){log('  cache api: erro','err')}
-  }
-  await sleep(280);
-  log('✓ dados locais limpos','ok');logCaret();
-  games=[];renderGames();
-  toast('Dados locais limpos','ok');setBusy(false);
-});
-
-// --------- JOGOS INSTALADOS (LEITURA REAL NATIVA) ---------
-$('#btnInstalledGames').addEventListener('click', async () => {
-  if(busy)return;
-  setBusy(true);
+$('#btnRefreshSpecs').addEventListener('click', async () => {
   buzz(12);
-  
-  switchTab('jogos');
-  lockLandscape();
+  terminal.innerHTML = '';
+  log('> relendo especificações...', 'info');
+  await loadDeviceSpecs();
+  toast('Especificações atualizadas', 'ok');
+});
 
-  log('> iniciando leitura nativa de apps...', 'info');
-  await sleep(400);
+/* ============================================================
+   ABA 2: STATUS — MONITOR EM TEMPO REAL
+   ============================================================ */
+let statusListener = null;
+let statusPollTimer = null;
+let statusStarted = false;
 
-  const isCap = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
-  
-  if (!isCap) {
-    log('  erro: leitura nativa disponível apenas no APK Android.', 'err');
-    toast('Disponível apenas no APK Android', 'err');
-    setBusy(false);
+async function startLiveStatus() {
+  if (statusStarted) return;
+  statusStarted = true;
+
+  const di = getDeviceInfoPlugin();
+  if (!di) {
+    log('  device-info plugin ausente, usando fallback bateria', 'warn');
+    // fallback: só bateria via @capacitor/device
+    statusPollTimer = setInterval(fallbackBatteryUpdate, 2000);
+    fallbackBatteryUpdate();
     return;
   }
 
   try {
-    const plugin = window.Capacitor.Plugins.CapacitorAndroidUsageStatsManager;
-    if (!plugin) throw new Error('Plugin nativo não encontrado.');
-
-    // 1. Checar permissão
-    const { granted } = await plugin.isUsageStatsPermissionGranted();
-    
-    if (!granted) {
-      log('  permissão pendente. Abrindo configurações...', 'warn');
-      toast('Conceda a permissão de uso', 'ok');
-      await plugin.openUsageStatsSettings();
-      setBusy(false);
-      return;
+    // Listener de updates
+    if (di.addListener) {
+      const h = await di.addListener('deviceInfoUpdate', (data) => updateStatusUI(data));
+      statusListener = h;
     }
-
-    // 2. Buscar apps reais
-    log('  lendo pacotes do sistema...', 'ok');
-    const { packages } = await plugin.queryAllPackages();
-
-    // 3. Filtrar apenas apps de usuário (ignora pacotes de sistema do Android)
-    const userApps = packages.filter(app => {
-       return app.appName && !app.packageName.startsWith('com.android') && !app.packageName.startsWith('android');
-    });
-
-    log('  apps encontrados: ' + userApps.length, 'ok');
-    
-    $('#gamesGrid').style.display = 'none';
-    $('#gamesEmpty').style.display = 'none';
-    $('#appListContainer').style.display = 'block';
-    
-    if (userApps.length === 0) {
-      $('#appList').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)">Nenhum app de usuário encontrado.</div>';
-    } else {
-      $('#appList').innerHTML = userApps.map(app => `
-        <div class="app-item">
-          <div class="app-icon">${esc(app.appName.charAt(0))}</div>
-          <div class="app-info">
-            <div class="app-name">${esc(app.appName)}</div>
-            <div class="app-pkg">${esc(app.packageName)}</div>
-          </div>
-        </div>
-      `).join('');
+    // Start monitoring nativo
+    if (di.startMonitoring) {
+      await di.startMonitoring({ intervalMs: 2000 });
+    } else if (di.getInfo) {
+      // fallback: polling
+      const poll = async () => {
+        try {
+          const data = await di.getInfo();
+          updateStatusUI(data);
+        } catch(e) {}
+      };
+      await poll();
+      statusPollTimer = setInterval(poll, 2000);
     }
-
-    toast('Apps carregados!', 'ok');
-
-  } catch (err) {
-    log('  erro: ' + err.message, 'err');
-    toast('Falha ao ler apps instalados');
-  } finally {
-    logCaret();
-    setBusy(false);
+  } catch(e) {
+    log('  erro monitoring: ' + e.message, 'err');
   }
-});
-
-$('#btnBackToGames').addEventListener('click', () => {
-  $('#appListContainer').style.display = 'none';
-  renderGames();
-  buzz(10);
-});
-
-// --------- BIBLIOTECA DE JOGOS ---------
-const GAMES_KEY='ctm_games_v2';
-const CATS=['Todos','Favoritos','Ação','Aventura','Puzzle','Corrida','Tiro','RPG','Esporte','Estratégia','Outro'];
-let games=[],currentCat='Todos',searchQ='';
-
-function loadGames(){try{const r=localStorage.getItem(GAMES_KEY);games=r?JSON.parse(r):[];if(!Array.isArray(games))games=[]}catch(e){games=[]}}
-function saveGames(){try{localStorage.setItem(GAMES_KEY,JSON.stringify(games))}catch(e){}}
-
-function domainOf(url){try{return new URL(url).hostname}catch(e){return ''}}
-function faviconOf(url){
-  const d=domainOf(url);
-  return d?'https://www.google.com/s2/favicons?domain='+encodeURIComponent(d)+'&sz=64':'';
 }
 
-function renderChips(){
-  $('#chips').innerHTML=CATS.map(c=>'<button class="chip'+(c===currentCat?' active':'')+'" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join('');
-  $$('#chips .chip').forEach(el=>el.addEventListener('click',()=>{currentCat=el.dataset.cat;renderChips();renderGames()}));
+async function stopLiveStatus() {
+  if (!statusStarted) return;
+  statusStarted = false;
+
+  if (statusPollTimer) { clearInterval(statusPollTimer); statusPollTimer = null; }
+  if (statusListener) {
+    try { statusListener.remove(); } catch(e) {}
+    statusListener = null;
+  }
+  const di = getDeviceInfoPlugin();
+  if (di && di.stopMonitoring) {
+    try { await di.stopMonitoring(); } catch(e) {}
+  }
 }
 
-function renderGames(){
-  if ($('#appListContainer').style.display === 'block') return;
+async function fallbackBatteryUpdate() {
+  const dev = getDevicePlugin();
+  if (!dev || !dev.getBatteryInfo) return;
+  try {
+    const b = await dev.getBatteryInfo();
+    const pct = Math.round((b.batteryLevel || 0) * 100);
+    $('#liveBattery').innerHTML = pct + ' <small>%</small>';
+    $('#liveBatterySub').textContent = b.isCharging ? 'Carregando' : 'Descarregando';
+    $('#liveBatteryBar').style.width = pct + '%';
+    $('#liveBatteryBar').style.background = pct < 20
+      ? 'linear-gradient(90deg,var(--red),var(--magenta))'
+      : 'linear-gradient(90deg,var(--amber),var(--green))';
+  } catch(e) {}
+}
 
-  const grid=$('#gamesGrid'),empty=$('#gamesEmpty');
-  grid.innerHTML='';
-  let list=games.slice();
-  if(currentCat==='Favoritos')list=list.filter(g=>g.fav);
-  else if(currentCat!=='Todos')list=list.filter(g=>g.cat===currentCat);
-  if(searchQ)list=list.filter(g=>(g.name||'').toLowerCase().includes(searchQ.toLowerCase()));
-  list.sort((a,b)=>(b.fav?1:0)-(a.fav?1:0)||(b.added||0)-(a.added||0));
+function updateStatusUI(sample) {
+  if (!sample) return;
 
-  if(!list.length){grid.style.display='none';empty.style.display='flex';return}
-  grid.style.display='grid';empty.style.display='none';
+  // ===== RAM =====
+  const mem = sample.memory || {};
+  if (mem.total) {
+    const used = mem.used || (mem.total - (mem.free || mem.available || 0));
+    const pct = mem.usedPercent != null ? mem.usedPercent : (used / mem.total) * 100;
+    $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>';
+    $('#liveRamSub').textContent = 'de ' + fmtGB(mem.total) + ' · ' + pct.toFixed(1) + '%';
+    $('#liveRamBar').style.width = Math.min(100, pct) + '%';
+    $('#liveRamBar').style.background = pct > 85
+      ? 'linear-gradient(90deg,var(--red),var(--magenta))'
+      : 'linear-gradient(90deg,var(--green),var(--cyan))';
+  }
 
-  list.forEach((g,idx)=>{
-    const card=document.createElement('div');
-    card.className='game-card';card.style.animationDelay=(idx*0.04)+'s';
+  // ===== CPU =====
+  const cpu = sample.cpu || {};
+  if (cpu.usagePercent != null) {
+    const pct = Math.min(100, Math.max(0, cpu.usagePercent));
+    $('#liveCpu').innerHTML = pct.toFixed(1) + ' <small>%</small>';
+    const active = cpu.activeCores ? cpu.activeCores + '/' : '';
+    const cores = cpu.cores || cpu.coreCount || '?';
+    $('#liveCpuSub').textContent = active + cores + ' núcleos · ' + (cpu.model || 'cpu');
+    $('#liveCpuBar').style.width = pct + '%';
+  }
 
-    const fav=document.createElement('button');
-    fav.className='game-fav-btn'+(g.fav?' on':'');
-    fav.setAttribute('aria-label','Favoritar');
-    fav.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>';
-    fav.addEventListener('click',ev=>{ev.stopPropagation();g.fav=!g.fav;saveGames();renderGames();buzz(12)});
+  // ===== Bateria =====
+  const bat = sample.battery || {};
+  let batPct = null;
+  let batStatus = '';
+  if (bat.level != null) {
+    batPct = bat.level <= 1 ? Math.round(bat.level * 100) : Math.round(bat.level);
+    batStatus = bat.isCharging ? 'Carregando'
+      : bat.status === 'charging' ? 'Carregando'
+      : bat.status === 'full' ? 'Cheia'
+      : bat.status === 'not-charging' ? 'Descarregando'
+      : 'Descarregando';
+  }
+  if (batPct != null) {
+    $('#liveBattery').innerHTML = batPct + ' <small>%</small>';
+    $('#liveBatterySub').textContent = batStatus;
+    $('#liveBatteryBar').style.width = batPct + '%';
+    $('#liveBatteryBar').style.background = batPct < 20
+      ? 'linear-gradient(90deg,var(--red),var(--magenta))'
+      : 'linear-gradient(90deg,var(--amber),var(--green))';
+  } else {
+    // fallback via @capacitor/device
+    fallbackBatteryUpdate();
+  }
 
-    const del=document.createElement('button');
-    del.className='game-del';del.setAttribute('aria-label','Remover');
-    del.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>';
-    del.addEventListener('click',ev=>{
+  // ===== Temperatura =====
+  const thermal = sample.thermal || {};
+  let tempC = thermal.cpuTemperatureC;
+  if (tempC == null) tempC = thermal.gpuTemperatureC;
+  if (tempC == null) tempC = thermal.batteryTemperatureC;
+  if (tempC == null && bat.temperatureC != null) tempC = bat.temperatureC;
+  if (tempC == null && bat.temperature != null) tempC = bat.temperature;
+
+  if (tempC != null && !isNaN(tempC)) {
+    $('#liveTemp').innerHTML = Number(tempC).toFixed(1) + ' <small>°C</small>';
+    $('#liveTempSub').textContent = thermal.state || 'monitorado';
+  } else {
+    $('#liveTemp').innerHTML = '<small>n/d</small>';
+    $('#liveTempSub').textContent = 'sensor indisponível';
+  }
+
+  // ===== Armazenamento =====
+  const st = sample.storage || {};
+  if (st.total) {
+    const free = st.free != null ? st.free : (st.available != null ? st.available : null);
+    const used = st.used != null ? st.used : (free != null ? (st.total - free) : null);
+    const pct = st.usedPercent != null ? st.usedPercent
+      : (used != null ? (used / st.total) * 100 : 0);
+    if (free != null) {
+      $('#liveStorage').innerHTML = fmtGB(free) + ' <small>livres</small>';
+    } else {
+      $('#liveStorage').innerHTML = fmtGB(used) + ' <small>usados</small>';
+    }
+    $('#liveStorageSub').textContent = 'de ' + fmtGB(st.total) + ' · ' + pct.toFixed(1) + '% usado';
+    $('#liveStorageBar').style.width = Math.min(100, pct) + '%';
+    $('#liveStorageBar').style.background = pct > 90
+      ? 'linear-gradient(90deg,var(--red),var(--magenta))'
+      : 'linear-gradient(90deg,var(--green),var(--cyan))';
+  }
+}
+
+/* ============================================================
+   ABA 3: JOGOS — BIBLIOTECA + APPS INSTALADOS
+   ============================================================ */
+const GAMES_KEY = 'gamezone_games_v3';
+const CATS = ['Todos', 'Favoritos', 'Instalados', 'Ação', 'Aventura', 'Puzzle',
+              'Corrida', 'Tiro', 'RPG', 'Esporte', 'Estratégia', 'Outro'];
+let games = [];
+let currentCat = 'Todos';
+let searchQ = '';
+
+function loadGames() {
+  try {
+    const r = localStorage.getItem(GAMES_KEY);
+    games = r ? JSON.parse(r) : [];
+    if (!Array.isArray(games)) games = [];
+  } catch(e) { games = []; }
+}
+function saveGames() {
+  try { localStorage.setItem(GAMES_KEY, JSON.stringify(games)); } catch(e) {}
+}
+
+function renderChips() {
+  const el = $('#chips');
+  if (!el) return;
+  el.innerHTML = CATS.map(c => {
+    const active = c === currentCat ? ' active' : '';
+    return '<button class="chip' + active + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+  }).join('');
+  $$('#chips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      currentCat = chip.dataset.cat;
+      renderChips();
+      renderGames();
+      buzz(8);
+    });
+  });
+}
+
+function domainOf(url) {
+  try { return new URL(url).hostname; } catch(e) { return ''; }
+}
+function faviconOf(url) {
+  const d = domainOf(url);
+  return d ? 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(d) + '&sz=64' : '';
+}
+
+function renderGames() {
+  const grid = $('#gamesGrid');
+  const empty = $('#gamesEmpty');
+  if (!grid || !empty) return;
+
+  grid.innerHTML = '';
+  let list = games.slice();
+
+  if (currentCat === 'Favoritos') {
+    list = list.filter(g => g.fav);
+  } else if (currentCat === 'Instalados') {
+    list = list.filter(g => g.isNative);
+  } else if (currentCat !== 'Todos') {
+    list = list.filter(g => g.cat === currentCat);
+  }
+
+  if (searchQ) {
+    const q = searchQ.toLowerCase();
+    list = list.filter(g => (g.name || '').toLowerCase().includes(q));
+  }
+
+  list.sort((a, b) =>
+    ((b.fav ? 1 : 0) - (a.fav ? 1 : 0)) ||
+    ((b.added || 0) - (a.added || 0))
+  );
+
+  if (!list.length) {
+    grid.style.display = 'none';
+    empty.style.display = 'flex';
+    return;
+  }
+  grid.style.display = 'grid';
+  empty.style.display = 'none';
+
+  list.forEach((g, idx) => {
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.style.animationDelay = (idx * 0.04) + 's';
+
+    // Favoritar
+    const fav = document.createElement('button');
+    fav.className = 'game-fav-btn' + (g.fav ? ' on' : '');
+    fav.setAttribute('aria-label', 'Favoritar');
+    fav.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>';
+    fav.addEventListener('click', ev => {
       ev.stopPropagation();
-      card.style.transition='opacity .2s,transform .2s';card.style.opacity='0';card.style.transform='scale(.85)';
-      buzz(18);
-      setTimeout(()=>{games=games.filter(x=>x!==g);saveGames();renderGames();toast('Removido','ok')},200);
+      g.fav = !g.fav;
+      saveGames();
+      renderGames();
+      buzz(12);
     });
 
-    let favEl;
-    const iconUrl=faviconOf(g.url);
-    if(iconUrl){
-      favEl=document.createElement('img');
-      favEl.className='game-fav';favEl.src=iconUrl;favEl.alt='';
-      favEl.onerror=()=>{const fb=document.createElement('div');fb.className='game-fav-fallback';fb.textContent=(g.name.charAt(0)||'?').toUpperCase();favEl.replaceWith(fb)};
-    }else{
-      favEl=document.createElement('div');favEl.className='game-fav-fallback';favEl.textContent=(g.name.charAt(0)||'?').toUpperCase();
+    // Remover
+    const del = document.createElement('button');
+    del.className = 'game-del';
+    del.setAttribute('aria-label', 'Remover');
+    del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>';
+    del.addEventListener('click', ev => {
+      ev.stopPropagation();
+      card.style.transition = 'opacity .2s, transform .2s';
+      card.style.opacity = '0';
+      card.style.transform = 'scale(.85)';
+      buzz(18);
+      setTimeout(() => {
+        games = games.filter(x => x !== g);
+        saveGames();
+        renderGames();
+        toast('Removido', 'ok');
+      }, 200);
+    });
+
+    // Ícone
+    let iconEl;
+    if (g.isNative) {
+      iconEl = document.createElement('div');
+      iconEl.className = 'game-fav-fallback native';
+      iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
+    } else {
+      const iconUrl = faviconOf(g.url);
+      if (iconUrl) {
+        iconEl = document.createElement('img');
+        iconEl.className = 'game-fav';
+        iconEl.src = iconUrl;
+        iconEl.alt = '';
+        iconEl.onerror = () => {
+          const fb = document.createElement('div');
+          fb.className = 'game-fav-fallback';
+          fb.textContent = (g.name.charAt(0) || '?').toUpperCase();
+          iconEl.replaceWith(fb);
+        };
+      } else {
+        iconEl = document.createElement('div');
+        iconEl.className = 'game-fav-fallback';
+        iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
+      }
     }
 
-    const name=document.createElement('div');name.className='game-name';name.textContent=g.name;
-    const cat=document.createElement('div');cat.className='game-cat';cat.textContent=g.cat||'Outro';
+    const name = document.createElement('div');
+    name.className = 'game-name';
+    name.textContent = g.name;
 
-    card.appendChild(fav);card.appendChild(del);card.appendChild(favEl);card.appendChild(name);card.appendChild(cat);
-    card.addEventListener('click',()=>{buzz(10);try{const w=window.open(g.url,'_blank','noopener,noreferrer');if(!w)toast('Permita pop-ups')}catch(e){toast('Erro ao abrir')}});
+    const cat = document.createElement('div');
+    cat.className = 'game-cat';
+    cat.textContent = g.isNative ? 'Instalado' : (g.cat || 'Outro');
+
+    card.appendChild(fav);
+    card.appendChild(del);
+    card.appendChild(iconEl);
+    card.appendChild(name);
+    card.appendChild(cat);
+
+    card.addEventListener('click', () => {
+      buzz(10);
+      if (g.isNative) {
+        toast('📱 ' + g.name + ' (app nativo)');
+      } else {
+        try {
+          const w = window.open(g.url, '_blank', 'noopener,noreferrer');
+          if (!w) toast('Permita pop-ups');
+        } catch(e) { toast('Erro ao abrir'); }
+      }
+    });
+
     grid.appendChild(card);
   });
 }
 
-// Export/Import
+// Search
+$('#searchGames').addEventListener('input', e => {
+  searchQ = e.target.value;
+  renderGames();
+});
+
+// Export / Import
 $('#btnExport').addEventListener('click', () => {
-  if(!games.length) return toast('Biblioteca vazia');
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(games));
-  const dlAnchorElem = document.createElement('a');
-  dlAnchorElem.setAttribute("href", dataStr);
-  dlAnchorElem.setAttribute("download", "central-top-games.json");
-  dlAnchorElem.click();
+  if (!games.length) return toast('Biblioteca vazia');
+  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(games));
+  const a = document.createElement('a');
+  a.href = dataStr;
+  a.download = 'central-top-games.json';
+  a.click();
   toast('Backup exportado', 'ok');
 });
 
 $('#btnImport').addEventListener('click', () => {
   const input = document.createElement('input');
   input.type = 'file';
-  input.accept = '.json';
+  input.accept = '.json,application/json';
   input.onchange = e => {
     const file = e.target.files[0];
+    if (!file) return;
     const reader = new FileReader();
-    reader.onload = event => {
+    reader.onload = ev => {
       try {
-        const imported = JSON.parse(event.target.result);
-        if(Array.isArray(imported)) {
+        const imported = JSON.parse(ev.target.result);
+        if (Array.isArray(imported)) {
           games = imported;
           saveGames();
           renderGames();
-          toast('Biblioteca importada!', 'ok');
-        } else throw new Error('Formato inválido');
-      } catch (err) {
+          toast('Biblioteca importada', 'ok');
+        } else {
+          throw new Error('formato inválido');
+        }
+      } catch(err) {
         toast('Erro ao importar arquivo');
       }
     };
@@ -989,97 +1275,205 @@ $('#btnImport').addEventListener('click', () => {
   input.click();
 });
 
-// Modal
-const gameModal=$('#gameModal');
-function openModal(){gameModal.classList.add('open');setTimeout(()=>{try{$('#gameName').focus()}catch(e){}},260)}
-function closeModal(){gameModal.classList.remove('open');$('#gameName').value='';$('#gameUrl').value='';$('#gameCat').value='Ação'}
-function normalizeUrl(raw){let u=raw.trim();if(!u)return '';if(!/^https?:\/\//i.test(u))u='https://'+u;try{const p=new URL(u);if(!p.hostname||!p.hostname.includes('.'))return '';return p.href}catch(e){return ''}}
+/* ============================================================
+   MODAL — ADICIONAR JOGO (Web ou Instalado)
+   ============================================================ */
+const gameModal = $('#gameModal');
+let modalMode = 'web';
+let selectedApps = new Set();
 
-function salvarJogo(){
-  const nome=$('#gameName').value.trim();
-  const url=normalizeUrl($('#gameUrl').value);
-  const cat=$('#gameCat').value;
-  if(nome.length<2){toast('Nome muito curto');$('#gameName').focus();return}
-  if(!url){toast('Link inválido');$('#gameUrl').focus();return}
-  games.push({name:nome,url:url,cat:cat,fav:false,added:Date.now()});
-  saveGames();renderGames();closeModal();buzz([20,40,20]);toast('"'+nome+'" adicionado','ok');
+function openGameModal() {
+  modalMode = 'web';
+  selectedApps.clear();
+  setModalMode('web');
+  gameModal.classList.add('open');
+  setTimeout(() => { try { $('#gameName').focus(); } catch(e) {} }, 260);
+}
+function closeGameModal() {
+  gameModal.classList.remove('open');
+  $('#gameName').value = '';
+  $('#gameUrl').value = '';
+  $('#gameCat').value = 'Ação';
+  selectedApps.clear();
+}
+function setModalMode(mode) {
+  modalMode = mode;
+  $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('#modePane-web').classList.toggle('active', mode === 'web');
+  $('#modePane-installed').classList.toggle('active', mode === 'installed');
+  if (mode === 'installed') loadInstalledAppsForModal();
 }
 
-$('#btnAddGame').addEventListener('click',()=>{buzz(10);openModal()});
-$('#btnCancelGame').addEventListener('click',closeModal);
-$('#btnSaveGame').addEventListener('click',salvarJogo);
-gameModal.addEventListener('click',e=>{if(e.target===gameModal)closeModal()});
-$('#searchGames').addEventListener('input',e=>{searchQ=e.target.value;renderGames()});
-[$('#gameName'),$('#gameUrl')].forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();salvarJogo()}}));
+$$('.mode-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    buzz(8);
+    setModalMode(b.dataset.mode);
+  });
+});
 
-// --------- CLIMA ---------
-const WEATHER_ICONS={113:'☀️',116:'⛅',119:'☁️',122:'☁️',143:'🌫️',248:'🌫️',260:'🌫️',176:'🌦️',263:'🌦️',266:'🌦️',293:'🌧️',296:'🌧️',299:'🌧️',302:'🌧️',305:'🌧️',308:'🌧️',200:'⛈️',386:'⛈️',389:'⛈️',392:'⛈️',395:'❄️',179:'❄️',182:'❄️',185:'❄️',227:'❄️',230:'❄️',317:'❄️',320:'❄️',323:'❄️',326:'❄️',329:'❄️',332:'❄️',335:'❄️',338:'❄️',350:'❄️',362:'❄️',365:'❄️',368:'❄️',371:'❄️',374:'❄️',377:'❄️'};
-const wIcon=c=>WEATHER_ICONS[+c]||'🌡️';
+async function loadInstalledAppsForModal() {
+  const listEl = $('#modalAppList');
+  listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Carregando apps...</div>';
 
-async function buscarClima(){
-  const cidade=$('#cityInput').value.trim();
-  if(!cidade){toast('Digite uma cidade');$('#cityInput').focus();return}
-  $('#wxResult').innerHTML='<div class="wx-loading"><div class="spinner"></div><span>consultando...</span></div>';
-  buzz(10);
-  const ctrl=new AbortController();const tm=setTimeout(()=>ctrl.abort(),15000);
-  try{
-    const res=await fetch('https://wttr.in/'+encodeURIComponent(cidade)+'?format=j1&lang=pt',{signal:ctrl.signal});
-    clearTimeout(tm);
-    if(!res.ok)throw new Error('HTTP '+res.status);
-    const data=await res.json();
-    const cur=data.current_condition&&data.current_condition[0];
-    if(!cur)throw new Error('sem dados');
-    const area=(data.nearest_area&&data.nearest_area[0])||null;
-    const areaName=area&&area.areaName&&area.areaName[0]?area.areaName[0].value:cidade;
-    const country=area&&area.country&&area.country[0]?area.country[0].value:'';
-    const region=area&&area.region&&area.region[0]?area.region[0].value:'';
-    if(!areaName)throw new Error('não encontrada');
-    const descPt=(cur.lang_pt&&cur.lang_pt[0]&&cur.lang_pt[0].value)||(cur.weatherDesc&&cur.weatherDesc[0]&&cur.weatherDesc[0].value)||'—';
-    $('#wxResult').innerHTML=
-      '<div class="wx-main">'+
-        '<div class="wx-city">'+esc(areaName)+(country?' · <b>'+esc(country)+'</b>':'')+(region&&region!==areaName?' · '+esc(region):'')+'</div>'+
-        '<div class="wx-icon">'+wIcon(cur.weatherCode)+'</div>'+
-        '<div class="wx-temp">'+esc(cur.temp_C)+'<sup>°C</sup></div>'+
-        '<div class="wx-desc">'+esc(descPt)+'</div>'+
-      '</div>'+
-      '<div class="wx-stats">'+
-        '<div class="wx-stat"><div class="k">Sensação</div><div class="v">'+esc(cur.FeelsLikeC)+'<small>°C</small></div></div>'+
-        '<div class="wx-stat"><div class="k">Umidade</div><div class="v">'+esc(cur.humidity)+'<small>%</small></div></div>'+
-        '<div class="wx-stat"><div class="k">Vento</div><div class="v">'+esc(cur.windspeedKmph)+'<small>km/h</small></div></div>'+
-      '</div>'+
-      '<div class="wx-extra">'+
-        '<span>DIR <b>'+esc(cur.winddir16Point||'—')+'</b></span>'+
-        '<span>PRESSÃO <b>'+esc(cur.pressure)+' hPa</b></span>'+
-        '<span>UV <b>'+esc(cur.uvIndex)+'</b></span>'+
-        '<span>VISIB <b>'+esc(cur.visibility)+' km</b></span>'+
+  if (!isNative()) {
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--amber);font-size:11px">⚠️ Listagem de apps instalados só funciona no APK Android.</div>';
+    return;
+  }
+
+  const us = getUsageStatsPlugin();
+  if (!us) {
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--red);font-size:11px">Plugin UsageStatsManager não encontrado.</div>';
+    return;
+  }
+
+  try {
+    const { granted } = await us.isUsageStatsPermissionGranted();
+    if (!granted) {
+      listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--amber);font-size:11px">Permissão de uso pendente. Abrindo configurações...</div>';
+      await us.openUsageStatsSettings();
+      return;
+    }
+
+    const { packages } = await us.queryAllPackages();
+    const userApps = (packages || []).filter(p =>
+      p && p.appName &&
+      !p.packageName.startsWith('com.android') &&
+      !p.packageName.startsWith('android') &&
+      !p.packageName.startsWith('com.google.android.inputmethod')
+    ).sort((a, b) => a.appName.localeCompare(b.appName));
+
+    if (!userApps.length) {
+      listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Nenhum app de usuário encontrado.</div>';
+      return;
+    }
+
+    listEl.innerHTML = userApps.map(app => {
+      const sel = selectedApps.has(app.packageName) ? ' selected' : '';
+      return '<div class="app-item' + sel + '" data-pkg="' + esc(app.packageName) + '" data-name="' + esc(app.appName) + '">' +
+        '<div class="app-icon">' + esc((app.appName.charAt(0) || '?').toUpperCase()) + '</div>' +
+        '<div class="app-info">' +
+          '<div class="app-name">' + esc(app.appName) + '</div>' +
+          '<div class="app-pkg">' + esc(app.packageName) + '</div>' +
+        '</div>' +
+        '<div class="app-check"></div>' +
       '</div>';
-    try{localStorage.setItem('ctm_last_city',cidade)}catch(e){}
-    toast('Clima de '+areaName,'ok');buzz([15,30,15]);
-  }catch(err){
-    clearTimeout(tm);
-    $('#wxResult').innerHTML='';
-    toast('Cidade não encontrada ou falha de rede');
-    buzz([60,50,60]);
+    }).join('');
+
+    listEl.querySelectorAll('.app-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const pkg = item.dataset.pkg;
+        if (selectedApps.has(pkg)) {
+          selectedApps.delete(pkg);
+          item.classList.remove('selected');
+        } else {
+          selectedApps.add(pkg);
+          item.classList.add('selected');
+        }
+        buzz(8);
+      });
+    });
+  } catch(e) {
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--red);font-size:11px">Erro: ' + esc(e.message) + '</div>';
   }
 }
-$('#btnSearchWeather').addEventListener('click',buscarClima);
-$('#cityInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();buscarClima()}});
 
-// --------- BOOT ---------
-async function boot(){
-  loadGames();renderChips();renderGames();
-  try{const lc=localStorage.getItem('ctm_last_city');if(lc)$('#cityInput').value=lc}catch(e){}
-  await sleep(280);
-  log('Central Top Mobile v2.2.0','ok');await sleep(180);
-  log('kernel: interface carregada','info');await sleep(160);
-  log('hardware: lendo APIs do navegador...','info');
-  await loadHardware();
-  await sleep(180);
-  log('Pronto.','warn');
-  logCaret();
+function normalizeUrl(raw) {
+  let u = (raw || '').trim();
+  if (!u) return '';
+  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  try {
+    const p = new URL(u);
+    if (!p.hostname || !p.hostname.includes('.')) return '';
+    return p.href;
+  } catch(e) { return ''; }
 }
-window.addEventListener('load',boot);
-if(document.readyState==='complete')boot();
+
+async function handleSave() {
+  if (modalMode === 'web') {
+    const nome = $('#gameName').value.trim();
+    const url = normalizeUrl($('#gameUrl').value);
+    const cat = $('#gameCat').value;
+    if (nome.length < 2) { toast('Nome muito curto'); $('#gameName').focus(); return; }
+    if (!url) { toast('Link inválido'); $('#gameUrl').focus(); return; }
+    games.push({
+      name: nome, url, cat,
+      fav: false, added: Date.now(), isNative: false
+    });
+    saveGames();
+    renderGames();
+    closeGameModal();
+    buzz([20, 40, 20]);
+    toast('"' + nome + '" adicionado', 'ok');
+  } else {
+    if (selectedApps.size === 0) {
+      toast('Selecione ao menos 1 app');
+      return;
+    }
+    let added = 0;
+    selectedApps.forEach(pkg => {
+      if (!games.find(g => g.isNative && g.packageName === pkg)) {
+        // Busca nome pelo item da lista
+        const el = $('#modalAppList .app-item[data-pkg="' + CSS.escape(pkg) + '"]');
+        const nome = el ? el.dataset.name : pkg;
+        games.push({
+          name: nome,
+          packageName: pkg,
+          cat: 'Instalado',
+          fav: false,
+          added: Date.now(),
+          isNative: true
+        });
+        added++;
+      }
+    });
+    saveGames();
+    renderGames();
+    closeGameModal();
+    buzz([20, 40, 20]);
+    toast(added + ' app(s) adicionado(s)', 'ok');
+  }
+}
+
+$('#btnAddGame').addEventListener('click', () => { buzz(10); openGameModal(); });
+$('#btnCancelGame').addEventListener('click', closeGameModal);
+$('#btnSaveGame').addEventListener('click', handleSave);
+gameModal.addEventListener('click', e => { if (e.target === gameModal) closeGameModal(); });
+
+[$('#gameName'), $('#gameUrl')].forEach(i => {
+  i.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); handleSave(); }
+  });
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function boot() {
+  loadGames();
+  renderChips();
+  renderGames();
+
+  // Aba inicial = aparelho
+  await sleep(200);
+  log('GameZone v3.0.0', 'ok');
+  await sleep(140);
+  log('kernel: interface carregada', 'info');
+  await sleep(140);
+  log('plugins: ' + (isNative() ? 'nativos detectados' : 'modo navegador'), isNative() ? 'ok' : 'warn');
+  await sleep(140);
+  log('hardware: lendo especificações...', 'info');
+
+  await loadDeviceSpecs();
+
+  log('Pronto.', 'warn');
+  logCaret();
+
+  // Garante tab inicial (redireciona se URL atualizou)
+  if (currentTab !== 'aparelho') await switchTab('aparelho');
+}
+
+window.addEventListener('load', boot);
+if (document.readyState === 'complete') boot();
 })();
 </script>
 </body>

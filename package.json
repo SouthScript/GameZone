@@ -1,14 +1,20 @@
 {
-  "name": "central-top-mobile",
-  "version": "2.2.0",
+  "name": "gamezone",
+  "version": "3.0.0",
   "private": true,
-  "scripts": { "build": "echo ok" },
+  "scripts": {
+    "build": "echo ok",
+    "sync": "npx cap sync android"
+  },
   "dependencies": {
-    "@capacitor/core": "^6.0.0",
-    "@capacitor/android": "^6.0.0",
-    "@capgo/capacitor-android-usagestatsmanager": "^6.0.0"
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/device": "^8.0.0",
+    "@capacitor/screen-orientation": "^8.0.0",
+    "@capgo/capacitor-device-info": "^8.0.0",
+    "@capgo/capacitor-android-usagestatsmanager": "^8.0.0"
   },
   "devDependencies": {
-    "@capacitor/cli": "^6.0.0"
+    "@capacitor/cli": "^8.0.0"
   }
 }

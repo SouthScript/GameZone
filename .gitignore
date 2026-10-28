@@ -4,3 +4,8 @@ ios/
 dist/
 .DS_Store
 *.log
+idea/
+.vscode/
+*.log
+.DS_Store
+```

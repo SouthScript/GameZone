@@ -1,6 +1,13 @@
 {
-  "appId": "com.centraltop.app",
-  "appName": "Central Top Mobile",
+  "appId": "com.gamezone.app",
+  "appName": "GameZone",
   "webDir": "www",
-  "server": { "androidScheme": "https" }
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "ScreenOrientation": {
+      "lockOnRotate": false
+    }
+  }
 }

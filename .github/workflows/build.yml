@@ -1,23 +1,31 @@
-name: Build APK
+name: Build GameZone APK
 
 on:
   push:
-    branches: [main]
+    branches: [ "main", "master" ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-
-      - uses: actions/setup-java@v4
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
         with:
-          distribution: temurin
-          java-version: 17
+          node-version: '22'
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Install dependencies
         run: npm install
@@ -25,44 +33,49 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
-      - name: Inject permissions and landscape support (Python Method)
-        run: |
-          python3 -c "
-          import re
-          manifest_path = 'android/app/src/main/AndroidManifest.xml'
-          with open(manifest_path, 'r') as f:
-              content = f.read()
-          
-          # 1. Adiciona as permissões antes da tag <application>
-          permissions = '''<uses-permission android:name=\"android.permission.QUERY_ALL_PACKAGES\" tools:ignore=\"QueryAllPackagesPermission\" />
-              <uses-permission android:name=\"android.permission.PACKAGE_USAGE_STATS\" tools:ignore=\"ProtectedPermissions\" />
-              <uses-permission android:name=\"android.permission.INTERNET\" />
-              <uses-permission android:name=\"android.permission.VIBRATE\" />
-              <application'''
-          content = content.replace('<application', permissions, 1)
-          
-          # 2. Adiciona a tag xmlns:tools se não existir
-          if 'xmlns:tools' not in content:
-              content = content.replace('<manifest', '<manifest xmlns:tools=\"http://schemas.android.com/tools\"', 1)
-              
-          # 3. Muda a orientação para aceitar paisagem
-          content = content.replace('android:screenOrientation=\"portrait\"', 'android:screenOrientation=\"fullSensor\"')
-          
-          with open(manifest_path, 'w') as f:
-              f.write(content)
-          "
-
-      - name: Sync Capacitor
+      - name: Sync web assets
         run: npx cap sync android
 
-      - name: Build APK (debug)
+      - name: Inject permissions in AndroidManifest.xml
         run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
+          python3 - <<'PY'
+          import os
+          import xml.etree.ElementTree as ET
+          manifest_path = os.path.join('android', 'app', 'src', 'main', 'AndroidManifest.xml')
+          if not os.path.exists(manifest_path):
+              raise SystemExit(f'Not found: {manifest_path}')
+          ET.register_namespace('android', 'http://schemas.android.com/apk/res/android')
+          ET.register_namespace('tools', 'http://schemas.android.com/tools')
+          tree = ET.parse(manifest_path)
+          root = tree.getroot()
+          ANDROID_NS = '{http://schemas.android.com/apk/res/android}'
+          TOOLS_NS = '{http://schemas.android.com/tools}'
+          def ensure_permission(name, ignore_attr):
+              for perm in root.findall('uses-permission'):
+                  if perm.get(ANDROID_NS + 'name') == name:
+                      if ignore_attr:
+                          perm.set(TOOLS_NS + 'ignore', ignore_attr)
+                      return
+              perm = ET.SubElement(root, 'uses-permission')
+              perm.set(ANDROID_NS + 'name', name)
+              if ignore_attr:
+                  perm.set(TOOLS_NS + 'ignore', ignore_attr)
+          ensure_permission('android.permission.QUERY_ALL_PACKAGES', 'QueryAllPackagesPermission')
+          ensure_permission('android.permission.PACKAGE_USAGE_STATS', 'ProtectedPermissions')
+          if 'xmlns:tools' not in (root.get('xmlns:tools') or ''):
+              root.set('xmlns:tools', 'http://schemas.android.com/tools')
+          tree.write(manifest_path, encoding='utf-8', xml_declaration=True)
+          print('Permissions injected OK')
+          PY
+
+      - name: Build Debug APK
+        working-directory: android
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: central-top-debug
+          name: GameZone-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
