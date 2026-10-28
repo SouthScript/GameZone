@@ -38,16 +38,45 @@ jobs:
       - name: Sync web assets
         run: npx cap sync android
 
-      - name: Inject permissions using sed
+      - name: Inject permissions using Python
         run: |
-          MANIFEST="android/app/src/main/AndroidManifest.xml"
-          
-          # 1. Garante a declaração do namespace 'tools' na tag <manifest>
-          sed -i 's|<manifest |<manifest xmlns:tools="http://schemas.android.com/tools" |' "$MANIFEST"
-          
-          # 2. Injeta as permissões ANTES da tag <application>
-          sed -i '/<application/i \    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission"/>' "$MANIFEST"
-          sed -i '/<application/i \    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions"/>' "$MANIFEST"
+          python3 - <<'PY'
+          import os
+          import xml.etree.ElementTree as ET
+
+          manifest_path = os.path.join('android', 'app', 'src', 'main', 'AndroidManifest.xml')
+          if not os.path.exists(manifest_path):
+              raise SystemExit(f'Not found: {manifest_path}')
+
+          ET.register_namespace('android', 'http://schemas.android.com/apk/res/android')
+          ET.register_namespace('tools', 'http://schemas.android.com/tools')
+
+          tree = ET.parse(manifest_path)
+          root = tree.getroot()
+
+          ANDROID_NS = '{http://schemas.android.com/apk/res/android}'
+          TOOLS_NS = '{http://schemas.android.com/tools}'
+
+          def ensure_permission(name, ignore_attr):
+              for perm in root.findall('uses-permission'):
+                  if perm.get(ANDROID_NS + 'name') == name:
+                      if ignore_attr:
+                          perm.set(TOOLS_NS + 'ignore', ignore_attr)
+                      return
+              perm = ET.SubElement(root, 'uses-permission')
+              perm.set(ANDROID_NS + 'name', name)
+              if ignore_attr:
+                  perm.set(TOOLS_NS + 'ignore', ignore_attr)
+
+          ensure_permission('android.permission.QUERY_ALL_PACKAGES', 'QueryAllPackagesPermission')
+          ensure_permission('android.permission.PACKAGE_USAGE_STATS', 'ProtectedPermissions')
+
+          if 'xmlns:tools' not in (root.get('xmlns:tools') or ''):
+              root.set('xmlns:tools', 'http://schemas.android.com/tools')
+
+          tree.write(manifest_path, encoding='utf-8', xml_declaration=True)
+          print('Permissions injected OK')
+          PY
 
       - name: Build Debug APK
         working-directory: android
