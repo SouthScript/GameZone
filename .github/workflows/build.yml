@@ -28,8 +28,10 @@ jobs:
       - name: Inject permissions and landscape support
         run: |
           MANIFEST=android/app/src/main/AndroidManifest.xml
-          sed -i 's@<application@<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />\n    <uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n    <application@' $MANIFEST
+          # Permissões para ler os apps instalados (UsageStats e PackageManager)
+          sed -i 's@<application@<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />\n    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />\n    <uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n    <application@' $MANIFEST
           sed -i 's@<manifest @<manifest xmlns:tools="http://schemas.android.com/tools" @' $MANIFEST
+          # Permite que a tela gire para paisagem (landscape)
           sed -i 's@android:screenOrientation="portrait"@android:screenOrientation="fullSensor"@' $MANIFEST
           sed -i 's@android:configChanges="orientation|screenSize"@android:configChanges="orientation|screenSize|keyboardHidden"@' $MANIFEST
 

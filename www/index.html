@@ -106,8 +106,6 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .hw-card.magenta .hw-bar-fill{background:linear-gradient(90deg,var(--magenta),#ff7a45)}
 .hw-card.amber .hw-v{color:var(--amber);text-shadow:0 0 14px rgba(255,209,102,.45)}
 .hw-card.amber .hw-bar-fill{background:linear-gradient(90deg,var(--amber),var(--green))}
-.hw-card.red .hw-v{color:var(--red);text-shadow:0 0 14px rgba(255,93,122,.45)}
-.hw-card.red .hw-bar-fill{background:linear-gradient(90deg,var(--red),var(--magenta))}
 .actions{display:grid;gap:10px;margin-top:14px}
 .btn{position:relative;overflow:hidden;display:flex;align-items:center;gap:13px;width:100%;
   padding:15px 16px;border-radius:16px;font-family:inherit;font-size:13px;font-weight:600;
@@ -145,6 +143,12 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .games-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 10px}
 .games-head h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .games-head h2::before{content:'// ';color:var(--cyan)}
+.games-actions{display:flex;gap:8px;align-items:center}
+.btn-small{padding:8px 12px;border-radius:10px;font-family:inherit;font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;cursor:pointer;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);color:var(--text);transition:background .2s;touch-action:manipulation}
+.btn-small:active{background:rgba(255,255,255,.15)}
+.btn-small.cyan{color:var(--cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.1)}
 .fab{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;
   cursor:pointer;border:1px solid rgba(0,255,180,.45);
   background:linear-gradient(135deg,rgba(0,255,180,.2),rgba(0,229,255,.14));
@@ -331,6 +335,16 @@ select.input{appearance:none;-webkit-appearance:none;
   color:rgba(255,209,102,.9);background:rgba(255,209,102,.08);
   border:1px solid rgba(255,209,102,.28)}
 
+/* LISTA DE APPS INSTALADOS REAL */
+.app-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.app-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;
+  background:var(--panel);border:1px solid var(--brd);}
+.app-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--magenta));
+  display:grid;place-items:center;font-size:18px;font-weight:bold;color:#fff;text-transform:uppercase;}
+.app-info{display:flex;flex-direction:column;flex:1;overflow:hidden;}
+.app-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.app-pkg{font-size:9.5px;color:var(--muted);letter-spacing:0.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
 /* ============================================================
    📱 SUPORTE A TELA DEITADA (LANDSCAPE)
    ============================================================ */
@@ -442,7 +456,7 @@ select.input{appearance:none;-webkit-appearance:none;
 
     <div class="notice-box">
       ⚠️ Dados lidos das APIs do navegador. No APK Android, os dados nativos
-      são reais via plugin. "Jogos Instalados" só funciona dentro do APK.
+      são reais via plugin.
     </div>
 
     <div class="actions">
@@ -471,7 +485,7 @@ select.input{appearance:none;-webkit-appearance:none;
             <path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/>
           </svg>
         </span>
-        <span class="txt">Jogos Instalados<small>requer APK Android</small></span>
+        <span class="txt">Jogos Instalados<small>ler apps reais (Android)</small></span>
       </button>
     </div>
   </section>
@@ -479,12 +493,19 @@ select.input{appearance:none;-webkit-appearance:none;
   <!-- ============ JOGOS ============ -->
   <section class="pane" id="pane-jogos">
     <div class="games-head">
-      <h2>Biblioteca</h2>
-      <button class="fab" id="btnAddGame" aria-label="Adicionar jogo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 5v14M5 12h14"/>
-        </svg>
-      </button>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <h2>Biblioteca</h2>
+        <button class="btn-small cyan" id="btnRotate">Girar Tela</button>
+      </div>
+      <div class="games-actions">
+        <button class="btn-small" id="btnExport">Exp</button>
+        <button class="btn-small" id="btnImport">Imp</button>
+        <button class="fab" id="btnAddGame" aria-label="Adicionar jogo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div class="search-bar">
@@ -502,6 +523,17 @@ select.input{appearance:none;-webkit-appearance:none;
       <div class="ico">◈</div>
       <p>Nenhum jogo ainda</p>
       <span>toque em + para adicionar</span>
+    </div>
+
+    <!-- Tela de Jogos Instalados Real -->
+    <div id="appListContainer" style="display:none;">
+      <div class="section-title" style="margin-top:20px">
+        <h2>Apps Instalados</h2>
+        <button class="btn-small" id="btnBackToGames">Voltar</button>
+      </div>
+      <div class="app-list" id="appList">
+        <!-- Preenchido via JS com os apps reais -->
+      </div>
     </div>
   </section>
 
@@ -524,24 +556,22 @@ select.input{appearance:none;-webkit-appearance:none;
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Central Top <span>Mobile</span></h2>
-      <div class="ver">versão 2.1.0</div>
+      <div class="ver">versão 2.2.0</div>
       <div class="divider"></div>
       <p class="about-text">
-        Central de hardware e biblioteca de jogos. Dados reais via APIs do navegador
-        e, no APK Android, dados nativos via Capacitor + plugin de apps instalados.
+        Central de hardware e biblioteca de jogos. Leitura real de apps instalados 
+        e suporte a modo paisagem automático.
       </p>
       <ul class="about-list">
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
-        <li><span>Empacotamento</span><b>Capacitor 6</b></li>
-        <li><span>Compilação</span><b>GitHub Actions</b></li>
-        <li><span>Orientação</span><b>Retrato + Paisagem</b></li>
+        <li><span>Plugin Nativo</span><b>UsageStatsManager</b></li>
+        <li><span>Orientação</span><b>Retrato + Paisagem Auto</b></li>
         <li><span>Clima</span><b>wttr.in</b></li>
       </ul>
       <div class="ai-note">
         <strong>⚠ Aviso</strong>
         <p>
-          App gerado por IA. No navegador, algumas APIs (RAM, bateria) são limitadas. 
-          No APK Android, a leitura de hardware é nativa via WebView.
+          App gerado por IA. Para listar os apps, o APK pedirá permissão de uso do Android.
         </p>
       </div>
       <p class="footer-note">// feito para rodar no seu bolso //</p>
@@ -622,10 +652,45 @@ const fmtBytes=b=>{if(!b||b<0)return '—';const u=['B','KB','MB','GB','TB'];let
 const toastEl=$('#toast');let toastT=null;
 function toast(m,t){toastEl.textContent=m;toastEl.className='toast show'+(t==='ok'?' ok':'');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),3200)}
 
+// --------- ORIENTAÇÃO DA TELA ---------
+async function lockLandscape() {
+  try {
+    if (screen.orientation && screen.orientation.lock) {
+      await screen.orientation.lock('landscape');
+    }
+  } catch (e) {
+    console.warn('Não foi possível travar a tela:', e);
+  }
+}
+async function unlockOrientation() {
+  try {
+    if (screen.orientation && screen.orientation.unlock) {
+      screen.orientation.unlock();
+    }
+  } catch (e) {}
+}
+
 // --------- NAVEGAÇÃO ---------
 const navBtns=$$('.nav-btn'),panes=$$('.pane');
-function switchTab(t){navBtns.forEach(b=>b.classList.toggle('active',b.dataset.tab===t));panes.forEach(p=>p.classList.toggle('active',p.id==='pane-'+t));buzz(8);try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}}
+function switchTab(t){
+  navBtns.forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  panes.forEach(p=>p.classList.toggle('active',p.id==='pane-'+t));
+  
+  if(t === 'jogos'){
+    lockLandscape();
+  } else {
+    unlockOrientation();
+  }
+
+  buzz(8);
+  try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}
+}
 navBtns.forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+
+$('#btnRotate').addEventListener('click', () => {
+  unlockOrientation();
+  toast('Gire o celular para ajustar', 'ok');
+});
 
 // --------- TERMINAL ---------
 const terminal=$('#terminal');
@@ -734,19 +799,86 @@ $('#btnClearCache').addEventListener('click',async()=>{
   toast('Dados locais limpos','ok');setBusy(false);
 });
 
-// --------- JOGOS INSTALADOS (MENSAGEM AMIGÁVEL) ---------
+// --------- JOGOS INSTALADOS (LEITURA REAL NATIVA) ---------
 $('#btnInstalledGames').addEventListener('click', async () => {
   if(busy)return;
+  setBusy(true);
   buzz(12);
   
-  log('> buscando apps instalados...', 'info');
-  await sleep(600);
+  switchTab('jogos');
+  lockLandscape();
+
+  log('> iniciando leitura nativa de apps...', 'info');
+  await sleep(400);
+
+  const isCap = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
   
-  log('  varredura de apps requer permissão especial do Android.', 'warn');
-  log('  recurso em desenvolvimento para a próxima versão.', 'info');
-  toast('Listagem de apps em breve!', 'ok');
-  
-  logCaret();
+  if (!isCap) {
+    log('  erro: leitura nativa disponível apenas no APK Android.', 'err');
+    toast('Disponível apenas no APK Android', 'err');
+    setBusy(false);
+    return;
+  }
+
+  try {
+    const plugin = window.Capacitor.Plugins.CapacitorAndroidUsageStatsManager;
+    if (!plugin) throw new Error('Plugin nativo não encontrado.');
+
+    // 1. Checar permissão
+    const { granted } = await plugin.isUsageStatsPermissionGranted();
+    
+    if (!granted) {
+      log('  permissão pendente. Abrindo configurações...', 'warn');
+      toast('Conceda a permissão de uso', 'ok');
+      await plugin.openUsageStatsSettings();
+      setBusy(false);
+      return;
+    }
+
+    // 2. Buscar apps reais
+    log('  lendo pacotes do sistema...', 'ok');
+    const { packages } = await plugin.queryAllPackages();
+
+    // 3. Filtrar apenas apps de usuário (ignora pacotes de sistema do Android)
+    const userApps = packages.filter(app => {
+       return app.appName && !app.packageName.startsWith('com.android') && !app.packageName.startsWith('android');
+    });
+
+    log('  apps encontrados: ' + userApps.length, 'ok');
+    
+    $('#gamesGrid').style.display = 'none';
+    $('#gamesEmpty').style.display = 'none';
+    $('#appListContainer').style.display = 'block';
+    
+    if (userApps.length === 0) {
+      $('#appList').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)">Nenhum app de usuário encontrado.</div>';
+    } else {
+      $('#appList').innerHTML = userApps.map(app => `
+        <div class="app-item">
+          <div class="app-icon">${esc(app.appName.charAt(0))}</div>
+          <div class="app-info">
+            <div class="app-name">${esc(app.appName)}</div>
+            <div class="app-pkg">${esc(app.packageName)}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    toast('Apps carregados!', 'ok');
+
+  } catch (err) {
+    log('  erro: ' + err.message, 'err');
+    toast('Falha ao ler apps instalados');
+  } finally {
+    logCaret();
+    setBusy(false);
+  }
+});
+
+$('#btnBackToGames').addEventListener('click', () => {
+  $('#appListContainer').style.display = 'none';
+  renderGames();
+  buzz(10);
 });
 
 // --------- BIBLIOTECA DE JOGOS ---------
@@ -769,6 +901,8 @@ function renderChips(){
 }
 
 function renderGames(){
+  if ($('#appListContainer').style.display === 'block') return;
+
   const grid=$('#gamesGrid'),empty=$('#gamesEmpty');
   grid.innerHTML='';
   let list=games.slice();
@@ -819,6 +953,43 @@ function renderGames(){
   });
 }
 
+// Export/Import
+$('#btnExport').addEventListener('click', () => {
+  if(!games.length) return toast('Biblioteca vazia');
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(games));
+  const dlAnchorElem = document.createElement('a');
+  dlAnchorElem.setAttribute("href", dataStr);
+  dlAnchorElem.setAttribute("download", "central-top-games.json");
+  dlAnchorElem.click();
+  toast('Backup exportado', 'ok');
+});
+
+$('#btnImport').addEventListener('click', () => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = event => {
+      try {
+        const imported = JSON.parse(event.target.result);
+        if(Array.isArray(imported)) {
+          games = imported;
+          saveGames();
+          renderGames();
+          toast('Biblioteca importada!', 'ok');
+        } else throw new Error('Formato inválido');
+      } catch (err) {
+        toast('Erro ao importar arquivo');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+});
+
+// Modal
 const gameModal=$('#gameModal');
 function openModal(){gameModal.classList.add('open');setTimeout(()=>{try{$('#gameName').focus()}catch(e){}},260)}
 function closeModal(){gameModal.classList.remove('open');$('#gameName').value='';$('#gameUrl').value='';$('#gameCat').value='Ação'}
@@ -899,7 +1070,7 @@ async function boot(){
   loadGames();renderChips();renderGames();
   try{const lc=localStorage.getItem('ctm_last_city');if(lc)$('#cityInput').value=lc}catch(e){}
   await sleep(280);
-  log('Central Top Mobile v2.1.0','ok');await sleep(180);
+  log('Central Top Mobile v2.2.0','ok');await sleep(180);
   log('kernel: interface carregada','info');await sleep(160);
   log('hardware: lendo APIs do navegador...','info');
   await loadHardware();
