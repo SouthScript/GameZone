@@ -1,0 +1,14 @@
+{
+  "name": "central-top-mobile",
+  "version": "2.1.0",
+  "private": true,
+  "scripts": { "build": "echo ok" },
+  "dependencies": {
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/android": "^6.0.0",
+    "deep-device-access": "^0.0.4"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  }
+}

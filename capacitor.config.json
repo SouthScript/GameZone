@@ -1,0 +1,6 @@
+{
+  "appId": "com.centraltop.app",
+  "appName": "Central Top Mobile",
+  "webDir": "www",
+  "server": { "androidScheme": "https" }
+}
