@@ -336,40 +336,23 @@ select.input{appearance:none;-webkit-appearance:none;
    ============================================================ */
 @media (orientation: landscape) {
   :root { --nav-h: 66px; }
-
-  main {
-    max-width: 100%;
-    padding: 0 12px calc(var(--nav-h) + 22px + env(safe-area-inset-bottom));
-  }
-
-  .app-header {
-    padding: calc(8px + env(safe-area-inset-top)) 16px 8px;
-  }
+  main { max-width: 100%; padding: 0 12px calc(var(--nav-h) + 22px + env(safe-area-inset-bottom)); }
+  .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; }
   .logo-mark { width: 36px; height: 36px; flex-basis: 36px; font-size: 17px; }
   .logo h1 { font-size: 13px; }
-
-  /* Terminal mais baixo para caber na tela */
   .terminal-body { height: 120px; }
-
-  /* Grid de hardware vira 3 colunas */
   .hw-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .hw-card.full { grid-column: span 1; }
   .hw-card { padding: 11px 9px; }
   .hw-v { font-size: 15px; }
-
-  /* Ações lado a lado */
   .actions { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .btn { padding: 12px 12px; gap: 9px; font-size: 11px; }
   .btn .ico { width: 30px; height: 30px; flex-basis: 30px; }
   .btn .txt small { font-size: 8.5px; }
-
-  /* Jogos: mais colunas no landscape */
   .games-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .game-card { min-height: 118px; padding: 14px 8px 12px; gap: 7px; }
   .game-fav, .game-fav-fallback { width: 42px; height: 42px; border-radius: 11px; font-size: 18px; }
   .game-name { font-size: 10.5px; }
-
-  /* Clima: layout horizontal */
   .wx-main { display: flex; align-items: center; justify-content: space-around; text-align: left; padding: 18px; }
   .wx-icon { font-size: 28px; margin: 0; }
   .wx-temp { font-size: 48px; }
@@ -378,26 +361,19 @@ select.input{appearance:none;-webkit-appearance:none;
   .wx-stats { grid-template-columns: repeat(6, 1fr); gap: 6px; }
   .wx-stat { padding: 10px 4px; }
   .wx-stat .v { font-size: 13px; }
-
-  /* Modal mais compacto */
   .modal { max-width: 520px; }
   .field { margin-top: 9px; }
-
-  /* Nav inferior menor */
   .bottom-nav { padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
   .nav-btn { padding: 5px 4px; font-size: 8.5px; gap: 3px; }
   .nav-btn svg { width: 19px; height: 19px; }
   .nav-btn.active::after { top: 1px; height: 2px; }
 }
-
-/* Telas muito baixas em landscape (ex: 320px de altura) */
 @media (orientation: landscape) and (max-height: 380px) {
   .terminal-body { height: 90px; }
   .hw-v { font-size: 13px; }
   .btn { padding: 10px; }
   .app-header { padding-top: 6px; padding-bottom: 6px; }
 }
-
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
@@ -557,7 +533,6 @@ select.input{appearance:none;-webkit-appearance:none;
       <ul class="about-list">
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
         <li><span>Empacotamento</span><b>Capacitor 6</b></li>
-        <li><span>Plugin nativo</span><b>deep-device-access</b></li>
         <li><span>Compilação</span><b>GitHub Actions</b></li>
         <li><span>Orientação</span><b>Retrato + Paisagem</b></li>
         <li><span>Clima</span><b>wttr.in</b></li>
@@ -565,9 +540,8 @@ select.input{appearance:none;-webkit-appearance:none;
       <div class="ai-note">
         <strong>⚠ Aviso</strong>
         <p>
-          App gerado por IA. No navegador, algumas APIs (RAM, bateria, jogos instalados)
-          são limitadas. No APK Android, a lista de jogos instalados é real via
-          <code>deep-device-access</code> e a permissão <code>QUERY_ALL_PACKAGES</code>.
+          App gerado por IA. No navegador, algumas APIs (RAM, bateria) são limitadas. 
+          No APK Android, a leitura de hardware é nativa via WebView.
         </p>
       </div>
       <p class="footer-note">// feito para rodar no seu bolso //</p>
@@ -760,60 +734,19 @@ $('#btnClearCache').addEventListener('click',async()=>{
   toast('Dados locais limpos','ok');setBusy(false);
 });
 
-// --------- JOGOS INSTALADOS (PLUGIN NATIVO) ---------
-$('#btnInstalledGames').addEventListener('click',async()=>{
+// --------- JOGOS INSTALADOS (MENSAGEM AMIGÁVEL) ---------
+$('#btnInstalledGames').addEventListener('click', async () => {
   if(busy)return;
-
-  // Verifica se está rodando dentro do Capacitor (APK)
-  const isCap = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
-
-  if(!isCap){
-    toast('Disponível apenas no APK Android');
-    log('  jogos instalados: requer APK Android','warn');
-    logCaret();
-    return;
-  }
-
-  log('> consultando apps instalados via plugin nativo...','info');
-  setBusy(true);
-
-  try {
-    // deep-device-access expõe o plugin como "DeepDeviceAccess"
-    const plugin = window.Capacitor.Plugins.DeepDeviceAccess;
-    if(!plugin || typeof plugin.getInstalledApps !== 'function'){
-      throw new Error('Plugin DeepDeviceAccess não encontrado. Rode npx cap sync.');
-    }
-
-    const result = await plugin.getInstalledApps();
-    const allApps = [].concat(result.userApps || [], result.systemApps || []);
-
-    // Filtro por palavra-chave (game/jogo) — Android não expõe categoria de forma direta
-    const gamesList = allApps.filter(app => {
-      const name = (app.appName || '').toLowerCase();
-      const pkg  = (app.packageName || '').toLowerCase();
-      return name.includes('game') || name.includes('jogo') ||
-             pkg.includes('game')  || pkg.includes('jogo');
-    });
-
-    log('  apps totais: ' + allApps.length, 'info');
-    log('  possíveis jogos: ' + gamesList.length, 'ok');
-
-    if(gamesList.length === 0){
-      toast('Nenhum jogo encontrado pelo filtro');
-      log('  nenhum jogo encontrado','warn');
-    } else {
-      gamesList.slice(0, 20).forEach(g => log('   · ' + g.appName, 'ok'));
-      if(gamesList.length > 20) log('   ... e mais ' + (gamesList.length - 20), 'info');
-      toast(gamesList.length + ' possível(is) jogo(s) encontrado(s)', 'ok');
-    }
-
-  } catch(err) {
-    log('  erro: ' + err.message, 'err');
-    toast('Falha ao ler apps instalados');
-  } finally {
-    logCaret();
-    setBusy(false);
-  }
+  buzz(12);
+  
+  log('> buscando apps instalados...', 'info');
+  await sleep(600);
+  
+  log('  varredura de apps requer permissão especial do Android.', 'warn');
+  log('  recurso em desenvolvimento para a próxima versão.', 'info');
+  toast('Listagem de apps em breve!', 'ok');
+  
+  logCaret();
 });
 
 // --------- BIBLIOTECA DE JOGOS ---------
