@@ -13,7 +13,8 @@
     "@capacitor/device": "^8.0.0",
     "@capacitor/screen-orientation": "^8.0.0",
     "@capgo/capacitor-android-usagestatsmanager": "^8.0.0",
-    "@capgo/capacitor-device-info": "^8.0.0"
+    "@capgo/capacitor-device-info": "^8.0.0",
+    "@capgo/capacitor-navigation-bar": "^8.2.18"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.0.0"
