@@ -10,317 +10,1011 @@
 <meta name="apple-mobile-web-app-title" content="GameZone">
 <title>GameZone</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
-:root{
-  --bg:#0d1117;--green:#00ffb4;--cyan:#00e5ff;--magenta:#ff2fb9;--amber:#ffd166;--red:#ff5d7a;
-  --text:#c9d1d9;--muted:#7d8590;--panel:rgba(255,255,255,.045);--brd:rgba(255,255,255,.09);
-  --nav-h:78px;
-}
-html,body{width:100%;overflow-x:hidden}
-body{
-  font-family:'Fira Code','JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
-  background:var(--bg);color:var(--text);min-height:100dvh;-webkit-font-smoothing:antialiased;
-  overflow:hidden;
+/* ============================================================
+   RESET E VARIÁVEIS GLOBAIS
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
 }
 
-/* FUNDO CYBERPUNK */
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background: radial-gradient(circle at 10% 4%,rgba(0,255,180,.13),transparent 45%),
-              radial-gradient(circle at 92% 10%,rgba(0,229,255,.11),transparent 42%),
-              radial-gradient(circle at 50% 104%,rgba(255,47,185,.13),transparent 55%);
+:root {
+  --bg: #0d1117;
+  --green: #00ffb4;
+  --cyan: #00e5ff;
+  --magenta: #ff2fb9;
+  --amber: #ffd166;
+  --red: #ff5d7a;
+  --text: #c9d1d9;
+  --muted: #7d8590;
+  --panel: rgba(255, 255, 255, 0.045);
+  --brd: rgba(255, 255, 255, 0.09);
+  --nav-h: 78px;
 }
-body::after{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
-  background-image:linear-gradient(rgba(0,255,180,.055) 1px,transparent 1px), linear-gradient(90deg,rgba(0,255,180,.055) 1px,transparent 1px);
-  background-size:44px 44px;
-  -webkit-mask-image:radial-gradient(circle at 50% 25%,#000 0%,transparent 78%);
-          mask-image:radial-gradient(circle at 50% 25%,#000 0%,transparent 78%);
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
 }
 
-/* CABEÇALHO */
-.app-header{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:calc(14px + env(safe-area-inset-top)) 18px 14px}
-.logo{display:flex;align-items:center;gap:11px;min-width:0}
-.logo-mark{width:42px;height:42px;flex:0 0 42px;border-radius:13px;display:grid;place-items:center;
-  font-size:20px;font-weight:700;color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));
-  box-shadow:0 0 22px -4px var(--green),inset 0 0 12px rgba(255,255,255,.35);
-  animation:logoPulse 3.4s ease-in-out infinite}
-@keyframes logoPulse{0%,100%{box-shadow:0 0 22px -4px var(--green),inset 0 0 12px rgba(255,255,255,.35)}
-  50%{box-shadow:0 0 34px -2px var(--cyan),inset 0 0 12px rgba(255,255,255,.5)}}
-.logo h1{font-size:15px;letter-spacing:.06em;font-weight:700;color:#eaf6f2;white-space:nowrap}
-.logo h1 span{color:var(--green);text-shadow:0 0 12px rgba(0,255,180,.6)}
-.logo p{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:3px}
-.status-pill{display:flex;align-items:center;gap:7px;flex:0 0 auto;padding:8px 12px;border-radius:999px;
-  font-size:10px;letter-spacing:.14em;color:var(--green);border:1px solid rgba(0,255,180,.3);
-  background:rgba(0,255,180,.07);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);
-  animation:pulse 1.5s ease-in-out infinite;display:inline-block}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+body {
+  font-family: 'Fira Code', 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* LAYOUT GERAL E ABAS */
-main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(safe-area-inset-bottom));
-  max-width:720px;margin:0 auto;height:100dvh;overflow-y:auto;transition:all .3s}
-.pane{display:none}
-.pane.active{display:block;animation:paneIn .38s cubic-bezier(.22,.85,.25,1)}
-@keyframes paneIn{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
-.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 14px}
-.section-title h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.section-title h2::before{content:'// ';color:var(--green)}
+/* Fundo Cyberpunk */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 10% 4%, rgba(0, 255, 180, 0.13), transparent 45%),
+              radial-gradient(circle at 92% 10%, rgba(0, 229, 255, 0.11), transparent 42%),
+              radial-gradient(circle at 50% 104%, rgba(255, 47, 185, 0.13), transparent 55%);
+}
 
-/* TERMINAL */
-.terminal{border-radius:18px;overflow:hidden;border:1px solid rgba(0,255,180,.28);
-  background:linear-gradient(180deg,rgba(0,0,0,.82),rgba(0,0,0,.6));
-  box-shadow:0 22px 48px -26px rgba(0,255,180,.55),inset 0 0 40px -20px rgba(0,255,180,.4);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.terminal-bar{display:flex;align-items:center;gap:6px;padding:10px 13px;
-  background:rgba(0,255,180,.06);border-bottom:1px solid rgba(0,255,180,.16)}
-.dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
-.dot.r{background:#ff5f56;box-shadow:0 0 8px #ff5f56}
-.dot.y{background:#ffbd2e;box-shadow:0 0 8px #ffbd2e}
-.dot.g{background:#27c93f;box-shadow:0 0 8px #27c93f}
-.terminal-title{margin-left:8px;font-size:11px;letter-spacing:.08em;
-  color:rgba(0,255,180,.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.terminal-body{height:130px;overflow-y:auto;overflow-x:hidden;padding:13px 14px;
-  font-size:12px;line-height:1.7;color:var(--green);
-  scrollbar-width:thin;scrollbar-color:rgba(0,255,180,.35) transparent;overscroll-behavior:contain}
-.terminal-body::-webkit-scrollbar{width:5px}
-.terminal-body::-webkit-scrollbar-thumb{background:rgba(0,255,180,.35);border-radius:4px}
-.line{white-space:pre-wrap;word-break:break-word;animation:lineIn .28s cubic-bezier(.2,.9,.3,1)}
-@keyframes lineIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
-.line .ts{color:rgba(0,255,180,.35);margin-right:7px;font-size:11px}
-.line.ok{color:var(--green)}.line.info{color:var(--cyan)}.line.warn{color:var(--amber)}
-.line.err{color:var(--red)}
-.caret{display:inline-block;width:8px;height:14px;vertical-align:-2px;background:var(--green);
-  box-shadow:0 0 10px var(--green);animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-
-/* CARDS DE HARDWARE */
-.hw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.hw-card{padding:14px 12px;border-radius:16px;background:var(--panel);border:1px solid var(--brd);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:relative;overflow:hidden;}
-.hw-card.full{grid-column:1/-1}
-.hw-k{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.hw-v{font-size:18px;font-weight:700;color:var(--green);text-shadow:0 0 14px rgba(0,255,180,.45);
-  word-break:break-word;line-height:1.2}
-.hw-v small{font-size:10px;font-weight:400;color:var(--muted);margin-left:4px}
-.hw-sub{font-size:9.5px;color:rgba(125,133,144,.8);margin-top:5px;letter-spacing:.04em;line-height:1.4}
-.hw-bar{height:6px;border-radius:4px;background:rgba(255,255,255,.07);margin-top:9px;overflow:hidden;
-  border:1px solid rgba(0,255,180,.15)}
-.hw-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:4px;
-  box-shadow:0 0 12px rgba(0,255,180,.6);transition:width .6s cubic-bezier(.2,.9,.3,1);width:0}
-.hw-card.cyan .hw-v{color:var(--cyan);text-shadow:0 0 14px rgba(0,229,255,.45)}
-.hw-card.cyan .hw-bar-fill{background:linear-gradient(90deg,var(--cyan),#7c5cff)}
-.hw-card.magenta .hw-v{color:var(--magenta);text-shadow:0 0 14px rgba(255,47,185,.45)}
-.hw-card.magenta .hw-bar-fill{background:linear-gradient(90deg,var(--magenta),#ff7a45)}
-.hw-card.amber .hw-v{color:var(--amber);text-shadow:0 0 14px rgba(255,209,102,.45)}
-.hw-card.amber .hw-bar-fill{background:linear-gradient(90deg,var(--amber),var(--green))}
-
-/* BOTÕES E NAVEGAÇÃO */
-.actions{display:grid;gap:10px;margin-top:14px}
-.btn{position:relative;overflow:hidden;display:flex;align-items:center;gap:13px;width:100%;
-  padding:15px 16px;border-radius:16px;font-family:inherit;font-size:13px;font-weight:600;
-  letter-spacing:.03em;color:var(--text);text-align:left;background:var(--panel);
-  border:1px solid var(--brd);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  cursor:pointer;transition:transform .14s,box-shadow .28s,border-color .28s;touch-action:manipulation}
-.btn:active{transform:scale(.972)}
-.btn .ico{width:36px;height:36px;flex:0 0 36px;border-radius:11px;display:grid;place-items:center;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
-.btn .ico svg{width:18px;height:18px;stroke-width:1.8}
-.btn .txt{display:flex;flex-direction:column;gap:3px;min-width:0}
-.btn .txt small{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
-.btn.green{border-color:rgba(0,255,180,.32);box-shadow:0 0 28px -18px var(--green)}
-.btn.green .ico{color:var(--green);border-color:rgba(0,255,180,.3);background:rgba(0,255,180,.09)}
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:100;display:grid;
-  grid-template-columns:repeat(4,1fr);gap:4px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));
-  background:rgba(13,17,23,.78);backdrop-filter:blur(20px) saturate(170%);
-  -webkit-backdrop-filter:blur(20px) saturate(170%);border-top:1px solid rgba(0,255,180,.18);
-  box-shadow:0 -18px 44px -24px rgba(0,255,180,.5)}
-.nav-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:5px;padding:8px 4px 7px;border:0;border-radius:14px;background:transparent;color:var(--muted);
-  font-family:inherit;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
-  transition:color .25s,background .25s,transform .15s;touch-action:manipulation}
-.nav-btn svg{width:22px;height:22px;stroke-width:1.8;transition:transform .25s}
-.nav-btn:active{transform:scale(.93)}
-.nav-btn.active{color:var(--green);background:rgba(0,255,180,.085)}
-.nav-btn.active svg{transform:translateY(-1px);filter:drop-shadow(0 0 8px rgba(0,255,180,.75))}
-.nav-btn.active::after{content:'';position:absolute;top:3px;left:50%;transform:translateX(-50%);
-  width:22px;height:3px;border-radius:3px;background:var(--green);box-shadow:0 0 12px var(--green)}
-
-/* ABA JOGOS (MODO RETRATO) */
-.games-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 10px}
-.games-head h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.games-head h2::before{content:'// ';color:var(--cyan)}
-.games-actions{display:flex;gap:8px;align-items:center}
-.btn-small{padding:8px 12px;border-radius:10px;font-family:inherit;font-size:10px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.08em;cursor:pointer;border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.05);color:var(--text);transition:background .2s;touch-action:manipulation}
-.btn-small.cyan{color:var(--cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.1)}
-.fab{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;
-  cursor:pointer;border:1px solid rgba(0,255,180,.45);
-  background:linear-gradient(135deg,rgba(0,255,180,.2),rgba(0,229,255,.14));
-  color:var(--green);box-shadow:0 0 24px -8px var(--green);transition:transform .15s;touch-action:manipulation}
-.fab:active{transform:scale(.9) rotate(90deg)}
-.fab svg{width:22px;height:22px;stroke-width:2.2}
-.search-bar{position:relative;margin-bottom:12px}
-.search-bar input{width:100%;padding:13px 15px 13px 42px;border-radius:14px;
-  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);color:var(--text);
-  font-family:inherit;font-size:13px;outline:none;transition:border-color .25s,box-shadow .25s}
-.search-bar input:focus{border-color:rgba(0,255,180,.5);box-shadow:0 0 0 3px rgba(0,255,180,.1)}
-.search-bar svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);
-  width:16px;height:16px;stroke:var(--muted);pointer-events:none}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:10px;
-  scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-size:10.5px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);cursor:pointer;font-family:inherit;
-  transition:all .22s;touch-action:manipulation}
-.chip.active{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));
-  border-color:transparent;box-shadow:0 0 20px -6px var(--green)}
-.games-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media (min-width:540px){.games-grid{grid-template-columns:repeat(3,1fr)}}
-.game-card{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:10px;min-height:148px;padding:22px 12px 16px;border-radius:18px;
-  background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
-  border:1px solid var(--brd);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  cursor:pointer;transition:transform .16s,border-color .28s,box-shadow .28s;
-  animation:paneIn .35s cubic-bezier(.22,.85,.25,1) backwards;touch-action:manipulation}
-.game-card:active{transform:scale(.955)}
-.game-fav{width:52px;height:52px;border-radius:14px;object-fit:cover;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  box-shadow:0 0 22px -8px rgba(0,255,180,.7)}
-.game-fav-fallback{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
-  font-size:22px;font-weight:700;color:#04120e;
-  background:linear-gradient(135deg,var(--green),var(--cyan));
-  box-shadow:0 0 22px -6px var(--green);text-transform:uppercase}
-.game-fav-fallback.native{background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#fff;box-shadow:0 0 22px -6px var(--cyan)}
-.game-name{font-size:12px;line-height:1.35;text-align:center;color:var(--text);
-  word-break:break-word;max-width:100%;display:-webkit-box; -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.game-cat{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.game-fav-btn{position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:8px;
-  display:grid;place-items:center;border:1px solid rgba(255,209,102,.3);
-  background:rgba(255,209,102,.1);color:var(--amber);cursor:pointer;transition:transform .15s,background .25s}
-.game-fav-btn.on{background:rgba(255,209,102,.3);border-color:rgba(255,209,102,.7);box-shadow:0 0 12px -2px var(--amber)}
-.game-fav-btn svg{width:13px;height:13px;stroke-width:2;fill:currentColor}
-.game-del{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:8px;
-  display:grid;place-items:center;border:1px solid rgba(255,47,185,.38);
-  background:rgba(255,47,185,.13);color:var(--magenta);cursor:pointer;transition:transform .15s,background .25s}
-.game-del svg{width:13px;height:13px;stroke-width:2}
-.empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:48px 20px;
-  text-align:center;border:1px dashed rgba(0,255,180,.22);border-radius:18px;margin-top:16px;background:rgba(0,255,180,.025)}
-.empty .ico{font-size:32px;color:rgba(0,255,180,.5);margin-bottom:4px}
-.empty p{font-size:13px;color:var(--text)}
-.empty span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: linear-gradient(rgba(0, 255, 180, 0.055) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 255, 180, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(circle at 50% 25%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(circle at 50% 25%, #000 0%, transparent 78%);
+}
 
 /* ============================================================
-   CONSOLE MODE (PAISAGEM - LAYOUT DIVIDIDO)
+   CABEÇALHO
    ============================================================ */
-.console-container { display: none; } /* Escondido por padrão (retrato) */
+.app-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: calc(14px + env(safe-area-inset-top)) 18px 14px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.logo-mark {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #04120e;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  box-shadow: 0 0 22px -4px var(--green), inset 0 0 12px rgba(255, 255, 255, 0.35);
+  animation: logoPulse 3.4s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { box-shadow: 0 0 22px -4px var(--green), inset 0 0 12px rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 34px -2px var(--cyan), inset 0 0 12px rgba(255, 255, 255, 0.5); }
+}
+
+.logo h1 {
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: #eaf6f2;
+  white-space: nowrap;
+}
+
+.logo h1 span {
+  color: var(--green);
+  text-shadow: 0 0 12px rgba(0, 255, 180, 0.6);
+}
+
+.logo p {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  border: 1px solid rgba(0, 255, 180, 0.3);
+  background: rgba(0, 255, 180, 0.07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+/* ============================================================
+   LAYOUT PRINCIPAL E ABAS
+   ============================================================ */
+main {
+  position: relative;
+  z-index: 2;
+  padding: 0 16px calc(var(--nav-h) + 34px + env(safe-area-inset-bottom));
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.pane {
+  display: none;
+}
+
+.pane.active {
+  display: block;
+  animation: paneIn 0.38s cubic-bezier(0.22, 0.85, 0.25, 1);
+}
+
+@keyframes paneIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 14px;
+}
+
+.section-title h2 {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.section-title h2::before {
+  content: '// ';
+  color: var(--green);
+}
+
+/* ============================================================
+   TERMINAL E LOGS
+   ============================================================ */
+.terminal {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 180, 0.28);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.6));
+  box-shadow: 0 22px 48px -26px rgba(0, 255, 180, 0.55), inset 0 0 40px -20px rgba(0, 255, 180, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 13px;
+  background: rgba(0, 255, 180, 0.06);
+  border-bottom: 1px solid rgba(0, 255, 180, 0.16);
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.dot.r { background: #ff5f56; box-shadow: 0 0 8px #ff5f56; }
+.dot.y { background: #ffbd2e; box-shadow: 0 0 8px #ffbd2e; }
+.dot.g { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
+
+.terminal-title {
+  margin-left: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(0, 255, 180, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.terminal-body {
+  height: 130px;
+  overflow-y: auto;
+  padding: 13px 14px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--green);
+  scrollbar-width: thin;
+}
+
+.line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: lineIn 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes lineIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.line .ts {
+  color: rgba(0, 255, 180, 0.35);
+  margin-right: 7px;
+  font-size: 11px;
+}
+
+.line.ok { color: var(--green); }
+.line.info { color: var(--cyan); }
+.line.warn { color: var(--amber); }
+.line.err { color: var(--red); }
+
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  vertical-align: -2px;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ============================================================
+   CARDS DE HARDWARE
+   ============================================================ */
+.hw-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.hw-card {
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--brd);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.hw-card.full { grid-column: 1 / -1; }
+
+.hw-k {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.hw-v {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green);
+  text-shadow: 0 0 14px rgba(0, 255, 180, 0.45);
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.hw-v small {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.hw-sub {
+  font-size: 9.5px;
+  color: rgba(125, 133, 144, 0.8);
+  margin-top: 5px;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.hw-bar {
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-top: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 180, 0.15);
+}
+
+.hw-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--cyan));
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(0, 255, 180, 0.6);
+  transition: width 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+  width: 0;
+}
+
+.hw-card.cyan .hw-v { color: var(--cyan); text-shadow: 0 0 14px rgba(0, 229, 255, 0.45); }
+.hw-card.cyan .hw-bar-fill { background: linear-gradient(90deg, var(--cyan), #7c5cff); }
+
+.hw-card.magenta .hw-v { color: var(--magenta); text-shadow: 0 0 14px rgba(255, 47, 185, 0.45); }
+.hw-card.magenta .hw-bar-fill { background: linear-gradient(90deg, var(--magenta), #ff7a45); }
+
+.hw-card.amber .hw-v { color: var(--amber); text-shadow: 0 0 14px rgba(255, 209, 102, 0.45); }
+.hw-card.amber .hw-bar-fill { background: linear-gradient(90deg, var(--amber), var(--green)); }
+
+/* ============================================================
+   BOTÕES E NAVEGAÇÃO
+   ============================================================ */
+.actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--brd);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition: transform 0.14s, box-shadow 0.28s;
+}
+
+.btn:active { transform: scale(0.972); }
+
+.btn .ico {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn .ico svg { width: 18px; height: 18px; stroke-width: 1.8; }
+
+.btn .txt {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.btn .txt small {
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.btn.green {
+  border-color: rgba(0, 255, 180, 0.32);
+  box-shadow: 0 0 28px -18px var(--green);
+}
+
+.btn.green .ico {
+  color: var(--green);
+  border-color: rgba(0, 255, 180, 0.3);
+  background: rgba(0, 255, 180, 0.09);
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 9px 10px calc(9px + env(safe-area-inset-bottom));
+  background: rgba(13, 17, 23, 0.78);
+  backdrop-filter: blur(20px) saturate(170%);
+  border-top: 1px solid rgba(0, 255, 180, 0.18);
+  box-shadow: 0 -18px 44px -24px rgba(0, 255, 180, 0.5);
+}
+
+.nav-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 4px 7px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s;
+}
+
+.nav-btn svg { width: 22px; height: 22px; stroke-width: 1.8; transition: transform 0.25s; }
+
+.nav-btn.active {
+  color: var(--green);
+  background: rgba(0, 255, 180, 0.085);
+}
+
+.nav-btn.active svg {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 0 8px rgba(0, 255, 180, 0.75));
+}
+
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+/* ============================================================
+   ABA JOGOS (MODO RETRATO)
+   ============================================================ */
+.games-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 10px;
+}
+
+.games-head h2 {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.games-head h2::before { content: '// '; color: var(--cyan); }
+
+.games-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-small {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  transition: background 0.2s;
+}
+
+.btn-small:active { background: rgba(255, 255, 255, 0.15); }
+
+.btn-small.cyan {
+  color: var(--cyan);
+  border-color: rgba(0, 229, 255, 0.3);
+  background: rgba(0, 229, 255, 0.1);
+}
+
+.fab {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border: 1px solid rgba(0, 255, 180, 0.45);
+  background: linear-gradient(135deg, rgba(0, 255, 180, 0.2), rgba(0, 229, 255, 0.14));
+  color: var(--green);
+  box-shadow: 0 0 24px -8px var(--green);
+  transition: transform 0.15s;
+}
+
+.fab:active { transform: scale(0.9) rotate(90deg); }
+
+.fab svg { width: 22px; height: 22px; stroke-width: 2.2; }
+
+.search-bar { position: relative; margin-bottom: 12px; }
+
+.search-bar input {
+  width: 100%;
+  padding: 13px 15px 13px 42px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.25s;
+}
+
+.search-bar input:focus {
+  border-color: rgba(0, 255, 180, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 255, 180, 0.1);
+}
+
+.search-bar svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  stroke: var(--muted);
+  pointer-events: none;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.22s;
+}
+
+.chip.active {
+  color: #04120e;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  border-color: transparent;
+  box-shadow: 0 0 20px -6px var(--green);
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 540px) {
+  .games-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.game-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 148px;
+  padding: 22px 12px 16px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018));
+  border: 1px solid var(--brd);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition: transform 0.16s, border-color 0.28s;
+}
+
+.game-card:active { transform: scale(0.955); }
+
+.game-fav, .game-fav-fallback {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #04120e;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  box-shadow: 0 0 22px -6px var(--green);
+  text-transform: uppercase;
+}
+
+.game-fav-fallback.native {
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  color: #fff;
+  box-shadow: 0 0 22px -6px var(--cyan);
+}
+
+.game-name {
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--text);
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-cat {
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 20px;
+  text-align: center;
+  border: 1px dashed rgba(0, 255, 180, 0.22);
+  border-radius: 18px;
+  margin-top: 16px;
+  background: rgba(0, 255, 180, 0.025);
+}
+
+.empty .ico { font-size: 32px; color: rgba(0, 255, 180, 0.5); margin-bottom: 4px; }
+.empty p { font-size: 13px; color: var(--text); }
+.empty span { font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+/* ============================================================
+   CONSOLE MODE (PAISAGEM)
+   ============================================================ */
+.console-container { display: none; }
 
 @media (orientation: landscape) {
-  body { overflow: hidden; } /* Trava rolagem na tela toda */
-  main { max-width: 100%; padding: 0 12px 10px; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-  .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; flex: 0 0 auto; }
-  
-  /* Quando a aba Jogos estiver ativa, esconde as coisas do modo retrato e mostra o Console */
+  main {
+    max-width: 100%;
+    padding: 0 12px 10px;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .app-header {
+    padding: calc(8px + env(safe-area-inset-top)) 16px 8px;
+    flex: 0 0 auto;
+  }
+
+  /* Quando a aba Jogos está ativa, esconde as coisas do modo retrato e mostra o Console */
   #pane-jogos.active .games-head,
   #pane-jogos.active .search-bar,
   #pane-jogos.active .chips,
   #pane-jogos.active .games-grid,
-  #pane-jogos.active .empty { display: none !important; }
-  
-  #pane-jogos.active .console-container { display: flex; flex-direction: row; gap: 12px; height: calc(100dvh - 130px); width: 100%; }
+  #pane-jogos.active .empty {
+    display: none !important;
+  }
 
-  /* Lado Esquerdo: Lista de Jogos */
-  .console-left { flex: 0 0 35%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
-  .console-left::-webkit-scrollbar { width: 4px; }
-  .console-left::-webkit-scrollbar-thumb { background: var(--green); border-radius: 4px; }
-  .console-card { background: var(--panel); border: 1px solid var(--brd); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; gap: 6px; cursor: pointer; transition: all .2s; }
-  .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgba(0, 255, 180, 0.1); }
-  .console-card .game-fav, .console-card .game-fav-fallback { width: 40px; height: 40px; font-size: 16px; border-radius: 10px; }
+  #pane-jogos.active .console-container {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    height: calc(100dvh - 140px);
+    width: 100%;
+  }
+
+  /* Lista de Jogos (Esquerda) */
+  .console-left {
+    flex: 0 0 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .console-left-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid var(--brd);
+  }
+  
+  .console-left-header h2 {
+    font-size: 11px;
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+
+  .console-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+  }
+
+  .console-grid::-webkit-scrollbar { width: 4px; }
+  .console-grid::-webkit-scrollbar-thumb { background: var(--green); border-radius: 4px; }
+
+  .console-card {
+    background: var(--panel);
+    border: 1px solid var(--brd);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .console-card.active {
+    border-color: var(--green);
+    box-shadow: 0 0 15px -5px var(--green);
+    background: rgba(0, 255, 180, 0.1);
+  }
+
+  .console-card .game-fav-fallback { width: 40px; height: 40px; font-size: 16px; border-radius: 10px; }
   .console-card .game-name { font-size: 10px; -webkit-line-clamp: 1; }
 
-  /* Lado Direito: Detalhes do Jogo */
-  .console-right { flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,.4); border: 1px solid var(--brd); border-radius: 18px; padding: 20px; overflow: hidden; position: relative; }
-  .console-right::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(0,255,180,.15), transparent 70%); pointer-events: none; }
-  
+  /* Detalhes do Jogo (Direita) */
+  .console-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--brd);
+    border-radius: 18px;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+
   .detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; z-index: 1; }
-  .detail-header .game-fav, .detail-header .game-fav-fallback { width: 64px; height: 64px; font-size: 28px; border-radius: 16px; }
+  .detail-header .game-fav-fallback { width: 64px; height: 64px; font-size: 28px; border-radius: 16px; }
   .detail-title h2 { font-size: 20px; color: #fff; line-height: 1.2; }
   .detail-title p { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; margin-top: 4px; text-transform: uppercase; }
-  
+
   .detail-content { flex: 1; display: flex; flex-direction: column; gap: 12px; z-index: 1; overflow-y: auto; }
   
-  .btn-start { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 14px; border: none; background: linear-gradient(135deg, var(--green), var(--cyan)); color: #04120e; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; box-shadow: 0 0 30px -10px var(--green); margin-bottom: 10px; }
+  .btn-start {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, var(--green), var(--cyan));
+    color: #04120e;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 0 30px -10px var(--green);
+    margin-bottom: 10px;
+  }
+  
   .btn-start:active { transform: scale(0.98); }
 
   .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .stat-box { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .stat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
   .stat-box.full { grid-column: 1 / -1; }
-  .stat-box .k { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .stat-box .k { font-size: 9px; color: var(--muted); text-transform: uppercase; }
   .stat-box .v { font-size: 16px; font-weight: 700; color: var(--text); }
   
-  /* Ocupação de espaço no modo console */
-  .console-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); text-align: center; gap: 10px; }
-  .console-empty .ico { font-size: 40px; color: rgba(0, 255, 180, 0.3); }
+  .console-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--muted);
+    text-align: center;
+    gap: 10px;
+  }
 }
 
-/* MODAIS */
-.modal-overlay{position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;justify-content:center;padding:16px;background:rgba(3,6,10,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.modal-overlay.open{display:flex;animation:fadeIn .25s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{width:100%;max-width:460px;max-height:88vh;overflow-y:auto;border-radius:22px;padding:22px 20px calc(20px + env(safe-area-inset-bottom));background:rgba(13,17,23,.96);border:1px solid rgba(0,255,180,.26);box-shadow:0 0 70px -22px var(--green);animation:modalIn .32s cubic-bezier(.2,.9,.3,1);scrollbar-width:thin}
-@keyframes modalIn{from{opacity:0;transform:translateY(38px) scale(.96)}to{opacity:1;transform:none}}
-.modal h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
-.modal .sub{font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
-.mode-selector{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 4px}
-.mode-btn{padding:13px 8px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:inherit;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s}
-.mode-btn.active{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));border-color:transparent}
-.mode-pane{display:none;margin-top:6px}
-.mode-pane.active{display:block}
-.field{margin-top:14px}
-.field label{display:block;margin-bottom:7px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.input{width:100%;padding:13px 14px;border-radius:13px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12);color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:all .2s}
-.input:focus{border-color:rgba(0,255,180,.6);box-shadow:0 0 0 3px rgba(0,255,180,.12)}
-select.input{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) center,calc(100% - 13px) center;background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
-.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.btn-solid{padding:14px 12px;border-radius:14px;border:0;font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .14s}
-.btn-solid:active{transform:scale(.96)}
-.btn-solid.primary{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan))}
-.btn-solid.ghost{color:var(--muted);background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1)}
-.app-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:52vh;overflow-y:auto;scrollbar-width:thin}
-.app-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--brd);cursor:pointer;transition:all .2s}
-.app-item.selected{border-color:rgba(0,255,180,.6);background:rgba(0,255,180,.06)}
-.app-icon{width:38px;height:38px;flex:0 0 38px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--magenta));display:grid;place-items:center;font-size:16px;font-weight:bold;color:#fff;text-transform:uppercase}
-.app-info{display:flex;flex-direction:column;flex:1;overflow:hidden;min-width:0}
-.app-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app-pkg{font-size:9.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-.app-check{width:20px;height:20px;flex:0 0 20px;border-radius:6px;border:2px solid rgba(0,255,180,.4);transition:all .2s}
-.app-item.selected .app-check{background:var(--green);border-color:var(--green)}
-.app-item.selected .app-check::after{content:'✓';position:absolute;color:#04120e;font-weight:800;font-size:12px}
+/* ============================================================
+   MODAIS
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(3, 6, 10, 0.72);
+  backdrop-filter: blur(8px);
+}
 
-/* ABA SOBRE */
-.about-card{margin-top:8px;padding:26px 20px;border-radius:22px;background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.015));border:1px solid var(--brd);backdrop-filter:blur(16px);text-align:center}
-.about-logo{width:66px;height:66px;margin:0 auto 16px;border-radius:20px;display:grid;place-items:center;font-size:30px;font-weight:700;color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));box-shadow:0 0 40px -8px var(--green)}
-.about-card h2{font-size:19px;color:#eaf6f2}
-.about-card h2 span{color:var(--green)}
-.ver{display:inline-block;margin:10px 0 0;padding:6px 14px;border-radius:999px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,229,255,.3);background:rgba(0,229,255,.08)}
-.divider{height:1px;margin:22px 0;background:linear-gradient(90deg,transparent,rgba(0,255,180,.35),transparent)}
-.about-text{margin:0 0 20px;font-size:12.5px;line-height:1.75;color:var(--muted)}
-.about-list{list-style:none;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07);text-align:left}
-.about-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;font-size:11.5px;background:rgba(255,255,255,.028)}
-.about-list li+li{border-top:1px solid rgba(255,255,255,.05)}
-.about-list li span{color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-size:9.5px}
-.about-list li b{color:var(--text);font-weight:600}
-.footer-note{margin:22px 0 0;text-align:center;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(125,133,144,.6)}
-.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));transform:translate(-50%,22px);z-index:300;max-width:min(420px,calc(100% - 32px));padding:14px 20px;border-radius:14px;text-align:center;font-size:12.5px;color:#ffd9ef;background:rgba(255,47,185,.15);border:1px solid rgba(255,47,185,.5);opacity:0;pointer-events:none;transition:all .32s}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.toast.ok{color:#c6ffec;background:rgba(0,255,180,.13);border-color:rgba(0,255,180,.5)}
+.modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 22px;
+  padding: 22px 20px calc(20px + env(safe-area-inset-bottom));
+  background: rgba(13, 17, 23, 0.96);
+  border: 1px solid rgba(0, 255, 180, 0.26);
+  box-shadow: 0 0 70px -22px var(--green);
+  animation: modalIn 0.32s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(38px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+.modal h3 { font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.modal .sub { font-size: 10.5px; color: var(--muted); text-transform: uppercase; }
+
+.mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 4px; }
+.mode-btn {
+  padding: 13px 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 11px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mode-btn.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
+
+.mode-pane { display: none; margin-top: 6px; }
+.mode-pane.active { display: block; }
+
+.field { margin-top: 14px; }
+.field label { display: block; margin-bottom: 7px; font-size: 10px; text-transform: uppercase; color: var(--muted); }
+
+.input {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 13px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus { border-color: rgba(0, 255, 180, 0.6); }
+
+.modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.btn-solid { padding: 14px 12px; border-radius: 14px; border: 0; font-family: inherit; font-size: 12.5px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+.btn-solid.primary { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); }
+.btn-solid.ghost { color: var(--muted); background: rgba(255, 255, 255, 0.055); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.app-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; max-height: 52vh; overflow-y: auto; }
+.app-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--brd); cursor: pointer; }
+.app-item.selected { border-color: rgba(0, 255, 180, 0.6); background: rgba(0, 255, 180, 0.06); }
+.app-icon { width: 38px; height: 38px; flex: 0 0 38px; border-radius: 10px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); display: grid; place-items: center; font-size: 16px; font-weight: bold; color: #fff; }
+.app-info { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.app-name { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-pkg { font-size: 9.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.app-check { width: 20px; height: 20px; flex: 0 0 20px; border-radius: 6px; border: 2px solid rgba(0, 255, 180, 0.4); }
+.app-item.selected .app-check { background: var(--green); border-color: var(--green); }
+
+/* ============================================================
+   ABA SOBRE
+   ============================================================ */
+.about-card { margin-top: 8px; padding: 26px 20px; border-radius: 22px; background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015)); border: 1px solid var(--brd); text-align: center; }
+.about-logo { width: 66px; height: 66px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); box-shadow: 0 0 40px -8px var(--green); }
+.about-card h2 { font-size: 19px; color: #eaf6f2; }
+.about-card h2 span { color: var(--green); }
+.ver { display: inline-block; margin: 10px 0 0; padding: 6px 14px; border-radius: 999px; font-size: 10px; text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); background: rgba(0, 229, 255, 0.08); }
+.divider { height: 1px; margin: 22px 0; background: linear-gradient(90deg, transparent, rgba(0, 255, 180, 0.35), transparent); }
+.about-text { margin: 0 0 20px; font-size: 12.5px; line-height: 1.75; color: var(--muted); }
+.about-list { list-style: none; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.07); text-align: left; }
+.about-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 15px; font-size: 11.5px; background: rgba(255, 255, 255, 0.028); }
+.about-list li+li { border-top: 1px solid rgba(255, 255, 255, 0.05); }
+.about-list li span { color: var(--muted); text-transform: uppercase; font-size: 9.5px; }
+.about-list li b { color: var(--text); font-weight: 600; }
+.footer-note { margin: 22px 0 0; text-align: center; font-size: 9.5px; text-transform: uppercase; color: rgba(125, 133, 144, 0.6); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 22px);
+  z-index: 300;
+  padding: 14px 20px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 12.5px;
+  color: #ffd9ef;
+  background: rgba(255, 47, 185, 0.15);
+  border: 1px solid rgba(255, 47, 185, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.32s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.ok { color: #c6ffec; background: rgba(0, 255, 180, 0.13); border-color: rgba(0, 255, 180, 0.5); }
 </style>
 </head>
 <body>
 
+<!-- CABEÇALHO -->
 <header class="app-header">
   <div class="logo">
     <div class="logo-mark">◈</div>
@@ -336,39 +1030,100 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
   <!-- ABA 1: APARELHO -->
   <section class="pane active" id="pane-aparelho">
     <div class="section-title"><h2>Especificações do Aparelho</h2></div>
+    
     <div class="terminal">
-      <div class="terminal-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="terminal-title">root@gamezone:~</span></div>
+      <div class="terminal-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="terminal-title">root@gamezone:~</span>
+      </div>
       <div class="terminal-body" id="terminal"></div>
     </div>
+
     <div class="hw-grid">
-      <div class="hw-card full"><div class="hw-k">Modelo do Aparelho</div><div class="hw-v" id="specModel">—</div><div class="hw-sub" id="specManufacturer">fabricante</div></div>
-      <div class="hw-card cyan"><div class="hw-k">Processador (CPU)</div><div class="hw-v" id="specCpu">—</div><div class="hw-sub" id="specCpuSub">—</div></div>
-      <div class="hw-card magenta"><div class="hw-k">GPU</div><div class="hw-v" id="specGpu">—</div><div class="hw-sub" id="specGpuSub">renderer</div></div>
-      <div class="hw-card amber"><div class="hw-k">RAM Total</div><div class="hw-v" id="specRam">—</div><div class="hw-sub">memória física</div></div>
-      <div class="hw-card green"><div class="hw-k">Armazenamento</div><div class="hw-v" id="specStorage">—</div><div class="hw-sub">total do dispositivo</div></div>
-      <div class="hw-card full"><div class="hw-k">Versão do Android</div><div class="hw-v" id="specOs">—</div><div class="hw-sub" id="specOsSub">—</div></div>
+      <div class="hw-card full">
+        <div class="hw-k">Modelo do Aparelho</div>
+        <div class="hw-v" id="specModel">—</div>
+        <div class="hw-sub" id="specManufacturer">fabricante</div>
+      </div>
+      <div class="hw-card cyan">
+        <div class="hw-k">Processador (CPU)</div>
+        <div class="hw-v" id="specCpu">—</div>
+        <div class="hw-sub" id="specCpuSub">—</div>
+      </div>
+      <div class="hw-card magenta">
+        <div class="hw-k">GPU</div>
+        <div class="hw-v" id="specGpu">—</div>
+        <div class="hw-sub" id="specGpuSub">renderer</div>
+      </div>
+      <div class="hw-card amber">
+        <div class="hw-k">RAM Total</div>
+        <div class="hw-v" id="specRam">—</div>
+        <div class="hw-sub">memória física</div>
+      </div>
+      <div class="hw-card green">
+        <div class="hw-k">Armazenamento</div>
+        <div class="hw-v" id="specStorage">—</div>
+        <div class="hw-sub">total do dispositivo</div>
+      </div>
+      <div class="hw-card full">
+        <div class="hw-k">Versão do Android</div>
+        <div class="hw-v" id="specOs">—</div>
+        <div class="hw-sub" id="specOsSub">—</div>
+      </div>
     </div>
+
     <div class="actions">
-      <button class="btn green action-btn" id="btnRefreshSpecs"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span><span class="txt">Reler Especificações<small>via plugin nativo</small></span></button>
+      <button class="btn green action-btn" id="btnRefreshSpecs">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span>
+        <span class="txt">Reler Especificações<small>via plugin nativo</small></span>
+      </button>
     </div>
   </section>
 
   <!-- ABA 2: STATUS -->
   <section class="pane" id="pane-status">
-    <div class="section-title"><h2>Monitor em Tempo Real</h2><div class="status-pill" style="color:var(--green)"><span class="pulse"></span>LIVE</div></div>
+    <div class="section-title">
+      <h2>Monitor em Tempo Real</h2>
+      <div class="status-pill"><span class="pulse"></span>LIVE</div>
+    </div>
+    
     <div class="hw-grid">
-      <div class="hw-card full"><div class="hw-k">Uso de RAM</div><div class="hw-v" id="liveRam">—</div><div class="hw-sub" id="liveRamSub">aguardando</div><div class="hw-bar"><div class="hw-bar-fill" id="liveRamBar"></div></div></div>
-      <div class="hw-card cyan"><div class="hw-k">Uso da CPU</div><div class="hw-v" id="liveCpu">—</div><div class="hw-sub" id="liveCpuSub">—</div><div class="hw-bar"><div class="hw-bar-fill" id="liveCpuBar"></div></div></div>
-      <div class="hw-card amber"><div class="hw-k">Bateria</div><div class="hw-v" id="liveBattery">—</div><div class="hw-sub" id="liveBatterySub">—</div><div class="hw-bar"><div class="hw-bar-fill" id="liveBatteryBar"></div></div></div>
-      <div class="hw-card magenta"><div class="hw-k">Temperatura</div><div class="hw-v" id="liveTemp">—</div><div class="hw-sub" id="liveTempSub">térmico</div></div>
-      <div class="hw-card green full"><div class="hw-k">Armazenamento Disponível</div><div class="hw-v" id="liveStorage">—</div><div class="hw-sub" id="liveStorageSub">—</div><div class="hw-bar"><div class="hw-bar-fill" id="liveStorageBar"></div></div></div>
+      <div class="hw-card full">
+        <div class="hw-k">Uso de RAM</div>
+        <div class="hw-v" id="liveRam">—</div>
+        <div class="hw-sub" id="liveRamSub">aguardando plugin</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveRamBar"></div></div>
+      </div>
+      <div class="hw-card cyan">
+        <div class="hw-k">Uso da CPU</div>
+        <div class="hw-v" id="liveCpu">—</div>
+        <div class="hw-sub" id="liveCpuSub">—</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveCpuBar"></div></div>
+      </div>
+      <div class="hw-card amber">
+        <div class="hw-k">Bateria</div>
+        <div class="hw-v" id="liveBattery">—</div>
+        <div class="hw-sub" id="liveBatterySub">—</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveBatteryBar"></div></div>
+      </div>
+      <div class="hw-card magenta">
+        <div class="hw-k">Temperatura</div>
+        <div class="hw-v" id="liveTemp">—</div>
+        <div class="hw-sub" id="liveTempSub">térmico</div>
+      </div>
+      <div class="hw-card green full">
+        <div class="hw-k">Armazenamento Disponível</div>
+        <div class="hw-v" id="liveStorage">—</div>
+        <div class="hw-sub" id="liveStorageSub">—</div>
+        <div class="hw-bar"><div class="hw-bar-fill" id="liveStorageBar"></div></div>
+      </div>
     </div>
   </section>
 
   <!-- ABA 3: JOGOS -->
   <section class="pane" id="pane-jogos">
     
-    <!-- Header Retrato -->
+    <!-- Header (Aparece no Retrato) -->
     <div class="games-head">
       <div style="display:flex; align-items:center; gap:8px;">
         <h2>Biblioteca</h2>
@@ -377,28 +1132,39 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
       <div class="games-actions">
         <button class="btn-small" id="btnExport">Exp</button>
         <button class="btn-small" id="btnImport">Imp</button>
-        <button class="fab" id="btnAddGame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="fab" id="btnAddGame" aria-label="Adicionar jogo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
       </div>
     </div>
 
     <!-- Conteúdo Retrato -->
     <div class="search-bar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-      <input id="searchGames" type="text" placeholder="Buscar jogo..." autocomplete="off">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="searchGames" type="text" placeholder="Buscar jogo...">
     </div>
     <div class="chips" id="chips"></div>
     <div class="games-grid" id="gamesGrid"></div>
-    <div class="empty" id="gamesEmpty"><div class="ico">◈</div><p>Nenhum jogo ainda</p><span>toque em + para adicionar</span></div>
+    <div class="empty" id="gamesEmpty">
+      <div class="ico">◈</div>
+      <p>Nenhum jogo ainda</p>
+      <span>toque em + para adicionar</span>
+    </div>
 
-    <!-- ========================================== -->
-    <!-- CONSOLE MODE (APARECE SÓ NA PAISAGEM)      -->
-    <!-- ========================================== -->
+    <!-- CONSOLE MODE (Aparece no Paisagem) -->
     <div class="console-container">
-      <div class="console-left" id="consoleLeft">
-        <!-- Lista de jogos injetada via JS -->
+      <div class="console-left">
+        <div class="console-left-header">
+          <h2>Jogos</h2>
+          <button class="fab" id="btnAddGameLandscape" style="width:34px; height:34px; border-radius:10px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <div class="console-grid" id="consoleLeft">
+          <!-- Lista de jogos injetada via JS -->
+        </div>
       </div>
       <div class="console-right" id="consoleRight">
-        <!-- Detalhes do jogo injetados via JS -->
         <div class="console-empty" id="consoleEmpty">
           <div class="ico">🎮</div>
           <p>Selecione um jogo na lista</p>
@@ -413,27 +1179,40 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.1.0 (Console Update)</div>
+      <div class="ver">versão 3.2.0</div>
       <div class="divider"></div>
-      <p class="about-text">Central de especificações e biblioteca de jogos com modo console para paisagem.</p>
+      <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem.</p>
       <ul class="about-list">
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
-        <li><span>Filtro</span><b>Somente Apps de Usuário</b></li>
-        <li><span>Layout</span><b>Console Mode (Landscape)</b></li>
+        <li><span>Device Info</span><b>@capgo/capacitor-device-info</b></li>
+        <li><span>Apps</span><b>UsageStatsManager</b></li>
       </ul>
       <p class="footer-note">// gamezone · feito para rodar no seu bolso //</p>
     </div>
   </section>
 </main>
 
+<!-- NAVEGAÇÃO -->
 <nav class="bottom-nav">
-  <button class="nav-btn active" data-tab="aparelho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg><span>Aparelho</span></button>
-  <button class="nav-btn" data-tab="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg><span>Status</span></button>
-  <button class="nav-btn" data-tab="jogos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="4.5"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/></svg><span>Jogos</span></button>
-  <button class="nav-btn" data-tab="sobre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg><span>Sobre</span></button>
+  <button class="nav-btn active" data-tab="aparelho">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+    <span>Aparelho</span>
+  </button>
+  <button class="nav-btn" data-tab="status">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+    <span>Status</span>
+  </button>
+  <button class="nav-btn" data-tab="jogos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="11" rx="4.5"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/></svg>
+    <span>Jogos</span>
+  </button>
+  <button class="nav-btn" data-tab="sobre">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+    <span>Sobre</span>
+  </button>
 </nav>
 
-<!-- MODAL NOVO JOGO -->
+<!-- MODAL DE JOGO -->
 <div class="modal-overlay" id="gameModal">
   <div class="modal">
     <h3>+ Novo Jogo</h3>
@@ -443,9 +1222,13 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
       <button class="mode-btn" data-mode="installed">📱 Instalado</button>
     </div>
     <div class="mode-pane active" id="modePane-web">
-      <div class="field"><label for="gameName">Nome do jogo</label><input class="input" id="gameName" type="text" placeholder="Ex: Subway Surfers" maxlength="40"></div>
-      <div class="field"><label for="gameUrl">Link (URL)</label><input class="input" id="gameUrl" type="url" placeholder="https://..." inputmode="url"></div>
-      <div class="field"><label for="gameCat">Categoria</label><select class="input" id="gameCat"><option>Ação</option><option>Aventura</option><option>Puzzle</option><option>Corrida</option><option>Tiro</option><option>RPG</option><option>Esporte</option><option>Estratégia</option><option>Outro</option></select></div>
+      <div class="field"><label>Nome do jogo</label><input class="input" id="gameName" type="text" placeholder="Ex: Roblox"></div>
+      <div class="field"><label>Link (URL)</label><input class="input" id="gameUrl" type="url" placeholder="https://..."></div>
+      <div class="field"><label>Categoria</label>
+        <select class="input" id="gameCat">
+          <option>Ação</option><option>Aventura</option><option>Puzzle</option><option>Corrida</option><option>Tiro</option><option>RPG</option><option>Outro</option>
+        </select>
+      </div>
     </div>
     <div class="mode-pane" id="modePane-installed">
       <p class="sub" style="margin-top:10px">Selecione apps para adicionar</p>
@@ -463,14 +1246,15 @@ select.input{appearance:none;background-image:linear-gradient(45deg,transparent 
 <script>
 (function(){
 'use strict';
+
+// Helpers
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-const sleep = ms => new Promise(r => setTimeout(r, ms));
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const fmtGB = b => (b == null || isNaN(b) || b < 0) ? '—' : (b / (1024**3)).toFixed(2) + ' GB';
 const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch(e){} };
-const fmtGB = b => { if (b == null || isNaN(b) || b < 0) return '—'; return (b / (1024**3)).toFixed(2) + ' GB'; };
 
-// Plugins e Variáveis
+// Plugins
 const isNative = () => !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
 const getPlugin = name => (window.Capacitor && window.Capacitor.Plugins) ? window.Capacitor.Plugins[name] : null;
 const getDeviceInfoPlugin = () => getPlugin('DeviceInfo') || getPlugin('CapacitorDeviceInfo');
@@ -478,18 +1262,24 @@ const getUsageStatsPlugin = () => getPlugin('CapacitorUsageStatsManager') || get
 const getDevicePlugin = () => getPlugin('Device');
 const getOrientationPlugin = () => getPlugin('ScreenOrientation');
 
-// Toast
+// UI Toast
 const toastEl = $('#toast'); let toastT = null;
-function toast(m, t) { toastEl.textContent = m; toastEl.className = 'toast show' + (t === 'ok' ? ' ok' : ''); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 3200); }
+function toast(m, t) {
+  toastEl.textContent = m;
+  toastEl.className = 'toast show' + (t === 'ok' ? ' ok' : '');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => toastEl.classList.remove('show'), 3000);
+}
 
-// Log
+// Terminal
 const terminal = $('#terminal');
 function log(text, type) {
   if (!terminal) return;
-  const line = document.createElement('div'); line.className = 'line' + (type ? ' ' + type : '');
-  const ts = document.createElement('span'); ts.className = 'ts';
-  const d = new Date(); ts.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
-  line.appendChild(ts); line.appendChild(document.createTextNode(text)); terminal.appendChild(line); terminal.scrollTop = terminal.scrollHeight;
+  const line = document.createElement('div');
+  line.className = 'line ' + (type || '');
+  line.textContent = text;
+  terminal.appendChild(line);
+  terminal.scrollTop = terminal.scrollHeight;
 }
 
 // Navegação
@@ -517,23 +1307,28 @@ async function loadDeviceSpecs() {
   try {
     let info = di ? await di.getInfo() : null;
     let capInfo = dev ? await dev.getInfo() : null;
+    
     const model = (capInfo && capInfo.model) || (info && info.device && info.device.model) || 'Desconhecido';
     const manufacturer = (capInfo && capInfo.manufacturer) || (info && info.device && info.device.manufacturer) || '';
     $('#specModel').textContent = model;
     $('#specManufacturer').textContent = manufacturer || 'fabricante';
+    
     const cpu = (info && info.cpu) || {}; const cpuModel = cpu.model || cpu.processor || '—'; const cpuCores = cpu.cores || cpu.coreCount || null;
     $('#specCpu').textContent = cpuModel;
     $('#specCpuSub').textContent = (cpuCores ? cpuCores + ' núcleos' : 'núcleos n/d') + (cpu.architecture ? ' · ' + cpu.architecture : '');
+    
     const gpu = (info && info.gpu) || {}; const gpuModel = gpu.renderer || gpu.model || gpu.vendor || '—';
     $('#specGpu').textContent = gpuModel;
-    $('#specGpuSub').textContent = gpu.vendor && gpu.vendor !== gpuModel ? gpu.vendor : 'renderer';
+    
     const mem = (info && info.memory) || {}; const ramTotal = mem.totalBytes || mem.total || null;
     $('#specRam').innerHTML = ramTotal ? fmtGB(ramTotal) : '<small>n/d</small>';
+    
     const st = (info && info.storage) || {}; const stTotal = st.totalBytes || st.total || null;
     $('#specStorage').innerHTML = stTotal ? fmtGB(stTotal) : '<small>n/d</small>';
+    
     const os = (info && info.os) || {}; const osName = os.name || (capInfo && capInfo.platform) || 'Android'; const osVer = os.version || (capInfo && capInfo.osVersion) || '';
     $('#specOs').textContent = (osName + ' ' + osVer).trim();
-    $('#specOsSub').textContent = (capInfo && capInfo.isVirtual) ? 'ambiente virtual' : 'dispositivo físico';
+    
     log('✓ especificações carregadas', 'ok');
   } catch(e) { log('erro: ' + e.message, 'err'); }
 }
@@ -597,9 +1392,10 @@ function renderGridPortrait() {
   grid.innerHTML = ''; let list = games.slice();
   if (currentCat === 'Favoritos') list = list.filter(g => g.fav); else if (currentCat !== 'Todos') list = list.filter(g => g.cat === currentCat);
   if (searchQ) list = list.filter(g => (g.name || '').toLowerCase().includes(searchQ.toLowerCase()));
-  list.sort((a, b) => ((b.fav ? 1 : 0) - (a.fav ? 1 : 0)) || ((b.added || 0) - (a.added || 0)));
+  
   if (!list.length) { grid.style.display = 'none'; empty.style.display = 'flex'; return; }
   grid.style.display = 'grid'; empty.style.display = 'none';
+  
   list.forEach((g, idx) => {
     const card = document.createElement('div'); card.className = 'game-card';
     let iconEl = document.createElement('div'); iconEl.className = 'game-fav-fallback' + (g.isNative ? ' native' : ''); iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
@@ -641,40 +1437,37 @@ function renderConsoleLandscape() {
       </div>
       <div class="detail-content">
         <button class="btn-start" id="btnStartGame">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           INICIAR
         </button>
         <div class="detail-stats">
           <div class="stat-box"><div class="k">Espaço Ocupado</div><div class="v">Indisponível</div></div>
           <div class="stat-box"><div class="k">Uso de RAM</div><div class="v" id="detailRam">Carregando...</div></div>
           <div class="stat-box"><div class="k">Bateria</div><div class="v" id="detailBat">Carregando...</div></div>
-          <div class="stat-box"><div class="k">Armazenamento</div><div class="v" id="detailStorage">Carregando...</div></div>
+          <div class="stat-box full"><div class="k">Armazenamento</div><div class="v" id="detailStorage">Carregando...</div></div>
         </div>
       </div>
     `;
     
     $('#btnStartGame').addEventListener('click', () => {
-      if (g.isNative) toast('Tentando abrir ' + g.name + ' (Apenas via plugin de abertura)');
+      if (g.isNative) toast('Tentando abrir ' + g.name);
       else window.open(g.url, '_blank');
     });
     
-    // Puxar status rápido do device para o painel direito
+    // Stats do Painel
     const di = getDeviceInfoPlugin();
     if (di && di.getInfo) {
       di.getInfo().then(info => {
-        if (info.memory) {
-          const used = info.memory.usedBytes || (info.memory.totalBytes - info.memory.freeBytes);
-          $('#detailRam').textContent = fmtGB(used) + ' / ' + fmtGB(info.memory.totalBytes);
-        }
-        if (info.storage) {
-           $('#detailStorage').textContent = fmtGB(info.storage.freeBytes) + ' livres';
-        }
+        if (info.memory) { $('#detailRam').textContent = fmtGB(info.memory.usedBytes) + ' / ' + fmtGB(info.memory.totalBytes); }
+        if (info.storage) { $('#detailStorage').textContent = fmtGB(info.storage.freeBytes) + ' livres'; }
       });
     }
     const dev = getDevicePlugin();
     if (dev && dev.getBatteryInfo) {
       dev.getBatteryInfo().then(b => { $('#detailBat').textContent = Math.round(b.batteryLevel*100) + '%'; });
     }
+  } else {
+    right.innerHTML = '<div class="console-empty"><div class="ico">🎮</div><p>Selecione um jogo na lista</p></div>';
   }
 }
 
@@ -683,19 +1476,20 @@ const gameModal = $('#gameModal'); let modalMode = 'web'; let selectedApps = new
 function setModalMode(mode) { modalMode = mode; $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode)); $('#modePane-web').classList.toggle('active', mode === 'web'); $('#modePane-installed').classList.toggle('active', mode === 'installed'); if (mode === 'installed') loadAppsForModal(); }
 $$('.mode-btn').forEach(b => b.addEventListener('click', () => setModalMode(b.dataset.mode)));
 
-$('#btnAddGame').addEventListener('click', () => { gameModal.classList.add('open'); setModalMode('web'); });
+function openModal() { gameModal.classList.add('open'); setModalMode('web'); }
+$('#btnAddGame').addEventListener('click', openModal);
+$('#btnAddGameLandscape').addEventListener('click', openModal);
 $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
 
 async function loadAppsForModal() {
   const listEl = $('#modalAppList');
-  if (!isNative()) { listEl.innerHTML = '<div style="color:var(--red);padding:10px">Apenas no APK Android.</div>'; return; }
+  if (!isNative()) { listEl.innerHTML = '<div style="color:var(--red);padding:10px">Apenas no APK.</div>'; return; }
   const us = getUsageStatsPlugin();
   try {
     const { granted } = await us.isUsageStatsPermissionGranted();
     if (!granted) { await us.openUsageStatsSettings(); return; }
     const { packages } = await us.queryAllPackages();
     
-    // FILTRO: Remove apps de sistema, Google, Samsung, Motorola, etc.
     const blacklist = ['com.android', 'android', 'com.google', 'com.samsung', 'com.motorola', 'com.sec', 'com.qualcomm', 'com.mediatek', 'com.miui', 'com.xiaomi'];
     const userApps = packages.filter(p => {
        if (!p.appName) return false;
@@ -739,7 +1533,7 @@ $('#btnSaveGame').addEventListener('click', () => {
   saveGames(); renderGames(); gameModal.classList.remove('open'); toast('Salvo!', 'ok');
 });
 
-window.addEventListener('load', () => { loadGames(); renderGames(); loadDeviceSpecs(); log('GameZone v3.1 (Console Mode)', 'ok'); });
+window.addEventListener('load', () => { loadGames(); renderGames(); loadDeviceSpecs(); log('GameZone v3.2', 'ok'); });
 })();
 </script>
 </body>
