@@ -45,12 +45,10 @@ jobs:
           const path = 'android/app/src/main/AndroidManifest.xml';
           let manifest = fs.readFileSync(path, 'utf8');
 
-          // 1. Adiciona o namespace tools na tag <manifest> se não existir
           if (!manifest.includes('xmlns:tools=\"http://schemas.android.com/tools\"')) {
             manifest = manifest.replace('<manifest ', '<manifest xmlns:tools=\"http://schemas.android.com/tools\" ');
           }
 
-          // 2. Injeta as permissões antes da tag <application>
           const permissions = '\n    <!-- Permissions for UsageStats -->\n' +
                               '    <uses-permission android:name=\"android.permission.QUERY_ALL_PACKAGES\" tools:ignore=\"QueryAllPackagesPermission\" />\n' +
                               '    <uses-permission android:name=\"android.permission.PACKAGE_USAGE_STATS\" tools:ignore=\"ProtectedPermissions\" />\n';

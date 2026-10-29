@@ -10,9 +10,6 @@
 <meta name="apple-mobile-web-app-title" content="GameZone">
 <title>GameZone</title>
 <style>
-/* ============================================================
-   RESET E VARIÁVEIS GLOBAIS
-   ============================================================ */
 *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 :root{
   --bg:#0d1117;--green:#00ffb4;--cyan:#00e5ff;--magenta:#ff2fb9;--amber:#ffd166;--red:#ff5d7a;
@@ -23,30 +20,25 @@ html,body{width:100%;overflow-x:hidden}
 body{
   font-family:'Fira Code','JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
   background:var(--bg);color:var(--text);min-height:100dvh;-webkit-font-smoothing:antialiased;
+  overflow:hidden;
 }
 
-/* ============================================================
-   FUNDO CYBERPUNK
-   ============================================================ */
+/* FUNDO CYBERPUNK */
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(circle at 10% 4%,rgba(0,255,180,.13),transparent 45%),
-    radial-gradient(circle at 92% 10%,rgba(0,229,255,.11),transparent 42%),
-    radial-gradient(circle at 50% 104%,rgba(255,47,185,.13),transparent 55%);
+  background: radial-gradient(circle at 10% 4%,rgba(0,255,180,.13),transparent 45%),
+              radial-gradient(circle at 92% 10%,rgba(0,229,255,.11),transparent 42%),
+              radial-gradient(circle at 50% 104%,rgba(255,47,185,.13),transparent 55%);
 }
 body::after{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
-  background-image:linear-gradient(rgba(0,255,180,.055) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(0,255,180,.055) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(0,255,180,.055) 1px,transparent 1px), linear-gradient(90deg,rgba(0,255,180,.055) 1px,transparent 1px);
   background-size:44px 44px;
   -webkit-mask-image:radial-gradient(circle at 50% 25%,#000 0%,transparent 78%);
           mask-image:radial-gradient(circle at 50% 25%,#000 0%,transparent 78%);
 }
 
-/* ============================================================
-   CABEÇALHO (HEADER)
-   ============================================================ */
+/* CABEÇALHO */
 .app-header{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;
   gap:12px;padding:calc(14px + env(safe-area-inset-top)) 18px 14px}
 .logo{display:flex;align-items:center;gap:11px;min-width:0}
@@ -66,11 +58,9 @@ body::after{
   animation:pulse 1.5s ease-in-out infinite;display:inline-block}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
 
-/* ============================================================
-   LAYOUT PRINCIPAL E ABAS
-   ============================================================ */
+/* LAYOUT GERAL E ABAS */
 main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(safe-area-inset-bottom));
-  max-width:720px;margin:0 auto}
+  max-width:720px;margin:0 auto;height:100dvh;overflow-y:auto;transition:all .3s}
 .pane{display:none}
 .pane.active{display:block;animation:paneIn .38s cubic-bezier(.22,.85,.25,1)}
 @keyframes paneIn{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
@@ -78,9 +68,7 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .section-title h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .section-title h2::before{content:'// ';color:var(--green)}
 
-/* ============================================================
-   TERMINAL
-   ============================================================ */
+/* TERMINAL */
 .terminal{border-radius:18px;overflow:hidden;border:1px solid rgba(0,255,180,.28);
   background:linear-gradient(180deg,rgba(0,0,0,.82),rgba(0,0,0,.6));
   box-shadow:0 22px 48px -26px rgba(0,255,180,.55),inset 0 0 40px -20px rgba(0,255,180,.4);
@@ -102,18 +90,15 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 @keyframes lineIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
 .line .ts{color:rgba(0,255,180,.35);margin-right:7px;font-size:11px}
 .line.ok{color:var(--green)}.line.info{color:var(--cyan)}.line.warn{color:var(--amber)}
-.line.err{color:var(--red)}.line.mag{color:var(--magenta)}
+.line.err{color:var(--red)}
 .caret{display:inline-block;width:8px;height:14px;vertical-align:-2px;background:var(--green);
   box-shadow:0 0 10px var(--green);animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 
-/* ============================================================
-   CARDS DE HARDWARE (GLASSMORPHISM)
-   ============================================================ */
+/* CARDS DE HARDWARE */
 .hw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .hw-card{padding:14px 12px;border-radius:16px;background:var(--panel);border:1px solid var(--brd);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:relative;overflow:hidden;
-  animation:paneIn .4s cubic-bezier(.22,.85,.25,1) backwards}
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:relative;overflow:hidden;}
 .hw-card.full{grid-column:1/-1}
 .hw-k{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .hw-v{font-size:18px;font-weight:700;color:var(--green);text-shadow:0 0 14px rgba(0,255,180,.45);
@@ -131,9 +116,7 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .hw-card.amber .hw-v{color:var(--amber);text-shadow:0 0 14px rgba(255,209,102,.45)}
 .hw-card.amber .hw-bar-fill{background:linear-gradient(90deg,var(--amber),var(--green))}
 
-/* ============================================================
-   BOTÕES E NAVEGAÇÃO INFERIOR
-   ============================================================ */
+/* BOTÕES E NAVEGAÇÃO */
 .actions{display:grid;gap:10px;margin-top:14px}
 .btn{position:relative;overflow:hidden;display:flex;align-items:center;gap:13px;width:100%;
   padding:15px 16px;border-radius:16px;font-family:inherit;font-size:13px;font-weight:600;
@@ -141,7 +124,6 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
   border:1px solid var(--brd);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   cursor:pointer;transition:transform .14s,box-shadow .28s,border-color .28s;touch-action:manipulation}
 .btn:active{transform:scale(.972)}
-.btn:disabled{opacity:.42;pointer-events:none}
 .btn .ico{width:36px;height:36px;flex:0 0 36px;border-radius:11px;display:grid;place-items:center;
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
 .btn .ico svg{width:18px;height:18px;stroke-width:1.8}
@@ -149,8 +131,6 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .btn .txt small{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
 .btn.green{border-color:rgba(0,255,180,.32);box-shadow:0 0 28px -18px var(--green)}
 .btn.green .ico{color:var(--green);border-color:rgba(0,255,180,.3);background:rgba(0,255,180,.09)}
-.btn.cyan{border-color:rgba(0,229,255,.32);box-shadow:0 0 28px -18px var(--cyan)}
-.btn.cyan .ico{color:var(--cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.09)}
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:100;display:grid;
   grid-template-columns:repeat(4,1fr);gap:4px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));
   background:rgba(13,17,23,.78);backdrop-filter:blur(20px) saturate(170%);
@@ -167,9 +147,7 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .nav-btn.active::after{content:'';position:absolute;top:3px;left:50%;transform:translateX(-50%);
   width:22px;height:3px;border-radius:3px;background:var(--green);box-shadow:0 0 12px var(--green)}
 
-/* ============================================================
-   ÁREA DE JOGOS
-   ============================================================ */
+/* ABA JOGOS (MODO RETRATO) */
 .games-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 10px}
 .games-head h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .games-head h2::before{content:'// ';color:var(--cyan)}
@@ -177,7 +155,6 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
 .btn-small{padding:8px 12px;border-radius:10px;font-family:inherit;font-size:10px;font-weight:600;
   text-transform:uppercase;letter-spacing:.08em;cursor:pointer;border:1px solid rgba(255,255,255,.1);
   background:rgba(255,255,255,.05);color:var(--text);transition:background .2s;touch-action:manipulation}
-.btn-small:active{background:rgba(255,255,255,.15)}
 .btn-small.cyan{color:var(--cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.1)}
 .fab{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;
   cursor:pointer;border:1px solid rgba(0,255,180,.45);
@@ -210,10 +187,6 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
   cursor:pointer;transition:transform .16s,border-color .28s,box-shadow .28s;
   animation:paneIn .35s cubic-bezier(.22,.85,.25,1) backwards;touch-action:manipulation}
 .game-card:active{transform:scale(.955)}
-.game-card::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 0%,rgba(0,255,180,.2),transparent 65%);
-  opacity:0;transition:opacity .32s}
-.game-card:hover::before{opacity:1}
 .game-fav{width:52px;height:52px;border-radius:14px;object-fit:cover;
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
   box-shadow:0 0 22px -8px rgba(0,255,180,.7)}
@@ -221,175 +194,129 @@ main{position:relative;z-index:2;padding:0 16px calc(var(--nav-h) + 34px + env(s
   font-size:22px;font-weight:700;color:#04120e;
   background:linear-gradient(135deg,var(--green),var(--cyan));
   box-shadow:0 0 22px -6px var(--green);text-transform:uppercase}
-.game-fav-fallback.native{background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#fff;
-  box-shadow:0 0 22px -6px var(--cyan)}
+.game-fav-fallback.native{background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#fff;box-shadow:0 0 22px -6px var(--cyan)}
 .game-name{font-size:12px;line-height:1.35;text-align:center;color:var(--text);
-  word-break:break-word;max-width:100%;display:-webkit-box;
-  -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  word-break:break-word;max-width:100%;display:-webkit-box; -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .game-cat{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .game-fav-btn{position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:8px;
   display:grid;place-items:center;border:1px solid rgba(255,209,102,.3);
-  background:rgba(255,209,102,.1);color:var(--amber);cursor:pointer;
-  transition:transform .15s,background .25s;touch-action:manipulation}
-.game-fav-btn.on{background:rgba(255,209,102,.3);border-color:rgba(255,209,102,.7);
-  box-shadow:0 0 12px -2px var(--amber)}
-.game-fav-btn:active{transform:scale(.82)}
+  background:rgba(255,209,102,.1);color:var(--amber);cursor:pointer;transition:transform .15s,background .25s}
+.game-fav-btn.on{background:rgba(255,209,102,.3);border-color:rgba(255,209,102,.7);box-shadow:0 0 12px -2px var(--amber)}
 .game-fav-btn svg{width:13px;height:13px;stroke-width:2;fill:currentColor}
 .game-del{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:8px;
   display:grid;place-items:center;border:1px solid rgba(255,47,185,.38);
-  background:rgba(255,47,185,.13);color:var(--magenta);cursor:pointer;
-  transition:transform .15s,background .25s;touch-action:manipulation}
-.game-del:active{transform:scale(.82);background:rgba(255,47,185,.3)}
+  background:rgba(255,47,185,.13);color:var(--magenta);cursor:pointer;transition:transform .15s,background .25s}
 .game-del svg{width:13px;height:13px;stroke-width:2}
 .empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:48px 20px;
-  text-align:center;border:1px dashed rgba(0,255,180,.22);border-radius:18px;
-  margin-top:16px;background:rgba(0,255,180,.025)}
+  text-align:center;border:1px dashed rgba(0,255,180,.22);border-radius:18px;margin-top:16px;background:rgba(0,255,180,.025)}
 .empty .ico{font-size:32px;color:rgba(0,255,180,.5);margin-bottom:4px}
 .empty p{font-size:13px;color:var(--text)}
 .empty span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 
 /* ============================================================
-   MODAIS E LISTA DE APPS
+   CONSOLE MODE (PAISAGEM - LAYOUT DIVIDIDO)
    ============================================================ */
-.modal-overlay{position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;
-  justify-content:center;padding:16px;background:rgba(3,6,10,.72);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.console-container { display: none; } /* Escondido por padrão (retrato) */
+
+@media (orientation: landscape) {
+  body { overflow: hidden; } /* Trava rolagem na tela toda */
+  main { max-width: 100%; padding: 0 12px 10px; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+  .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; flex: 0 0 auto; }
+  
+  /* Quando a aba Jogos estiver ativa, esconde as coisas do modo retrato e mostra o Console */
+  #pane-jogos.active .games-head,
+  #pane-jogos.active .search-bar,
+  #pane-jogos.active .chips,
+  #pane-jogos.active .games-grid,
+  #pane-jogos.active .empty { display: none !important; }
+  
+  #pane-jogos.active .console-container { display: flex; flex-direction: row; gap: 12px; height: calc(100dvh - 130px); width: 100%; }
+
+  /* Lado Esquerdo: Lista de Jogos */
+  .console-left { flex: 0 0 35%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
+  .console-left::-webkit-scrollbar { width: 4px; }
+  .console-left::-webkit-scrollbar-thumb { background: var(--green); border-radius: 4px; }
+  .console-card { background: var(--panel); border: 1px solid var(--brd); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; gap: 6px; cursor: pointer; transition: all .2s; }
+  .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgba(0, 255, 180, 0.1); }
+  .console-card .game-fav, .console-card .game-fav-fallback { width: 40px; height: 40px; font-size: 16px; border-radius: 10px; }
+  .console-card .game-name { font-size: 10px; -webkit-line-clamp: 1; }
+
+  /* Lado Direito: Detalhes do Jogo */
+  .console-right { flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,.4); border: 1px solid var(--brd); border-radius: 18px; padding: 20px; overflow: hidden; position: relative; }
+  .console-right::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(0,255,180,.15), transparent 70%); pointer-events: none; }
+  
+  .detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; z-index: 1; }
+  .detail-header .game-fav, .detail-header .game-fav-fallback { width: 64px; height: 64px; font-size: 28px; border-radius: 16px; }
+  .detail-title h2 { font-size: 20px; color: #fff; line-height: 1.2; }
+  .detail-title p { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; margin-top: 4px; text-transform: uppercase; }
+  
+  .detail-content { flex: 1; display: flex; flex-direction: column; gap: 12px; z-index: 1; overflow-y: auto; }
+  
+  .btn-start { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 14px; border: none; background: linear-gradient(135deg, var(--green), var(--cyan)); color: #04120e; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; box-shadow: 0 0 30px -10px var(--green); margin-bottom: 10px; }
+  .btn-start:active { transform: scale(0.98); }
+
+  .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-box { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .stat-box.full { grid-column: 1 / -1; }
+  .stat-box .k { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .stat-box .v { font-size: 16px; font-weight: 700; color: var(--text); }
+  
+  /* Ocupação de espaço no modo console */
+  .console-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); text-align: center; gap: 10px; }
+  .console-empty .ico { font-size: 40px; color: rgba(0, 255, 180, 0.3); }
+}
+
+/* MODAIS */
+.modal-overlay{position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;justify-content:center;padding:16px;background:rgba(3,6,10,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .modal-overlay.open{display:flex;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{width:100%;max-width:460px;max-height:88vh;overflow-y:auto;border-radius:22px;
-  padding:22px 20px calc(20px + env(safe-area-inset-bottom));
-  background:rgba(13,17,23,.96);border:1px solid rgba(0,255,180,.26);
-  box-shadow:0 0 70px -22px var(--green),inset 0 0 40px -28px var(--green);
-  animation:modalIn .32s cubic-bezier(.2,.9,.3,1);
-  scrollbar-width:thin;scrollbar-color:rgba(0,255,180,.35) transparent}
-.modal::-webkit-scrollbar{width:5px}
-.modal::-webkit-scrollbar-thumb{background:rgba(0,255,180,.35);border-radius:4px}
+.modal{width:100%;max-width:460px;max-height:88vh;overflow-y:auto;border-radius:22px;padding:22px 20px calc(20px + env(safe-area-inset-bottom));background:rgba(13,17,23,.96);border:1px solid rgba(0,255,180,.26);box-shadow:0 0 70px -22px var(--green);animation:modalIn .32s cubic-bezier(.2,.9,.3,1);scrollbar-width:thin}
 @keyframes modalIn{from{opacity:0;transform:translateY(38px) scale(.96)}to{opacity:1;transform:none}}
 .modal h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
 .modal .sub{font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
 .mode-selector{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 4px}
-.mode-btn{padding:13px 8px;border-radius:12px;background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:inherit;font-size:11px;
-  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .25s;
-  touch-action:manipulation;font-weight:600}
-.mode-btn.active{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));
-  border-color:transparent;box-shadow:0 0 20px -6px var(--green)}
-.mode-btn:active{transform:scale(.97)}
+.mode-btn{padding:13px 8px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:inherit;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s}
+.mode-btn.active{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));border-color:transparent}
 .mode-pane{display:none;margin-top:6px}
 .mode-pane.active{display:block}
 .field{margin-top:14px}
-.field label{display:block;margin-bottom:7px;font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted)}
-.input{width:100%;padding:13px 14px;border-radius:13px;background:rgba(0,0,0,.5);
-  border:1px solid rgba(255,255,255,.12);color:var(--text);font-family:inherit;font-size:14px;
-  outline:none;transition:border-color .25s,box-shadow .25s}
-.input::placeholder{color:rgba(125,133,144,.65)}
+.field label{display:block;margin-bottom:7px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.input{width:100%;padding:13px 14px;border-radius:13px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12);color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:all .2s}
 .input:focus{border-color:rgba(0,255,180,.6);box-shadow:0 0 0 3px rgba(0,255,180,.12)}
-select.input{appearance:none;-webkit-appearance:none;
-  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),
-                   linear-gradient(135deg,var(--muted) 50%,transparent 50%);
-  background-position:calc(100% - 18px) center,calc(100% - 13px) center;
-  background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
+select.input{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) center,calc(100% - 13px) center;background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
 .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.btn-solid{padding:14px 12px;border-radius:14px;border:0;font-family:inherit;font-size:12.5px;
-  font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
-  transition:transform .14s;touch-action:manipulation}
+.btn-solid{padding:14px 12px;border-radius:14px;border:0;font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .14s}
 .btn-solid:active{transform:scale(.96)}
-.btn-solid.primary{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));
-  box-shadow:0 0 28px -10px var(--green)}
+.btn-solid.primary{color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan))}
 .btn-solid.ghost{color:var(--muted);background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1)}
-.app-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:52vh;overflow-y:auto;
-  padding-right:4px;scrollbar-width:thin;scrollbar-color:rgba(0,255,180,.35) transparent}
-.app-list::-webkit-scrollbar{width:5px}
-.app-list::-webkit-scrollbar-thumb{background:rgba(0,255,180,.35);border-radius:4px}
-.app-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;
-  background:var(--panel);border:1px solid var(--brd);transition:border-color .2s,background .2s;
-  cursor:pointer}
+.app-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:52vh;overflow-y:auto;scrollbar-width:thin}
+.app-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--brd);cursor:pointer;transition:all .2s}
 .app-item.selected{border-color:rgba(0,255,180,.6);background:rgba(0,255,180,.06)}
-.app-icon{width:38px;height:38px;flex:0 0 38px;border-radius:10px;
-  background:linear-gradient(135deg,var(--cyan),var(--magenta));
-  display:grid;place-items:center;font-size:16px;font-weight:bold;color:#fff;text-transform:uppercase}
+.app-icon{width:38px;height:38px;flex:0 0 38px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--magenta));display:grid;place-items:center;font-size:16px;font-weight:bold;color:#fff;text-transform:uppercase}
 .app-info{display:flex;flex-direction:column;flex:1;overflow:hidden;min-width:0}
 .app-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app-pkg{font-size:9.5px;color:var(--muted);letter-spacing:0.05em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-.app-check{width:20px;height:20px;flex:0 0 20px;border-radius:6px;
-  border:2px solid rgba(0,255,180,.4);background:transparent;position:relative;transition:all .2s}
-.app-item.selected .app-check{background:var(--green);border-color:var(--green);box-shadow:0 0 12px -2px var(--green)}
-.app-item.selected .app-check::after{content:'✓';position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);color:#04120e;font-weight:800;font-size:12px;line-height:1}
+.app-pkg{font-size:9.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.app-check{width:20px;height:20px;flex:0 0 20px;border-radius:6px;border:2px solid rgba(0,255,180,.4);transition:all .2s}
+.app-item.selected .app-check{background:var(--green);border-color:var(--green)}
+.app-item.selected .app-check::after{content:'✓';position:absolute;color:#04120e;font-weight:800;font-size:12px}
 
-/* ============================================================
-   ABA SOBRE
-   ============================================================ */
-.about-card{margin-top:8px;padding:26px 20px;border-radius:22px;
-  background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
-  border:1px solid var(--brd);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 26px 62px -40px var(--green);text-align:center}
-.about-logo{width:66px;height:66px;margin:0 auto 16px;border-radius:20px;display:grid;
-  place-items:center;font-size:30px;font-weight:700;color:#04120e;
-  background:linear-gradient(135deg,var(--green),var(--cyan));box-shadow:0 0 40px -8px var(--green)}
-.about-card h2{font-size:19px;letter-spacing:.06em;color:#eaf6f2;font-weight:700}
+/* ABA SOBRE */
+.about-card{margin-top:8px;padding:26px 20px;border-radius:22px;background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.015));border:1px solid var(--brd);backdrop-filter:blur(16px);text-align:center}
+.about-logo{width:66px;height:66px;margin:0 auto 16px;border-radius:20px;display:grid;place-items:center;font-size:30px;font-weight:700;color:#04120e;background:linear-gradient(135deg,var(--green),var(--cyan));box-shadow:0 0 40px -8px var(--green)}
+.about-card h2{font-size:19px;color:#eaf6f2}
 .about-card h2 span{color:var(--green)}
-.ver{display:inline-block;margin:10px 0 0;padding:6px 14px;border-radius:999px;font-size:10px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);
-  border:1px solid rgba(0,229,255,.3);background:rgba(0,229,255,.08)}
+.ver{display:inline-block;margin:10px 0 0;padding:6px 14px;border-radius:999px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,229,255,.3);background:rgba(0,229,255,.08)}
 .divider{height:1px;margin:22px 0;background:linear-gradient(90deg,transparent,rgba(0,255,180,.35),transparent)}
 .about-text{margin:0 0 20px;font-size:12.5px;line-height:1.75;color:var(--muted)}
 .about-list{list-style:none;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07);text-align:left}
-.about-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:13px 15px;font-size:11.5px;background:rgba(255,255,255,.028)}
+.about-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;font-size:11.5px;background:rgba(255,255,255,.028)}
 .about-list li+li{border-top:1px solid rgba(255,255,255,.05)}
 .about-list li span{color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-size:9.5px}
-.about-list li b{color:var(--text);font-weight:600;text-align:right}
-.footer-note{margin:22px 0 0;text-align:center;font-size:9.5px;letter-spacing:.18em;
-  text-transform:uppercase;color:rgba(125,133,144,.6)}
-
-/* ============================================================
-   TOASTS E AVISOS
-   ============================================================ */
-.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));
-  transform:translate(-50%,22px);z-index:300;max-width:min(420px,calc(100% - 32px));
-  padding:14px 20px;border-radius:14px;text-align:center;font-size:12.5px;line-height:1.5;
-  color:#ffd9ef;background:rgba(255,47,185,.15);border:1px solid rgba(255,47,185,.5);
-  box-shadow:0 0 42px -12px var(--magenta);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  opacity:0;pointer-events:none;transition:opacity .32s,transform .32s cubic-bezier(.2,.9,.3,1)}
+.about-list li b{color:var(--text);font-weight:600}
+.footer-note{margin:22px 0 0;text-align:center;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(125,133,144,.6)}
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));transform:translate(-50%,22px);z-index:300;max-width:min(420px,calc(100% - 32px));padding:14px 20px;border-radius:14px;text-align:center;font-size:12.5px;color:#ffd9ef;background:rgba(255,47,185,.15);border:1px solid rgba(255,47,185,.5);opacity:0;pointer-events:none;transition:all .32s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-.toast.ok{color:#c6ffec;background:rgba(0,255,180,.13);border-color:rgba(0,255,180,.5);box-shadow:0 0 42px -12px var(--green)}
-.notice-box{margin-top:12px;padding:13px 14px;border-radius:13px;font-size:11px;line-height:1.6;
-  color:rgba(255,209,102,.9);background:rgba(255,209,102,.08);border:1px solid rgba(255,209,102,.28)}
-
-/* ============================================================
-   RESPONSIVIDADE (LANDSCAPE E OUTROS)
-   ============================================================ */
-@media (orientation: landscape) {
-  :root { --nav-h: 66px; }
-  main { max-width: 100%; padding: 0 12px calc(var(--nav-h) + 22px + env(safe-area-inset-bottom)); }
-  .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; }
-  .logo-mark { width: 36px; height: 36px; flex-basis: 36px; font-size: 17px; }
-  .logo h1 { font-size: 13px; }
-  .terminal-body { height: 90px; }
-  .hw-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .hw-card.full { grid-column: span 1; }
-  .hw-card { padding: 11px 9px; }
-  .hw-v { font-size: 15px; }
-  .actions { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .btn { padding: 12px 12px; gap: 9px; font-size: 11px; }
-  .btn .ico { width: 30px; height: 30px; flex-basis: 30px; }
-  .btn .txt small { font-size: 8.5px; }
-  .games-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .game-card { min-height: 118px; padding: 14px 8px 12px; gap: 7px; }
-  .game-fav, .game-fav-fallback { width: 42px; height: 42px; border-radius: 11px; font-size: 18px; }
-  .game-name { font-size: 10.5px; }
-  .modal { max-width: 560px; }
-  .bottom-nav { padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
-  .nav-btn { padding: 5px 4px; font-size: 8.5px; gap: 3px; }
-  .nav-btn svg { width: 19px; height: 19px; }
-  .app-list { max-height: 40vh; }
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
+.toast.ok{color:#c6ffec;background:rgba(0,255,180,.13);border-color:rgba(0,255,180,.5)}
 </style>
 </head>
 <body>
@@ -406,113 +333,42 @@ select.input{appearance:none;-webkit-appearance:none;
 </header>
 
 <main>
-  <!-- ABA 1: ESPECIFICAÇÕES DO APARELHO -->
+  <!-- ABA 1: APARELHO -->
   <section class="pane active" id="pane-aparelho">
     <div class="section-title"><h2>Especificações do Aparelho</h2></div>
-
     <div class="terminal">
-      <div class="terminal-bar">
-        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="terminal-title">root@gamezone:~</span>
-      </div>
+      <div class="terminal-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="terminal-title">root@gamezone:~</span></div>
       <div class="terminal-body" id="terminal"></div>
     </div>
-
     <div class="hw-grid">
-      <div class="hw-card full">
-        <div class="hw-k">Modelo do Aparelho</div>
-        <div class="hw-v" id="specModel">—</div>
-        <div class="hw-sub" id="specManufacturer">fabricante</div>
-      </div>
-      <div class="hw-card cyan">
-        <div class="hw-k">Processador (CPU)</div>
-        <div class="hw-v" id="specCpu">—</div>
-        <div class="hw-sub" id="specCpuSub">—</div>
-      </div>
-      <div class="hw-card magenta">
-        <div class="hw-k">GPU</div>
-        <div class="hw-v" id="specGpu">—</div>
-        <div class="hw-sub" id="specGpuSub">renderer</div>
-      </div>
-      <div class="hw-card amber">
-        <div class="hw-k">RAM Total</div>
-        <div class="hw-v" id="specRam">—</div>
-        <div class="hw-sub">memória física</div>
-      </div>
-      <div class="hw-card green">
-        <div class="hw-k">Armazenamento</div>
-        <div class="hw-v" id="specStorage">—</div>
-        <div class="hw-sub">total do dispositivo</div>
-      </div>
-      <div class="hw-card full">
-        <div class="hw-k">Versão do Android</div>
-        <div class="hw-v" id="specOs">—</div>
-        <div class="hw-sub" id="specOsSub">—</div>
-      </div>
+      <div class="hw-card full"><div class="hw-k">Modelo do Aparelho</div><div class="hw-v" id="specModel">—</div><div class="hw-sub" id="specManufacturer">fabricante</div></div>
+      <div class="hw-card cyan"><div class="hw-k">Processador (CPU)</div><div class="hw-v" id="specCpu">—</div><div class="hw-sub" id="specCpuSub">—</div></div>
+      <div class="hw-card magenta"><div class="hw-k">GPU</div><div class="hw-v" id="specGpu">—</div><div class="hw-sub" id="specGpuSub">renderer</div></div>
+      <div class="hw-card amber"><div class="hw-k">RAM Total</div><div class="hw-v" id="specRam">—</div><div class="hw-sub">memória física</div></div>
+      <div class="hw-card green"><div class="hw-k">Armazenamento</div><div class="hw-v" id="specStorage">—</div><div class="hw-sub">total do dispositivo</div></div>
+      <div class="hw-card full"><div class="hw-k">Versão do Android</div><div class="hw-v" id="specOs">—</div><div class="hw-sub" id="specOsSub">—</div></div>
     </div>
-
     <div class="actions">
-      <button class="btn green action-btn" id="btnRefreshSpecs">
-        <span class="ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>
-          </svg>
-        </span>
-        <span class="txt">Reler Especificações<small>via plugin nativo</small></span>
-      </button>
-    </div>
-
-    <div class="notice-box">
-      ℹ️ Especificações estáticas lidas via <b>@capgo/capacitor-device-info</b>. Sem APIs do navegador.
+      <button class="btn green action-btn" id="btnRefreshSpecs"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span><span class="txt">Reler Especificações<small>via plugin nativo</small></span></button>
     </div>
   </section>
 
-  <!-- ABA 2: STATUS EM TEMPO REAL -->
+  <!-- ABA 2: STATUS -->
   <section class="pane" id="pane-status">
-    <div class="section-title">
-      <h2>Monitor em Tempo Real</h2>
-      <div class="live-indicator"><span class="pulse"></span>LIVE</div>
-    </div>
-
+    <div class="section-title"><h2>Monitor em Tempo Real</h2><div class="status-pill" style="color:var(--green)"><span class="pulse"></span>LIVE</div></div>
     <div class="hw-grid">
-      <div class="hw-card full">
-        <div class="hw-k">Uso de RAM</div>
-        <div class="hw-v" id="liveRam">—</div>
-        <div class="hw-sub" id="liveRamSub">aguardando plugin</div>
-        <div class="hw-bar"><div class="hw-bar-fill" id="liveRamBar"></div></div>
-      </div>
-      <div class="hw-card cyan">
-        <div class="hw-k">Uso da CPU</div>
-        <div class="hw-v" id="liveCpu">—</div>
-        <div class="hw-sub" id="liveCpuSub">—</div>
-        <div class="hw-bar"><div class="hw-bar-fill" id="liveCpuBar"></div></div>
-      </div>
-      <div class="hw-card amber">
-        <div class="hw-k">Bateria</div>
-        <div class="hw-v" id="liveBattery">—</div>
-        <div class="hw-sub" id="liveBatterySub">—</div>
-        <div class="hw-bar"><div class="hw-bar-fill" id="liveBatteryBar"></div></div>
-      </div>
-      <div class="hw-card magenta">
-        <div class="hw-k">Temperatura</div>
-        <div class="hw-v" id="liveTemp">—</div>
-        <div class="hw-sub" id="liveTempSub">térmico</div>
-      </div>
-      <div class="hw-card green full">
-        <div class="hw-k">Armazenamento Disponível</div>
-        <div class="hw-v" id="liveStorage">—</div>
-        <div class="hw-sub" id="liveStorageSub">—</div>
-        <div class="hw-bar"><div class="hw-bar-fill" id="liveStorageBar"></div></div>
-      </div>
-    </div>
-
-    <div class="notice-box">
-      🔄 Atualizando a cada 2 segundos via plugin nativo. Temperatura pode não estar disponível em todos os aparelhos.
+      <div class="hw-card full"><div class="hw-k">Uso de RAM</div><div class="hw-v" id="liveRam">—</div><div class="hw-sub" id="liveRamSub">aguardando</div><div class="hw-bar"><div class="hw-bar-fill" id="liveRamBar"></div></div></div>
+      <div class="hw-card cyan"><div class="hw-k">Uso da CPU</div><div class="hw-v" id="liveCpu">—</div><div class="hw-sub" id="liveCpuSub">—</div><div class="hw-bar"><div class="hw-bar-fill" id="liveCpuBar"></div></div></div>
+      <div class="hw-card amber"><div class="hw-k">Bateria</div><div class="hw-v" id="liveBattery">—</div><div class="hw-sub" id="liveBatterySub">—</div><div class="hw-bar"><div class="hw-bar-fill" id="liveBatteryBar"></div></div></div>
+      <div class="hw-card magenta"><div class="hw-k">Temperatura</div><div class="hw-v" id="liveTemp">—</div><div class="hw-sub" id="liveTempSub">térmico</div></div>
+      <div class="hw-card green full"><div class="hw-k">Armazenamento Disponível</div><div class="hw-v" id="liveStorage">—</div><div class="hw-sub" id="liveStorageSub">—</div><div class="hw-bar"><div class="hw-bar-fill" id="liveStorageBar"></div></div></div>
     </div>
   </section>
 
-  <!-- ABA 3: BIBLIOTECA DE JOGOS -->
+  <!-- ABA 3: JOGOS -->
   <section class="pane" id="pane-jogos">
+    
+    <!-- Header Retrato -->
     <div class="games-head">
       <div style="display:flex; align-items:center; gap:8px;">
         <h2>Biblioteca</h2>
@@ -521,29 +377,35 @@ select.input{appearance:none;-webkit-appearance:none;
       <div class="games-actions">
         <button class="btn-small" id="btnExport">Exp</button>
         <button class="btn-small" id="btnImport">Imp</button>
-        <button class="fab" id="btnAddGame" aria-label="Adicionar jogo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v14M5 12h14"/>
-          </svg>
-        </button>
+        <button class="fab" id="btnAddGame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button>
       </div>
     </div>
 
+    <!-- Conteúdo Retrato -->
     <div class="search-bar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
       <input id="searchGames" type="text" placeholder="Buscar jogo..." autocomplete="off">
     </div>
-
     <div class="chips" id="chips"></div>
     <div class="games-grid" id="gamesGrid"></div>
+    <div class="empty" id="gamesEmpty"><div class="ico">◈</div><p>Nenhum jogo ainda</p><span>toque em + para adicionar</span></div>
 
-    <div class="empty" id="gamesEmpty">
-      <div class="ico">◈</div>
-      <p>Nenhum jogo ainda</p>
-      <span>toque em + para adicionar</span>
+    <!-- ========================================== -->
+    <!-- CONSOLE MODE (APARECE SÓ NA PAISAGEM)      -->
+    <!-- ========================================== -->
+    <div class="console-container">
+      <div class="console-left" id="consoleLeft">
+        <!-- Lista de jogos injetada via JS -->
+      </div>
+      <div class="console-right" id="consoleRight">
+        <!-- Detalhes do jogo injetados via JS -->
+        <div class="console-empty" id="consoleEmpty">
+          <div class="ico">🎮</div>
+          <p>Selecione um jogo na lista</p>
+        </div>
+      </div>
     </div>
+
   </section>
 
   <!-- ABA 4: SOBRE -->
@@ -551,97 +413,44 @@ select.input{appearance:none;-webkit-appearance:none;
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.0.0</div>
+      <div class="ver">versão 3.1.0 (Console Update)</div>
       <div class="divider"></div>
-      <p class="about-text">
-        Central de especificações, monitoramento em tempo real e biblioteca de jogos.
-        Todos os dados de hardware são lidos via plugins nativos do Capacitor — sem APIs do navegador.
-      </p>
+      <p class="about-text">Central de especificações e biblioteca de jogos com modo console para paisagem.</p>
       <ul class="about-list">
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
-        <li><span>Device Info</span><b>@capgo/capacitor-device-info</b></li>
-        <li><span>Apps</span><b>@capgo/capacitor-android-usagestatsmanager</b></li>
-        <li><span>Orientação</span><b>@capacitor/screen-orientation</b></li>
+        <li><span>Filtro</span><b>Somente Apps de Usuário</b></li>
+        <li><span>Layout</span><b>Console Mode (Landscape)</b></li>
       </ul>
-      <div class="ai-note" style="margin-top:20px;padding:16px 15px;border-radius:16px;text-align:left;border:1px solid rgba(255,209,102,.32);background:rgba(255,209,102,.07)">
-        <strong style="display:block;margin-bottom:8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)">⚠ Aviso</strong>
-        <p style="font-size:11.5px;line-height:1.7;color:rgba(201,209,217,.85)">
-          Para listar apps instalados, o APK precisa da permissão de uso do Android.
-          O build injeta automaticamente <code>QUERY_ALL_PACKAGES</code> e <code>PACKAGE_USAGE_STATS</code>
-          no AndroidManifest.xml.
-        </p>
-      </div>
       <p class="footer-note">// gamezone · feito para rodar no seu bolso //</p>
     </div>
   </section>
 </main>
 
 <nav class="bottom-nav">
-  <button class="nav-btn active" data-tab="aparelho">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="5" y="2" width="14" height="20" rx="2"/>
-      <path d="M12 18h.01"/>
-    </svg>
-    <span>Aparelho</span>
-  </button>
-  <button class="nav-btn" data-tab="status">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 12h4l3-9 4 18 3-9h4"/>
-    </svg>
-    <span>Status</span>
-  </button>
-  <button class="nav-btn" data-tab="jogos">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="2" y="7" width="20" height="11" rx="4.5"/>
-      <path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/>
-    </svg>
-    <span>Jogos</span>
-  </button>
-  <button class="nav-btn" data-tab="sobre">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/>
-    </svg>
-    <span>Sobre</span>
-  </button>
+  <button class="nav-btn active" data-tab="aparelho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg><span>Aparelho</span></button>
+  <button class="nav-btn" data-tab="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg><span>Status</span></button>
+  <button class="nav-btn" data-tab="jogos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="4.5"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/></svg><span>Jogos</span></button>
+  <button class="nav-btn" data-tab="sobre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg><span>Sobre</span></button>
 </nav>
 
-<!-- MODAL DE JOGO -->
+<!-- MODAL NOVO JOGO -->
 <div class="modal-overlay" id="gameModal">
   <div class="modal">
     <h3>+ Novo Jogo</h3>
     <p class="sub">adicionar à biblioteca</p>
-
     <div class="mode-selector">
       <button class="mode-btn active" data-mode="web">🌐 Web</button>
       <button class="mode-btn" data-mode="installed">📱 Instalado</button>
     </div>
-
     <div class="mode-pane active" id="modePane-web">
-      <div class="field">
-        <label for="gameName">Nome do jogo</label>
-        <input class="input" id="gameName" type="text" placeholder="Ex: Subway Surfers" maxlength="40" autocomplete="off">
-      </div>
-      <div class="field">
-        <label for="gameUrl">Link (URL)</label>
-        <input class="input" id="gameUrl" type="url" placeholder="https://..." inputmode="url" autocomplete="off">
-      </div>
-      <div class="field">
-        <label for="gameCat">Categoria</label>
-        <select class="input" id="gameCat">
-          <option>Ação</option><option>Aventura</option><option>Puzzle</option>
-          <option>Corrida</option><option>Tiro</option><option>RPG</option>
-          <option>Esporte</option><option>Estratégia</option><option>Outro</option>
-        </select>
-      </div>
+      <div class="field"><label for="gameName">Nome do jogo</label><input class="input" id="gameName" type="text" placeholder="Ex: Subway Surfers" maxlength="40"></div>
+      <div class="field"><label for="gameUrl">Link (URL)</label><input class="input" id="gameUrl" type="url" placeholder="https://..." inputmode="url"></div>
+      <div class="field"><label for="gameCat">Categoria</label><select class="input" id="gameCat"><option>Ação</option><option>Aventura</option><option>Puzzle</option><option>Corrida</option><option>Tiro</option><option>RPG</option><option>Esporte</option><option>Estratégia</option><option>Outro</option></select></div>
     </div>
-
     <div class="mode-pane" id="modePane-installed">
-      <p class="sub" style="margin-top:10px">Selecione apps instalados para adicionar</p>
-      <div class="app-list" id="modalAppList">
-        <div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Toque em "Instalado" para carregar</div>
-      </div>
+      <p class="sub" style="margin-top:10px">Selecione apps para adicionar</p>
+      <div class="app-list" id="modalAppList"><div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Toque em "Instalado" para carregar</div></div>
     </div>
-
     <div class="modal-actions">
       <button class="btn-solid ghost" id="btnCancelGame">Fechar</button>
       <button class="btn-solid primary" id="btnSaveGame">Salvar</button>
@@ -654,612 +463,283 @@ select.input{appearance:none;-webkit-appearance:none;
 <script>
 (function(){
 'use strict';
-
-/* ============================================================
-   HELPERS
-   ============================================================ */
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-}[c]));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch(e){} };
-const fmtGB = b => {
-  if (b == null || isNaN(b) || b < 0) return '—';
-  return (b / (1024**3)).toFixed(2) + ' GB';
-};
+const fmtGB = b => { if (b == null || isNaN(b) || b < 0) return '—'; return (b / (1024**3)).toFixed(2) + ' GB'; };
 
-/* ============================================================
-   TOAST
-   ============================================================ */
-const toastEl = $('#toast');
-let toastT = null;
-function toast(m, t) {
-  toastEl.textContent = m;
-  toastEl.className = 'toast show' + (t === 'ok' ? ' ok' : '');
-  clearTimeout(toastT);
-  toastT = setTimeout(() => toastEl.classList.remove('show'), 3200);
-}
-
-/* ============================================================
-   CAPACITOR PLUGINS (NATIVOS)
-   ============================================================ */
+// Plugins e Variáveis
 const isNative = () => !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+const getPlugin = name => (window.Capacitor && window.Capacitor.Plugins) ? window.Capacitor.Plugins[name] : null;
+const getDeviceInfoPlugin = () => getPlugin('DeviceInfo') || getPlugin('CapacitorDeviceInfo');
+const getUsageStatsPlugin = () => getPlugin('CapacitorUsageStatsManager') || getPlugin('UsageStatsManager');
+const getDevicePlugin = () => getPlugin('Device');
+const getOrientationPlugin = () => getPlugin('ScreenOrientation');
 
-function getPlugin(name) {
-  if (!window.Capacitor || !window.Capacitor.Plugins) return null;
-  return window.Capacitor.Plugins[name] || null;
-}
-function getDeviceInfoPlugin() {
-  return getPlugin('DeviceInfo') || getPlugin('CapacitorDeviceInfo');
-}
-function getUsageStatsPlugin() {
-  // Correção: O nome exportado correto do plugin v8 é CapacitorUsageStatsManager
-  return getPlugin('CapacitorUsageStatsManager') || getPlugin('UsageStatsManager');
-}
-function getDevicePlugin() { return getPlugin('Device'); }
-function getOrientationPlugin() { return getPlugin('ScreenOrientation'); }
+// Toast
+const toastEl = $('#toast'); let toastT = null;
+function toast(m, t) { toastEl.textContent = m; toastEl.className = 'toast show' + (t === 'ok' ? ' ok' : ''); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 3200); }
 
-/* ============================================================
-   ORIENTAÇÃO DA TELA
-   ============================================================ */
-async function lockLandscape() {
-  const so = getOrientationPlugin();
-  if (so && so.lock) {
-    try { await so.lock({ orientation: 'landscape' }); return; } catch(e) {}
-  }
-  try {
-    if (screen.orientation && screen.orientation.lock) {
-      await screen.orientation.lock('landscape');
-    }
-  } catch(e) {}
-}
-async function unlockOrientation() {
-  const so = getOrientationPlugin();
-  if (so && so.unlock) {
-    try { await so.unlock(); return; } catch(e) {}
-  }
-  try {
-    if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
-  } catch(e) {}
-}
-
-/* ============================================================
-   TERMINAL LOG
-   ============================================================ */
+// Log
 const terminal = $('#terminal');
 function log(text, type) {
   if (!terminal) return;
-  const line = document.createElement('div');
-  line.className = 'line' + (type ? ' ' + type : '');
-  const ts = document.createElement('span');
-  ts.className = 'ts';
-  const d = new Date();
-  ts.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
-  line.appendChild(ts);
-  line.appendChild(document.createTextNode(text));
-  terminal.appendChild(line);
-  terminal.scrollTop = terminal.scrollHeight;
-}
-function logCaret() {
-  if (!terminal) return;
-  const l = document.createElement('div');
-  l.className = 'line';
-  const c = document.createElement('span');
-  c.className = 'caret';
-  l.appendChild(c);
-  terminal.appendChild(l);
-  terminal.scrollTop = terminal.scrollHeight;
+  const line = document.createElement('div'); line.className = 'line' + (type ? ' ' + type : '');
+  const ts = document.createElement('span'); ts.className = 'ts';
+  const d = new Date(); ts.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
+  line.appendChild(ts); line.appendChild(document.createTextNode(text)); terminal.appendChild(line); terminal.scrollTop = terminal.scrollHeight;
 }
 
-/* ============================================================
-   NAVEGAÇÃO E TROCA DE ABAS
-   ============================================================ */
-const navBtns = $$('.nav-btn');
-const panes = $$('.pane');
-let currentTab = 'aparelho';
-
+// Navegação
+const navBtns = $$('.nav-btn'); const panes = $$('.pane'); let currentTab = 'aparelho';
 async function switchTab(tab) {
   currentTab = tab;
   navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   panes.forEach(p => p.classList.toggle('active', p.id === 'pane-' + tab));
-
-  if (tab === 'jogos') await lockLandscape();
-  else await unlockOrientation();
-
-  if (tab === 'status') await startLiveStatus();
-  else await stopLiveStatus();
-
-  if (tab === 'aparelho') await loadDeviceSpecs();
-  if (tab === 'jogos') renderGames();
-
+  
+  const so = getOrientationPlugin();
+  if (tab === 'jogos') { try { await so.lock({ orientation: 'landscape' }); } catch(e){} renderGames(); } 
+  else { try { await so.unlock(); } catch(e){} }
+  
+  if (tab === 'status') startLiveStatus(); else stopLiveStatus();
+  if (tab === 'aparelho') loadDeviceSpecs();
   buzz(8);
-  try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) { window.scrollTo(0,0); }
 }
 navBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+$('#btnRotate').addEventListener('click', async () => { try { await getOrientationPlugin().unlock(); } catch(e){} toast('Gire o celular', 'ok'); });
 
-$('#btnRotate').addEventListener('click', async () => {
-  await unlockOrientation();
-  toast('Gire o celular para ajustar', 'ok');
-});
-
-/* ============================================================
-   ABA APARELHO: ESPECIFICAÇÕES ESTÁTICAS
-   ============================================================ */
+// Hardware Especificações
 async function loadDeviceSpecs() {
-  const di = getDeviceInfoPlugin();
-  const dev = getDevicePlugin();
-
+  const di = getDeviceInfoPlugin(); const dev = getDevicePlugin();
   if (!di && !dev) return;
-
-  log('> lendo especificações via plugin nativo...', 'info');
-
   try {
-    let info = null;
-    if (di && di.getInfo) {
-      try { info = await di.getInfo(); } catch(e) { log('  device-info erro: ' + e.message, 'warn'); }
-    }
-    let capInfo = null;
-    if (dev && dev.getInfo) {
-      try { capInfo = await dev.getInfo(); } catch(e) {}
-    }
-
-    // Modelo
+    let info = di ? await di.getInfo() : null;
+    let capInfo = dev ? await dev.getInfo() : null;
     const model = (capInfo && capInfo.model) || (info && info.device && info.device.model) || 'Desconhecido';
     const manufacturer = (capInfo && capInfo.manufacturer) || (info && info.device && info.device.manufacturer) || '';
     $('#specModel').textContent = model;
     $('#specManufacturer').textContent = manufacturer || 'fabricante';
-    log('  modelo: ' + model + (manufacturer ? ' · ' + manufacturer : ''), 'ok');
-
-    // CPU
-    const cpu = (info && info.cpu) || {};
-    const cpuModel = cpu.model || cpu.processor || '—';
-    const cpuCores = cpu.cores || cpu.coreCount || null;
+    const cpu = (info && info.cpu) || {}; const cpuModel = cpu.model || cpu.processor || '—'; const cpuCores = cpu.cores || cpu.coreCount || null;
     $('#specCpu').textContent = cpuModel;
     $('#specCpuSub').textContent = (cpuCores ? cpuCores + ' núcleos' : 'núcleos n/d') + (cpu.architecture ? ' · ' + cpu.architecture : '');
-    log('  cpu: ' + cpuModel + (cpuCores ? ' (' + cpuCores + ' cores)' : ''), 'info');
-
-    // GPU
-    const gpu = (info && info.gpu) || {};
-    const gpuModel = gpu.renderer || gpu.model || gpu.vendor || '—';
+    const gpu = (info && info.gpu) || {}; const gpuModel = gpu.renderer || gpu.model || gpu.vendor || '—';
     $('#specGpu').textContent = gpuModel;
     $('#specGpuSub').textContent = gpu.vendor && gpu.vendor !== gpuModel ? gpu.vendor : 'renderer';
-    log('  gpu: ' + gpuModel, 'info');
-
-    // RAM (Corrigido para totalBytes)
-    const mem = (info && info.memory) || {};
-    const ramTotal = mem.totalBytes || mem.total || null;
+    const mem = (info && info.memory) || {}; const ramTotal = mem.totalBytes || mem.total || null;
     $('#specRam').innerHTML = ramTotal ? fmtGB(ramTotal) : '<small>n/d</small>';
-    log('  ram total: ' + (ramTotal ? fmtGB(ramTotal) : 'n/d'), 'info');
-
-    // Armazenamento (Corrigido para totalBytes)
-    const st = (info && info.storage) || {};
-    const stTotal = st.totalBytes || st.total || null;
+    const st = (info && info.storage) || {}; const stTotal = st.totalBytes || st.total || null;
     $('#specStorage').innerHTML = stTotal ? fmtGB(stTotal) : '<small>n/d</small>';
-    log('  storage total: ' + (stTotal ? fmtGB(stTotal) : 'n/d'), 'info');
-
-    // SO
-    const os = (info && info.os) || {};
-    const osName = os.name || (capInfo && capInfo.platform) || 'Android';
-    const osVer = os.version || (capInfo && capInfo.osVersion) || '';
+    const os = (info && info.os) || {}; const osName = os.name || (capInfo && capInfo.platform) || 'Android'; const osVer = os.version || (capInfo && capInfo.osVersion) || '';
     $('#specOs').textContent = (osName + ' ' + osVer).trim();
     $('#specOsSub').textContent = (capInfo && capInfo.isVirtual) ? 'ambiente virtual' : 'dispositivo físico';
-    log('  so: ' + osName + ' ' + osVer, 'info');
-
     log('✓ especificações carregadas', 'ok');
-    logCaret();
-  } catch(e) {
-    log('  erro ao ler especificações: ' + e.message, 'err');
-    logCaret();
-  }
+  } catch(e) { log('erro: ' + e.message, 'err'); }
 }
+$('#btnRefreshSpecs').addEventListener('click', () => { terminal.innerHTML = ''; loadDeviceSpecs(); toast('Atualizado', 'ok'); });
 
-$('#btnRefreshSpecs').addEventListener('click', async () => {
-  buzz(12);
-  terminal.innerHTML = '';
-  log('> relendo especificações...', 'info');
-  await loadDeviceSpecs();
-  toast('Especificações atualizadas', 'ok');
-});
-
-/* ============================================================
-   ABA STATUS: MONITOR EM TEMPO REAL
-   ============================================================ */
-let statusListener = null;
-let statusPollTimer = null;
-let statusStarted = false;
-
+// Monitor Status
+let statusStarted = false; let statusListener = null;
 async function startLiveStatus() {
-  if (statusStarted) return;
-  statusStarted = true;
-
-  const di = getDeviceInfoPlugin();
-  if (!di) return;
-
+  if (statusStarted) return; statusStarted = true;
+  const di = getDeviceInfoPlugin(); if (!di) return;
   try {
-    if (di.addListener) {
-      const h = await di.addListener('deviceInfoUpdate', (data) => updateStatusUI(data));
-      statusListener = h;
-    }
-    if (di.startMonitoring) {
-      await di.startMonitoring({ intervalMs: 2000 });
-    }
-  } catch(e) {
-    log('  erro monitoring: ' + e.message, 'err');
-  }
+    if (di.addListener) statusListener = await di.addListener('deviceInfoUpdate', updateStatusUI);
+    if (di.startMonitoring) await di.startMonitoring({ intervalMs: 2000 });
+  } catch(e) {}
 }
-
 async function stopLiveStatus() {
-  if (!statusStarted) return;
-  statusStarted = false;
-  if (statusPollTimer) { clearInterval(statusPollTimer); statusPollTimer = null; }
-  if (statusListener) { try { statusListener.remove(); } catch(e) {} statusListener = null; }
-  const di = getDeviceInfoPlugin();
-  if (di && di.stopMonitoring) { try { await di.stopMonitoring(); } catch(e) {} }
+  if (!statusStarted) return; statusStarted = false;
+  if (statusListener) statusListener.remove();
+  const di = getDeviceInfoPlugin(); if (di && di.stopMonitoring) await di.stopMonitoring();
 }
-
 function updateStatusUI(sample) {
   if (!sample) return;
-
-  // RAM (Campos Corrigidos)
   const mem = sample.memory || {};
   if (mem.totalBytes) {
-    const used = mem.usedBytes || (mem.totalBytes - (mem.freeBytes || 0));
-    const pct = mem.usedPercent != null ? mem.usedPercent : (used / mem.totalBytes) * 100;
-    $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>';
-    $('#liveRamSub').textContent = 'de ' + fmtGB(mem.totalBytes) + ' · ' + pct.toFixed(1) + '%';
+    const used = mem.usedBytes || (mem.totalBytes - (mem.freeBytes || 0)); const pct = mem.usedPercent != null ? mem.usedPercent : (used / mem.totalBytes) * 100;
+    $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>'; $('#liveRamSub').textContent = 'de ' + fmtGB(mem.totalBytes) + ' · ' + pct.toFixed(1) + '%';
     $('#liveRamBar').style.width = Math.min(100, pct) + '%';
-    $('#liveRamBar').style.background = pct > 85 ? 'linear-gradient(90deg,var(--red),var(--magenta))' : 'linear-gradient(90deg,var(--green),var(--cyan))';
   }
-
-  // CPU
   const cpu = sample.cpu || {};
   if (cpu.usagePercent != null) {
-    const pct = Math.min(100, Math.max(0, cpu.usagePercent));
-    $('#liveCpu').innerHTML = pct.toFixed(1) + ' <small>%</small>';
-    const active = cpu.activeCores ? cpu.activeCores + '/' : '';
-    const cores = cpu.cores || cpu.coreCount || '?';
-    $('#liveCpuSub').textContent = active + cores + ' núcleos · ' + (cpu.model || 'cpu');
-    $('#liveCpuBar').style.width = pct + '%';
-  } else if (cpu.cores) {
-    $('#liveCpu').innerHTML = '—';
-    $('#liveCpuSub').textContent = (cpu.cores || '?') + ' núcleos (calculando...)';
+    $('#liveCpu').innerHTML = cpu.usagePercent.toFixed(1) + ' <small>%</small>'; $('#liveCpuSub').textContent = (cpu.cores || '?') + ' núcleos';
+    $('#liveCpuBar').style.width = cpu.usagePercent + '%';
   }
-
-  // Bateria
   const bat = sample.battery || {};
   if (bat.level != null) {
     const batPct = bat.level <= 1 ? Math.round(bat.level * 100) : Math.round(bat.level);
-    $('#liveBattery').innerHTML = batPct + ' <small>%</small>';
-    $('#liveBatterySub').textContent = bat.isCharging ? 'Carregando' : 'Descarregando';
-    $('#liveBatteryBar').style.width = batPct + '%';
-    $('#liveBatteryBar').style.background = batPct < 20 ? 'linear-gradient(90deg,var(--red),var(--magenta))' : 'linear-gradient(90deg,var(--amber),var(--green))';
+    $('#liveBattery').innerHTML = batPct + ' <small>%</small>'; $('#liveBatterySub').textContent = bat.isCharging ? 'Carregando' : 'Descarregando'; $('#liveBatteryBar').style.width = batPct + '%';
   }
-
-  // Temperatura
-  const thermal = sample.thermal || {};
-  let tempC = thermal.cpuTemperatureC || thermal.batteryTemperatureC || (bat.temperatureC);
-  if (tempC != null) {
-    $('#liveTemp').innerHTML = Number(tempC).toFixed(1) + ' <small>°C</small>';
-    $('#liveTempSub').textContent = thermal.state || 'monitorado';
-  }
-
-  // Armazenamento (Campos Corrigidos)
+  const thermal = sample.thermal || {}; const tempC = thermal.cpuTemperatureC || thermal.batteryTemperatureC;
+  if (tempC != null) $('#liveTemp').innerHTML = tempC.toFixed(1) + ' <small>°C</small>';
   const st = sample.storage || {};
   if (st.totalBytes) {
-    const free = st.freeBytes != null ? st.freeBytes : null;
-    const used = st.usedBytes != null ? st.usedBytes : null;
-    const pct = st.usedPercent != null ? st.usedPercent : 0;
-    if (free != null) $('#liveStorage').innerHTML = fmtGB(free) + ' <small>livres</small>';
-    else if (used != null) $('#liveStorage').innerHTML = fmtGB(used) + ' <small>usados</small>';
-    $('#liveStorageSub').textContent = 'de ' + fmtGB(st.totalBytes) + ' · ' + pct.toFixed(1) + '% usado';
-    $('#liveStorageBar').style.width = Math.min(100, pct) + '%';
+    const free = st.freeBytes || 0; const used = st.usedBytes || (st.totalBytes - free); const pct = (used / st.totalBytes) * 100;
+    $('#liveStorage').innerHTML = fmtGB(free) + ' <small>livres</small>'; $('#liveStorageSub').textContent = 'de ' + fmtGB(st.totalBytes); $('#liveStorageBar').style.width = pct + '%';
   }
 }
 
-/* ============================================================
-   ABA JOGOS: BIBLIOTECA E APPS INSTALADOS
-   ============================================================ */
+// Jogos e Filtro
 const GAMES_KEY = 'gamezone_games_v3';
-const CATS = ['Todos', 'Favoritos', 'Instalados', 'Ação', 'Aventura', 'Puzzle', 'Corrida', 'Tiro', 'RPG', 'Esporte', 'Estratégia', 'Outro'];
-let games = [];
-let currentCat = 'Todos';
-let searchQ = '';
-
-function loadGames() {
-  try {
-    const r = localStorage.getItem(GAMES_KEY);
-    games = r ? JSON.parse(r) : [];
-    if (!Array.isArray(games)) games = [];
-  } catch(e) { games = []; }
-}
-function saveGames() {
-  try { localStorage.setItem(GAMES_KEY, JSON.stringify(games)); } catch(e) {}
-}
-
-function renderChips() {
-  const el = $('#chips');
-  if (!el) return;
-  el.innerHTML = CATS.map(c => '<button class="chip' + (c === currentCat ? ' active' : '') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>').join('');
-  $$('#chips .chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      currentCat = chip.dataset.cat;
-      renderChips();
-      renderGames();
-      buzz(8);
-    });
-  });
-}
-
-function domainOf(url) {
-  try { return new URL(url).hostname; } catch(e) { return ''; }
-}
-function faviconOf(url) {
-  const d = domainOf(url);
-  return d ? 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(d) + '&sz=64' : '';
-}
+let games = []; let currentCat = 'Todos'; let searchQ = ''; let selectedGameIndex = -1;
+function loadGames() { try { games = JSON.parse(localStorage.getItem(GAMES_KEY)) || []; } catch(e) { games = []; } }
+function saveGames() { localStorage.setItem(GAMES_KEY, JSON.stringify(games)); }
 
 function renderGames() {
-  const grid = $('#gamesGrid');
-  const empty = $('#gamesEmpty');
-  if (!grid || !empty) return;
+  renderGridPortrait();
+  renderConsoleLandscape();
+}
 
-  grid.innerHTML = '';
-  let list = games.slice();
-
-  if (currentCat === 'Favoritos') list = list.filter(g => g.fav);
-  else if (currentCat === 'Instalados') list = list.filter(g => g.isNative);
-  else if (currentCat !== 'Todos') list = list.filter(g => g.cat === currentCat);
-
-  if (searchQ) {
-    const q = searchQ.toLowerCase();
-    list = list.filter(g => (g.name || '').toLowerCase().includes(q));
-  }
-
+function renderGridPortrait() {
+  const grid = $('#gamesGrid'); const empty = $('#gamesEmpty');
+  grid.innerHTML = ''; let list = games.slice();
+  if (currentCat === 'Favoritos') list = list.filter(g => g.fav); else if (currentCat !== 'Todos') list = list.filter(g => g.cat === currentCat);
+  if (searchQ) list = list.filter(g => (g.name || '').toLowerCase().includes(searchQ.toLowerCase()));
   list.sort((a, b) => ((b.fav ? 1 : 0) - (a.fav ? 1 : 0)) || ((b.added || 0) - (a.added || 0)));
-
-  if (!list.length) {
-    grid.style.display = 'none';
-    empty.style.display = 'flex';
-    return;
-  }
-  grid.style.display = 'grid';
-  empty.style.display = 'none';
-
+  if (!list.length) { grid.style.display = 'none'; empty.style.display = 'flex'; return; }
+  grid.style.display = 'grid'; empty.style.display = 'none';
   list.forEach((g, idx) => {
-    const card = document.createElement('div');
-    card.className = 'game-card';
-    card.style.animationDelay = (idx * 0.04) + 's';
-
-    const fav = document.createElement('button');
-    fav.className = 'game-fav-btn' + (g.fav ? ' on' : '');
-    fav.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>';
-    fav.addEventListener('click', ev => { ev.stopPropagation(); g.fav = !g.fav; saveGames(); renderGames(); buzz(12); });
-
-    const del = document.createElement('button');
-    del.className = 'game-del';
-    del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>';
-    del.addEventListener('click', ev => {
-      ev.stopPropagation();
-      card.style.transition = 'opacity .2s, transform .2s';
-      card.style.opacity = '0';
-      card.style.transform = 'scale(.85)';
-      buzz(18);
-      setTimeout(() => { games = games.filter(x => x !== g); saveGames(); renderGames(); toast('Removido', 'ok'); }, 200);
-    });
-
-    let iconEl;
-    if (g.isNative) {
-      iconEl = document.createElement('div');
-      iconEl.className = 'game-fav-fallback native';
-      iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
-    } else {
-      const iconUrl = faviconOf(g.url);
-      if (iconUrl) {
-        iconEl = document.createElement('img');
-        iconEl.className = 'game-fav';
-        iconEl.src = iconUrl;
-        iconEl.onerror = () => {
-          const fb = document.createElement('div'); fb.className = 'game-fav-fallback'; fb.textContent = (g.name.charAt(0) || '?').toUpperCase(); iconEl.replaceWith(fb);
-        };
-      } else {
-        iconEl = document.createElement('div'); iconEl.className = 'game-fav-fallback'; iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
-      }
-    }
-
+    const card = document.createElement('div'); card.className = 'game-card';
+    let iconEl = document.createElement('div'); iconEl.className = 'game-fav-fallback' + (g.isNative ? ' native' : ''); iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
     const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
     const cat = document.createElement('div'); cat.className = 'game-cat'; cat.textContent = g.isNative ? 'Instalado' : (g.cat || 'Outro');
-
-    card.appendChild(fav); card.appendChild(del); card.appendChild(iconEl); card.appendChild(name); card.appendChild(cat);
-
-    card.addEventListener('click', () => {
-      buzz(10);
-      if (g.isNative) toast('📱 ' + g.name + ' (app nativo)');
-      else {
-        try {
-          const w = window.open(g.url, '_blank', 'noopener,noreferrer');
-          if (!w) toast('Permita pop-ups');
-        } catch(e) { toast('Erro ao abrir'); }
-      }
-    });
-
+    card.appendChild(iconEl); card.appendChild(name); card.appendChild(cat);
+    card.addEventListener('click', () => { if (g.isNative) toast('App Nativo'); else window.open(g.url, '_blank'); });
     grid.appendChild(card);
   });
 }
 
-$('#searchGames').addEventListener('input', e => { searchQ = e.target.value; renderGames(); });
-
-$('#btnExport').addEventListener('click', () => {
-  if (!games.length) return toast('Biblioteca vazia');
-  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(games));
-  const a = document.createElement('a'); a.href = dataStr; a.download = 'gamezone-games.json'; a.click();
-  toast('Backup exportado', 'ok');
-});
-
-$('#btnImport').addEventListener('click', () => {
-  const input = document.createElement('input'); input.type = 'file'; input.accept = '.json,application/json';
-  input.onchange = e => {
-    const file = e.target.files[0]; if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      try {
-        const imported = JSON.parse(ev.target.result);
-        if (Array.isArray(imported)) { games = imported; saveGames(); renderGames(); toast('Biblioteca importada', 'ok'); }
-        else throw new Error('formato inválido');
-      } catch(err) { toast('Erro ao importar arquivo'); }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-});
-
-/* ============================================================
-   MODAL: ADICIONAR JOGO (WEB OU INSTALADO)
-   ============================================================ */
-const gameModal = $('#gameModal');
-let modalMode = 'web';
-let selectedApps = new Set();
-
-function openGameModal() {
-  modalMode = 'web';
-  selectedApps.clear();
-  setModalMode('web');
-  gameModal.classList.add('open');
-  setTimeout(() => { try { $('#gameName').focus(); } catch(e) {} }, 260);
+function renderConsoleLandscape() {
+  const left = $('#consoleLeft'); const right = $('#consoleRight');
+  left.innerHTML = '';
+  
+  if (!games.length) {
+    right.innerHTML = '<div class="console-empty"><div class="ico">◈</div><p>Nenhum jogo na biblioteca</p></div>';
+    return;
+  }
+  
+  games.forEach((g, idx) => {
+    const card = document.createElement('div'); card.className = 'console-card' + (idx === selectedGameIndex ? ' active' : '');
+    let iconEl = document.createElement('div'); iconEl.className = 'game-fav-fallback' + (g.isNative ? ' native' : ''); iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
+    const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
+    card.appendChild(iconEl); card.appendChild(name);
+    card.addEventListener('click', () => { selectedGameIndex = idx; renderConsoleLandscape(); });
+    left.appendChild(card);
+  });
+  
+  if (selectedGameIndex >= 0 && games[selectedGameIndex]) {
+    const g = games[selectedGameIndex];
+    right.innerHTML = `
+      <div class="detail-header">
+        <div class="game-fav-fallback ${g.isNative ? 'native' : ''}">${(g.name.charAt(0) || '?').toUpperCase()}</div>
+        <div class="detail-title">
+          <h2>${esc(g.name)}</h2>
+          <p>${g.isNative ? 'App Instalado' : esc(g.cat || 'Jogo Web')}</p>
+        </div>
+      </div>
+      <div class="detail-content">
+        <button class="btn-start" id="btnStartGame">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          INICIAR
+        </button>
+        <div class="detail-stats">
+          <div class="stat-box"><div class="k">Espaço Ocupado</div><div class="v">Indisponível</div></div>
+          <div class="stat-box"><div class="k">Uso de RAM</div><div class="v" id="detailRam">Carregando...</div></div>
+          <div class="stat-box"><div class="k">Bateria</div><div class="v" id="detailBat">Carregando...</div></div>
+          <div class="stat-box"><div class="k">Armazenamento</div><div class="v" id="detailStorage">Carregando...</div></div>
+        </div>
+      </div>
+    `;
+    
+    $('#btnStartGame').addEventListener('click', () => {
+      if (g.isNative) toast('Tentando abrir ' + g.name + ' (Apenas via plugin de abertura)');
+      else window.open(g.url, '_blank');
+    });
+    
+    // Puxar status rápido do device para o painel direito
+    const di = getDeviceInfoPlugin();
+    if (di && di.getInfo) {
+      di.getInfo().then(info => {
+        if (info.memory) {
+          const used = info.memory.usedBytes || (info.memory.totalBytes - info.memory.freeBytes);
+          $('#detailRam').textContent = fmtGB(used) + ' / ' + fmtGB(info.memory.totalBytes);
+        }
+        if (info.storage) {
+           $('#detailStorage').textContent = fmtGB(info.storage.freeBytes) + ' livres';
+        }
+      });
+    }
+    const dev = getDevicePlugin();
+    if (dev && dev.getBatteryInfo) {
+      dev.getBatteryInfo().then(b => { $('#detailBat').textContent = Math.round(b.batteryLevel*100) + '%'; });
+    }
+  }
 }
-function closeGameModal() {
-  gameModal.classList.remove('open');
-  $('#gameName').value = ''; $('#gameUrl').value = ''; $('#gameCat').value = 'Ação';
-  selectedApps.clear();
-}
-function setModalMode(mode) {
-  modalMode = mode;
-  $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  $('#modePane-web').classList.toggle('active', mode === 'web');
-  $('#modePane-installed').classList.toggle('active', mode === 'installed');
-  if (mode === 'installed') loadInstalledAppsForModal();
-}
 
-$$('.mode-btn').forEach(b => { b.addEventListener('click', () => { buzz(8); setModalMode(b.dataset.mode); }); });
+// Modal Adicionar
+const gameModal = $('#gameModal'); let modalMode = 'web'; let selectedApps = new Set();
+function setModalMode(mode) { modalMode = mode; $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode)); $('#modePane-web').classList.toggle('active', mode === 'web'); $('#modePane-installed').classList.toggle('active', mode === 'installed'); if (mode === 'installed') loadAppsForModal(); }
+$$('.mode-btn').forEach(b => b.addEventListener('click', () => setModalMode(b.dataset.mode)));
 
-async function loadInstalledAppsForModal() {
+$('#btnAddGame').addEventListener('click', () => { gameModal.classList.add('open'); setModalMode('web'); });
+$('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
+
+async function loadAppsForModal() {
   const listEl = $('#modalAppList');
-  listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Carregando apps...</div>';
-
-  if (!isNative()) {
-    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--amber);font-size:11px">⚠️ Listagem de apps instalados só funciona no APK Android.</div>';
-    return;
-  }
-
+  if (!isNative()) { listEl.innerHTML = '<div style="color:var(--red);padding:10px">Apenas no APK Android.</div>'; return; }
   const us = getUsageStatsPlugin();
-  if (!us) {
-    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--red);font-size:11px">Plugin UsageStatsManager não encontrado.</div>';
-    return;
-  }
-
   try {
     const { granted } = await us.isUsageStatsPermissionGranted();
-    if (!granted) {
-      listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--amber);font-size:11px">Permissão de uso pendente. Abrindo configurações...</div>';
-      await us.openUsageStatsSettings();
-      return;
-    }
-
+    if (!granted) { await us.openUsageStatsSettings(); return; }
     const { packages } = await us.queryAllPackages();
-    const userApps = (packages || []).filter(p =>
-      p && p.appName && !p.packageName.startsWith('com.android') && !p.packageName.startsWith('android') && !p.packageName.startsWith('com.google.android.inputmethod')
-    ).sort((a, b) => a.appName.localeCompare(b.appName));
-
-    if (!userApps.length) {
-      listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Nenhum app de usuário encontrado.</div>';
-      return;
-    }
+    
+    // FILTRO: Remove apps de sistema, Google, Samsung, Motorola, etc.
+    const blacklist = ['com.android', 'android', 'com.google', 'com.samsung', 'com.motorola', 'com.sec', 'com.qualcomm', 'com.mediatek', 'com.miui', 'com.xiaomi'];
+    const userApps = packages.filter(p => {
+       if (!p.appName) return false;
+       const pkg = p.packageName.toLowerCase();
+       return !blacklist.some(b => pkg.startsWith(b));
+    }).sort((a,b) => a.appName.localeCompare(b.appName));
 
     listEl.innerHTML = userApps.map(app => {
       const sel = selectedApps.has(app.packageName) ? ' selected' : '';
-      return '<div class="app-item' + sel + '" data-pkg="' + esc(app.packageName) + '" data-name="' + esc(app.appName) + '">' +
-        '<div class="app-icon">' + esc((app.appName.charAt(0) || '?').toUpperCase()) + '</div>' +
-        '<div class="app-info">' +
-          '<div class="app-name">' + esc(app.appName) + '</div>' +
-          '<div class="app-pkg">' + esc(app.packageName) + '</div>' +
-        '</div>' +
-        '<div class="app-check"></div>' +
-      '</div>';
+      return `<div class="app-item ${sel}" data-pkg="${esc(app.packageName)}" data-name="${esc(app.appName)}">
+        <div class="app-icon">${esc(app.appName.charAt(0))}</div>
+        <div class="app-info"><div class="app-name">${esc(app.appName)}</div><div class="app-pkg">${esc(app.packageName)}</div></div>
+        <div class="app-check"></div>
+      </div>`;
     }).join('');
-
+    
     listEl.querySelectorAll('.app-item').forEach(item => {
       item.addEventListener('click', () => {
         const pkg = item.dataset.pkg;
         if (selectedApps.has(pkg)) { selectedApps.delete(pkg); item.classList.remove('selected'); }
         else { selectedApps.add(pkg); item.classList.add('selected'); }
-        buzz(8);
       });
     });
-  } catch(e) {
-    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--red);font-size:11px">Erro: ' + esc(e.message) + '</div>';
-  }
+  } catch(e) { listEl.innerHTML = '<div style="color:var(--red)">Erro ao listar.</div>'; }
 }
 
-function normalizeUrl(raw) {
-  let u = (raw || '').trim();
-  if (!u) return '';
-  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
-  try { const p = new URL(u); if (!p.hostname || !p.hostname.includes('.')) return ''; return p.href; } catch(e) { return ''; }
-}
-
-async function handleSave() {
+$('#btnSaveGame').addEventListener('click', () => {
   if (modalMode === 'web') {
-    const nome = $('#gameName').value.trim();
-    const url = normalizeUrl($('#gameUrl').value);
-    const cat = $('#gameCat').value;
-    if (nome.length < 2) { toast('Nome muito curto'); $('#gameName').focus(); return; }
-    if (!url) { toast('Link inválido'); $('#gameUrl').focus(); return; }
-    games.push({ name: nome, url, cat, fav: false, added: Date.now(), isNative: false });
-    saveGames(); renderGames(); closeGameModal(); buzz([20, 40, 20]);
-    toast('"' + nome + '" adicionado', 'ok');
+    const name = $('#gameName').value.trim(); let url = $('#gameUrl').value.trim();
+    if (!name || !url) return toast('Preencha tudo');
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    games.push({ name, url, cat: $('#gameCat').value, fav: false, isNative: false, added: Date.now() });
   } else {
-    if (selectedApps.size === 0) { toast('Selecione ao menos 1 app'); return; }
-    let added = 0;
+    if (!selectedApps.size) return toast('Selecione um app');
     selectedApps.forEach(pkg => {
-      if (!games.find(g => g.isNative && g.packageName === pkg)) {
-        const el = $('#modalAppList .app-item[data-pkg="' + CSS.escape(pkg) + '"]');
-        const nome = el ? el.dataset.name : pkg;
-        games.push({ name: nome, packageName: pkg, cat: 'Instalado', fav: false, added: Date.now(), isNative: true });
-        added++;
-      }
+      const el = $('#modalAppList .app-item[data-pkg="' + CSS.escape(pkg) + '"]');
+      const name = el ? el.dataset.name : pkg;
+      if (!games.find(g => g.isNative && g.packageName === pkg)) games.push({ name, packageName: pkg, cat: 'Instalado', fav: false, isNative: true, added: Date.now() });
     });
-    saveGames(); renderGames(); closeGameModal(); buzz([20, 40, 20]);
-    toast(added + ' app(s) adicionado(s)', 'ok');
   }
-}
+  saveGames(); renderGames(); gameModal.classList.remove('open'); toast('Salvo!', 'ok');
+});
 
-$('#btnAddGame').addEventListener('click', () => { buzz(10); openGameModal(); });
-$('#btnCancelGame').addEventListener('click', closeGameModal);
-$('#btnSaveGame').addEventListener('click', handleSave);
-gameModal.addEventListener('click', e => { if (e.target === gameModal) closeGameModal(); });
-
-/* ============================================================
-   BOOT
-   ============================================================ */
-async function boot() {
-  loadGames(); renderChips(); renderGames();
-  await sleep(200);
-  log('GameZone v3.0.0', 'ok');
-  await sleep(140);
-  log('kernel: interface carregada', 'info');
-  await sleep(140);
-  log('plugins: ' + (isNative() ? 'nativos detectados' : 'modo navegador'), isNative() ? 'ok' : 'warn');
-  await sleep(140);
-  log('hardware: lendo especificações...', 'info');
-  await loadDeviceSpecs();
-  log('Pronto.', 'warn');
-  logCaret();
-  if (currentTab !== 'aparelho') await switchTab('aparelho');
-}
-
-window.addEventListener('load', boot);
-if (document.readyState === 'complete') boot();
+window.addEventListener('load', () => { loadGames(); renderGames(); loadDeviceSpecs(); log('GameZone v3.1 (Console Mode)', 'ok'); });
 })();
 </script>
 </body>
