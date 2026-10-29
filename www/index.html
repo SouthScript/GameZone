@@ -917,7 +917,7 @@ main {
 }
 
 /* ============================================================
-   ANEL ANALÓGICO DE RAM (NOVO)
+   ANEL ANALÓGICO DE RAM
    ============================================================ */
 .ring-wrap {
   display: flex;
@@ -966,7 +966,7 @@ main {
   color: var(--muted);
 }
 
-/* Botão de otimização (NOVO) */
+/* Botão de otimização */
 .btn-opt {
   display: flex;
   align-items: center;
@@ -1119,7 +1119,7 @@ main {
   border-color: transparent;
 }
 
-/* Slider de configurações (NOVO) */
+/* Slider de configurações */
 .slider-group { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
 .slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; }
 .slider-val { font-size: 12px; font-weight: 700; color: var(--green); min-width: 30px; text-align: center; }
@@ -1335,9 +1335,12 @@ main {
       <div class="console-left">
         <div class="console-left-header">
           <h2>Jogos</h2>
-          <button class="fab" id="btnAddGameLandscape" style="width:34px; height:34px; border-radius:10px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-small" id="btnSettingsLandscape" style="padding: 4px 8px; font-size: 14px;">⚙️</button>
+            <button class="fab" id="btnAddGameLandscape" style="width:34px; height:34px; border-radius:10px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
         </div>
         <div class="console-grid" id="consoleLeft">
           <!-- Lista de jogos injetada via JS -->
@@ -1772,9 +1775,8 @@ function renderConsoleLandscape() {
       btn.textContent = 'OTIMIZANDO...';
       buzz([50, 50, 50]);
       
-      // Simula processo de limpeza (trimMemory nativo + coleta)
+      // Simula processo de limpeza
       setTimeout(() => {
-        // Força atualização do monitor
         const di = getDeviceInfoPlugin();
         if (di && di.getInfo) {
           di.getInfo().then(info => {
@@ -1783,7 +1785,7 @@ function renderConsoleLandscape() {
               const total = info.memory.totalBytes || 1;
               const pct = (used / total) * 100;
               updateRing(pct, used, total);
-              // Atualiza o card de texto do painel de status também
+              
               const ramEl = $('#liveRam');
               if (ramEl) ramEl.innerHTML = fmtGB(used) + ' <small>usados</small>';
               const ramSub = $('#liveRamSub');
@@ -1848,6 +1850,10 @@ $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('
 // Configurações
 const settingsModal = $('#settingsModal');
 $('#btnSettings').addEventListener('click', () => {
+  settingsModal.classList.add('open');
+  loadIconSize();
+});
+$('#btnSettingsLandscape').addEventListener('click', () => {
   settingsModal.classList.add('open');
   loadIconSize();
 });
