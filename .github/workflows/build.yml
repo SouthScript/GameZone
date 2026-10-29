@@ -18,51 +18,67 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-fund
 
-      - name: Add Android platform
-        run: npx cap add android || true
+      - name: Clean & add Android platform
+        run: |
+          rm -rf android
+          npx cap add android
 
       - name: Inject AndroidManifest permissions & queries
         run: |
-          node -e "
+          node << 'NODE_EOF'
           const fs = require('fs');
           const path = 'android/app/src/main/AndroidManifest.xml';
           let xml = fs.readFileSync(path, 'utf8');
 
-          // Permissões
+          console.log('--- BEFORE ---');
+          console.log(xml);
+
+          // 1. Garante o namespace xmlns:tools no <manifest>
+          if (!xml.includes('xmlns:tools=')) {
+            xml = xml.replace(
+              /<manifest(\s|>)/,
+              '<manifest xmlns:tools="http://schemas.android.com/tools"$1'
+            );
+          }
+
+          // 2. Permissões
           const perms = [
-            '<uses-permission android:name=\"android.permission.QUERY_ALL_PACKAGES\" tools:ignore=\"QueryAllPackagesPermission\" />',
-            '<uses-permission android:name=\"android.permission.PACKAGE_USAGE_STATS\" tools:ignore=\"ProtectedPermissions\" />'
+            'android.permission.QUERY_ALL_PACKAGES',
+            'android.permission.PACKAGE_USAGE_STATS'
           ];
-          for (const p of perms) {
-            if (!xml.includes(p)) {
-              xml = xml.replace('</manifest>', '  ' + p + '\n</manifest>');
+          for (const perm of perms) {
+            if (!xml.includes('android:name="' + perm + '"')) {
+              xml = xml.replace(
+                '</manifest>',
+                '    <uses-permission android:name="' + perm + '" tools:ignore="QueryAllPackagesPermission,ProtectedPermissions" />\n</manifest>'
+              );
             }
           }
 
-          // Queries para AppLauncher (Android 11+)
-          const queries = [
-            'com.android.chrome',
-            'org.mozilla.firefox',
-            'com.microsoft.emmx',
-            'com.brave.browser',
-            'com.opera.browser',
-            'com.roblox.client',
-            'com.mojang.minecraftpe',
-            'com.innersloth.spacemafia',
-            'com.supercell.clashofclans',
-            'com.supercell.clashroyale',
-            'com.mojang.minecraftpe'
-          ];
-          const queryBlock = '<queries>\n' + queries.map(p => '  <package android:name=\"' + p + '\" />').join('\n') + '\n</queries>';
+          // 3. Queries (Android 11+)
           if (!xml.includes('<queries>')) {
-            xml = xml.replace('</manifest>', '  ' + queryBlock + '\n</manifest>');
+            const queryPkgs = [
+              'com.android.chrome', 'org.mozilla.firefox',
+              'com.microsoft.emmx', 'com.brave.browser',
+              'com.opera.browser', 'com.opera.mini.native',
+              'com.sec.android.app.sbrowser',
+              'com.roblox.client', 'com.mojang.minecraftpe',
+              'com.innersloth.spacemafia',
+              'com.supercell.clashofclans', 'com.supercell.clashroyale'
+            ];
+            const q = '    <queries>\n' +
+              queryPkgs.map(p => '        <package android:name="' + p + '" />').join('\n') +
+              '\n    </queries>\n';
+            xml = xml.replace('</manifest>', q + '</manifest>');
           }
 
           fs.writeFileSync(path, xml);
-          console.log('✅ AndroidManifest.xml atualizado');
-          "
+
+          console.log('--- AFTER ---');
+          console.log(xml);
+          NODE_EOF
 
       - name: Sync Capacitor
         run: npx cap sync android
@@ -72,3 +88,9 @@ jobs:
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gamezone-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
