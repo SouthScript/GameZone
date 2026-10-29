@@ -659,9 +659,9 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 148px;
-  padding: 22px 12px 16px;
+  gap: 8px;
+  min-height: 128px;
+  padding: 18px 10px 14px;
   border-radius: 18px;
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018));
   border: 1px solid var(--brd);
@@ -673,27 +673,28 @@ main {
 .game-card:active { transform: scale(0.955); }
 
 .game-fav, .game-fav-fallback {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   color: #04120e;
   background: linear-gradient(135deg, var(--green), var(--cyan));
-  box-shadow: 0 0 22px -6px var(--green);
+  box-shadow: 0 0 18px -6px var(--green);
   text-transform: uppercase;
+  object-fit: cover;
 }
 
 .game-fav-fallback.native {
   background: linear-gradient(135deg, var(--cyan), var(--magenta));
   color: #fff;
-  box-shadow: 0 0 22px -6px var(--cyan);
+  box-shadow: 0 0 18px -6px var(--cyan);
 }
 
 .game-name {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.35;
   text-align: center;
   color: var(--text);
@@ -705,7 +706,7 @@ main {
 }
 
 .game-cat {
-  font-size: 8.5px;
+  font-size: 8px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
@@ -734,6 +735,11 @@ main {
 .console-container { display: none; }
 
 @media (orientation: landscape) {
+  body, html {
+    overflow: hidden;
+    height: 100dvh;
+  }
+
   main {
     max-width: 100%;
     padding: 0 12px 10px;
@@ -760,8 +766,9 @@ main {
     display: flex;
     flex-direction: row;
     gap: 12px;
-    height: calc(100dvh - 140px);
+    height: calc(100dvh - 120px);
     width: 100%;
+    overflow: hidden;
   }
 
   /* Lista de Jogos (Esquerda) */
@@ -770,6 +777,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-height: 0;
   }
 
   .console-left-header {
@@ -780,6 +788,7 @@ main {
     padding: 10px;
     border-radius: 14px;
     border: 1px solid var(--brd);
+    flex: 0 0 auto;
   }
   
   .console-left-header h2 {
@@ -796,6 +805,7 @@ main {
     overflow-y: auto;
     padding-right: 4px;
     scrollbar-width: thin;
+    min-height: 0;
   }
 
   .console-grid::-webkit-scrollbar { width: 4px; }
@@ -809,8 +819,8 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px;
-    gap: 6px;
+    padding: 8px 6px;
+    gap: 5px;
     cursor: pointer;
     transition: all 0.2s;
   }
@@ -821,8 +831,15 @@ main {
     background: rgba(0, 255, 180, 0.1);
   }
 
-  .console-card .game-fav-fallback { width: 40px; height: 40px; font-size: 16px; border-radius: 10px; }
-  .console-card .game-name { font-size: 10px; -webkit-line-clamp: 1; }
+  .console-card .game-fav-fallback,
+  .console-card .game-fav-img {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; }
 
   /* Detalhes do Jogo (Direita) */
   .console-right {
@@ -832,43 +849,46 @@ main {
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--brd);
     border-radius: 18px;
-    padding: 20px;
+    padding: 18px;
     overflow: hidden;
     position: relative;
+    min-height: 0;
   }
 
-  .detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; z-index: 1; }
-  .detail-header .game-fav-fallback { width: 64px; height: 64px; font-size: 28px; border-radius: 16px; }
-  .detail-title h2 { font-size: 20px; color: #fff; line-height: 1.2; }
-  .detail-title p { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; margin-top: 4px; text-transform: uppercase; }
+  .detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; z-index: 1; flex: 0 0 auto; }
+  .detail-header .game-fav-fallback,
+  .detail-header .game-fav-img { width: 52px; height: 52px; font-size: 22px; border-radius: 14px; }
+  .detail-title h2 { font-size: 18px; color: #fff; line-height: 1.2; }
+  .detail-title p { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-top: 4px; text-transform: uppercase; }
 
-  .detail-content { flex: 1; display: flex; flex-direction: column; gap: 12px; z-index: 1; overflow-y: auto; }
+  .detail-content { flex: 1; display: flex; flex-direction: column; gap: 10px; z-index: 1; overflow-y: auto; min-height: 0; }
   
   .btn-start {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 16px;
+    padding: 14px;
     border-radius: 14px;
     border: none;
     background: linear-gradient(135deg, var(--green), var(--cyan));
     color: #04120e;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 800;
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: 0 0 30px -10px var(--green);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    flex: 0 0 auto;
   }
   
   .btn-start:active { transform: scale(0.98); }
 
-  .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .stat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 4px; }
   .stat-box.full { grid-column: 1 / -1; }
   .stat-box .k { font-size: 9px; color: var(--muted); text-transform: uppercase; }
-  .stat-box .v { font-size: 16px; font-weight: 700; color: var(--text); }
+  .stat-box .v { font-size: 14px; font-weight: 700; color: var(--text); }
   
   .console-empty {
     display: flex;
@@ -966,12 +986,43 @@ main {
 .app-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; max-height: 52vh; overflow-y: auto; }
 .app-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--brd); cursor: pointer; }
 .app-item.selected { border-color: rgba(0, 255, 180, 0.6); background: rgba(0, 255, 180, 0.06); }
-.app-icon { width: 38px; height: 38px; flex: 0 0 38px; border-radius: 10px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); display: grid; place-items: center; font-size: 16px; font-weight: bold; color: #fff; }
+.app-icon { width: 38px; height: 38px; flex: 0 0 38px; border-radius: 10px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); display: grid; place-items: center; font-size: 16px; font-weight: bold; color: #fff; object-fit: cover; }
 .app-info { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
 .app-name { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .app-pkg { font-size: 9.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
 .app-check { width: 20px; height: 20px; flex: 0 0 20px; border-radius: 6px; border: 2px solid rgba(0, 255, 180, 0.4); }
 .app-item.selected .app-check { background: var(--green); border-color: var(--green); }
+
+/* Filtros na modal */
+.modal-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.modal-chips::-webkit-scrollbar { display: none; }
+
+.modal-chip {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.modal-chip.active {
+  color: #04120e;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  border-color: transparent;
+}
 
 /* ============================================================
    ABA SOBRE
@@ -1010,6 +1061,32 @@ main {
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .toast.ok { color: #c6ffec; background: rgba(0, 255, 180, 0.13); border-color: rgba(0, 255, 180, 0.5); }
+
+/* Ícone de imagem real */
+.game-fav-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  box-shadow: 0 0 18px -6px var(--green);
+}
+.console-card .game-fav-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+.detail-header .game-fav-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+}
+.app-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
 </style>
 </head>
 <body>
@@ -1186,6 +1263,7 @@ main {
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
         <li><span>Device Info</span><b>@capgo/capacitor-device-info</b></li>
         <li><span>Apps</span><b>UsageStatsManager</b></li>
+        <li><span>Launcher</span><b>@capacitor/app-launcher</b></li>
       </ul>
       <p class="footer-note">// gamezone · feito para rodar no seu bolso //</p>
     </div>
@@ -1231,7 +1309,12 @@ main {
       </div>
     </div>
     <div class="mode-pane" id="modePane-installed">
-      <p class="sub" style="margin-top:10px">Selecione apps para adicionar</p>
+      <div class="modal-chips" id="modalFilterChips">
+        <button class="modal-chip active" data-filter="all">Todos</button>
+        <button class="modal-chip" data-filter="browsers">Navegadores</button>
+        <button class="modal-chip" data-filter="installed">Instalados</button>
+      </div>
+      <p class="sub" style="margin-top:6px">Selecione apps para adicionar</p>
       <div class="app-list" id="modalAppList"><div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Toque em "Instalado" para carregar</div></div>
     </div>
     <div class="modal-actions">
@@ -1261,6 +1344,7 @@ const getDeviceInfoPlugin = () => getPlugin('DeviceInfo') || getPlugin('Capacito
 const getUsageStatsPlugin = () => getPlugin('CapacitorUsageStatsManager') || getPlugin('UsageStatsManager');
 const getDevicePlugin = () => getPlugin('Device');
 const getOrientationPlugin = () => getPlugin('ScreenOrientation');
+const getAppLauncherPlugin = () => getPlugin('AppLauncher');
 
 // UI Toast
 const toastEl = $('#toast'); let toastT = null;
@@ -1346,7 +1430,7 @@ async function startLiveStatus() {
 }
 async function stopLiveStatus() {
   if (!statusStarted) return; statusStarted = false;
-  if (statusListener) statusListener.remove();
+  if (statusListener) { try { await statusListener.remove(); } catch(e){} statusListener = null; }
   const di = getDeviceInfoPlugin(); if (di && di.stopMonitoring) await di.stopMonitoring();
 }
 function updateStatusUI(sample) {
@@ -1387,6 +1471,26 @@ function renderGames() {
   renderConsoleLandscape();
 }
 
+// Favicon helper
+function getFaviconUrl(url) {
+  try {
+    const domain = new URL(url).hostname;
+    return 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(domain) + '&sz=64';
+  } catch(e) { return null; }
+}
+
+function getGameIconHtml(g, sizeClass) {
+  const cls = sizeClass || 'game-fav';
+  if (g.iconBase64) {
+    return `<img class="${cls}" src="${esc(g.iconBase64)}" alt="${esc(g.name)}" loading="lazy">`;
+  }
+  if (!g.isNative && g.url) {
+    const fav = getFaviconUrl(g.url);
+    if (fav) return `<img class="${cls}" src="${fav}" alt="${esc(g.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="${cls}-fallback ${g.isNative ? 'native' : ''}" style="display:none">${(g.name.charAt(0) || '?').toUpperCase()}</div>`;
+  }
+  return `<div class="${cls}-fallback ${g.isNative ? 'native' : ''}">${(g.name.charAt(0) || '?').toUpperCase()}</div>`;
+}
+
 function renderGridPortrait() {
   const grid = $('#gamesGrid'); const empty = $('#gamesEmpty');
   grid.innerHTML = ''; let list = games.slice();
@@ -1396,16 +1500,33 @@ function renderGridPortrait() {
   if (!list.length) { grid.style.display = 'none'; empty.style.display = 'flex'; return; }
   grid.style.display = 'grid'; empty.style.display = 'none';
   
-  list.forEach((g, idx) => {
+  const frag = document.createDocumentFragment();
+  list.forEach((g) => {
     const card = document.createElement('div'); card.className = 'game-card';
-    let iconEl = document.createElement('div'); iconEl.className = 'game-fav-fallback' + (g.isNative ? ' native' : ''); iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
+    card.innerHTML = getGameIconHtml(g, 'game-fav');
     const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
     const cat = document.createElement('div'); cat.className = 'game-cat'; cat.textContent = g.isNative ? 'Instalado' : (g.cat || 'Outro');
-    card.appendChild(iconEl); card.appendChild(name); card.appendChild(cat);
-    card.addEventListener('click', () => { if (g.isNative) toast('App Nativo'); else window.open(g.url, '_blank'); });
-    grid.appendChild(card);
+    card.appendChild(name); card.appendChild(cat);
+    card.addEventListener('click', () => openGame(g));
+    frag.appendChild(card);
   });
+  grid.appendChild(frag);
 }
+
+async function openGame(g) {
+  const launcher = getAppLauncherPlugin();
+  try {
+    if (g.isNative) {
+      await launcher.openUrl({ url: g.packageName });
+    } else {
+      await launcher.openUrl({ url: g.url });
+    }
+  } catch(e) {
+    toast('Não foi possível abrir: ' + e.message);
+  }
+}
+
+let consoleSelectedIdx = -1;
 
 function renderConsoleLandscape() {
   const left = $('#consoleLeft'); const right = $('#consoleRight');
@@ -1416,20 +1537,20 @@ function renderConsoleLandscape() {
     return;
   }
   
+  const frag = document.createDocumentFragment();
   games.forEach((g, idx) => {
-    const card = document.createElement('div'); card.className = 'console-card' + (idx === selectedGameIndex ? ' active' : '');
-    let iconEl = document.createElement('div'); iconEl.className = 'game-fav-fallback' + (g.isNative ? ' native' : ''); iconEl.textContent = (g.name.charAt(0) || '?').toUpperCase();
-    const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
-    card.appendChild(iconEl); card.appendChild(name);
-    card.addEventListener('click', () => { selectedGameIndex = idx; renderConsoleLandscape(); });
-    left.appendChild(card);
+    const card = document.createElement('div'); card.className = 'console-card' + (idx === consoleSelectedIdx ? ' active' : '');
+    card.innerHTML = getGameIconHtml(g, 'game-fav') + `<div class="game-name">${esc(g.name)}</div>`;
+    card.addEventListener('click', () => { consoleSelectedIdx = idx; renderConsoleLandscape(); });
+    frag.appendChild(card);
   });
+  left.appendChild(frag);
   
-  if (selectedGameIndex >= 0 && games[selectedGameIndex]) {
-    const g = games[selectedGameIndex];
+  if (consoleSelectedIdx >= 0 && games[consoleSelectedIdx]) {
+    const g = games[consoleSelectedIdx];
     right.innerHTML = `
       <div class="detail-header">
-        <div class="game-fav-fallback ${g.isNative ? 'native' : ''}">${(g.name.charAt(0) || '?').toUpperCase()}</div>
+        ${getGameIconHtml(g, 'game-fav')}
         <div class="detail-title">
           <h2>${esc(g.name)}</h2>
           <p>${g.isNative ? 'App Instalado' : esc(g.cat || 'Jogo Web')}</p>
@@ -1441,7 +1562,7 @@ function renderConsoleLandscape() {
           INICIAR
         </button>
         <div class="detail-stats">
-          <div class="stat-box"><div class="k">Espaço Ocupado</div><div class="v">Indisponível</div></div>
+          <div class="stat-box"><div class="k">Espaço Ocupado</div><div class="v" id="detailSpace">Carregando...</div></div>
           <div class="stat-box"><div class="k">Uso de RAM</div><div class="v" id="detailRam">Carregando...</div></div>
           <div class="stat-box"><div class="k">Bateria</div><div class="v" id="detailBat">Carregando...</div></div>
           <div class="stat-box full"><div class="k">Armazenamento</div><div class="v" id="detailStorage">Carregando...</div></div>
@@ -1449,10 +1570,21 @@ function renderConsoleLandscape() {
       </div>
     `;
     
-    $('#btnStartGame').addEventListener('click', () => {
-      if (g.isNative) toast('Tentando abrir ' + g.name);
-      else window.open(g.url, '_blank');
-    });
+    $('#btnStartGame').addEventListener('click', () => openGame(g));
+    
+    // Espaço ocupado
+    if (g.isNative) {
+      $('#detailSpace').textContent = 'Restrito pelo Android';
+    } else {
+      if (navigator.storage && navigator.storage.estimate) {
+        navigator.storage.estimate().then(est => {
+          const used = est.usage || 0;
+          $('#detailSpace').textContent = used > 0 ? fmtGB(used) + ' (cache)' : '—';
+        }).catch(() => { $('#detailSpace').textContent = '—'; });
+      } else {
+        $('#detailSpace').textContent = '—';
+      }
+    }
     
     // Stats do Painel
     const di = getDeviceInfoPlugin();
@@ -1473,6 +1605,9 @@ function renderConsoleLandscape() {
 
 // Modal Adicionar
 const gameModal = $('#gameModal'); let modalMode = 'web'; let selectedApps = new Set();
+let modalFilter = 'all'; // 'all' | 'browsers' | 'installed'
+let cachedUserApps = [];
+
 function setModalMode(mode) { modalMode = mode; $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode)); $('#modePane-web').classList.toggle('active', mode === 'web'); $('#modePane-installed').classList.toggle('active', mode === 'installed'); if (mode === 'installed') loadAppsForModal(); }
 $$('.mode-btn').forEach(b => b.addEventListener('click', () => setModalMode(b.dataset.mode)));
 
@@ -1481,6 +1616,58 @@ $('#btnAddGame').addEventListener('click', openModal);
 $('#btnAddGameLandscape').addEventListener('click', openModal);
 $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
 
+// Filtros da modal
+const BROWSER_PACKAGES = [
+  'com.android.chrome', 'org.mozilla.firefox', 'com.microsoft.emmx',
+  'com.brave.browser', 'com.opera.browser', 'com.opera.mini.native',
+  'com.sec.android.app.sbrowser', 'com.google.android.apps.nbu.files'
+];
+
+function isBrowser(pkg) {
+  return BROWSER_PACKAGES.includes(pkg) || pkg.toLowerCase().includes('browser') || pkg.toLowerCase().includes('chrome') || pkg.toLowerCase().includes('firefox');
+}
+
+$$('#modalFilterChips .modal-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    $$('#modalFilterChips .modal-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    modalFilter = chip.dataset.filter;
+    renderModalAppList();
+  });
+});
+
+function renderModalAppList() {
+  const listEl = $('#modalAppList');
+  let filtered = cachedUserApps;
+  if (modalFilter === 'browsers') filtered = filtered.filter(a => isBrowser(a.packageName));
+  else if (modalFilter === 'installed') filtered = filtered.filter(a => !isBrowser(a.packageName));
+  
+  if (!filtered.length) {
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Nenhum app nesta categoria</div>';
+    return;
+  }
+  
+  listEl.innerHTML = filtered.map(app => {
+    const sel = selectedApps.has(app.packageName) ? ' selected' : '';
+    const iconHtml = app.icon
+      ? `<img src="${esc(app.icon)}" alt="" style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex:0 0 38px">`
+      : `<div class="app-icon">${esc(app.appName.charAt(0))}</div>`;
+    return `<div class="app-item ${sel}" data-pkg="${esc(app.packageName)}" data-name="${esc(app.appName)}">
+      ${iconHtml}
+      <div class="app-info"><div class="app-name">${esc(app.appName)}</div><div class="app-pkg">${esc(app.packageName)}</div></div>
+      <div class="app-check"></div>
+    </div>`;
+  }).join('');
+  
+  listEl.querySelectorAll('.app-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const pkg = item.dataset.pkg;
+      if (selectedApps.has(pkg)) { selectedApps.delete(pkg); item.classList.remove('selected'); }
+      else { selectedApps.add(pkg); item.classList.add('selected'); }
+    });
+  });
+}
+
 async function loadAppsForModal() {
   const listEl = $('#modalAppList');
   if (!isNative()) { listEl.innerHTML = '<div style="color:var(--red);padding:10px">Apenas no APK.</div>'; return; }
@@ -1488,31 +1675,17 @@ async function loadAppsForModal() {
   try {
     const { granted } = await us.isUsageStatsPermissionGranted();
     if (!granted) { await us.openUsageStatsSettings(); return; }
-    const { packages } = await us.queryAllPackages();
+    // includeIcon: true para obter Base64
+    const { packages } = await us.queryAllPackages({ includeIcon: true });
     
-    const blacklist = ['com.android', 'android', 'com.google', 'com.samsung', 'com.motorola', 'com.sec', 'com.qualcomm', 'com.mediatek', 'com.miui', 'com.xiaomi'];
-    const userApps = packages.filter(p => {
+    const blacklist = ['com.android', 'android', 'com.samsung', 'com.motorola', 'com.sec', 'com.qualcomm', 'com.mediatek', 'com.miui', 'com.xiaomi', 'com.google.android.gms'];
+    cachedUserApps = packages.filter(p => {
        if (!p.appName) return false;
        const pkg = p.packageName.toLowerCase();
        return !blacklist.some(b => pkg.startsWith(b));
     }).sort((a,b) => a.appName.localeCompare(b.appName));
-
-    listEl.innerHTML = userApps.map(app => {
-      const sel = selectedApps.has(app.packageName) ? ' selected' : '';
-      return `<div class="app-item ${sel}" data-pkg="${esc(app.packageName)}" data-name="${esc(app.appName)}">
-        <div class="app-icon">${esc(app.appName.charAt(0))}</div>
-        <div class="app-info"><div class="app-name">${esc(app.appName)}</div><div class="app-pkg">${esc(app.packageName)}</div></div>
-        <div class="app-check"></div>
-      </div>`;
-    }).join('');
     
-    listEl.querySelectorAll('.app-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const pkg = item.dataset.pkg;
-        if (selectedApps.has(pkg)) { selectedApps.delete(pkg); item.classList.remove('selected'); }
-        else { selectedApps.add(pkg); item.classList.add('selected'); }
-      });
-    });
+    renderModalAppList();
   } catch(e) { listEl.innerHTML = '<div style="color:var(--red)">Erro ao listar.</div>'; }
 }
 
@@ -1527,10 +1700,23 @@ $('#btnSaveGame').addEventListener('click', () => {
     selectedApps.forEach(pkg => {
       const el = $('#modalAppList .app-item[data-pkg="' + CSS.escape(pkg) + '"]');
       const name = el ? el.dataset.name : pkg;
-      if (!games.find(g => g.isNative && g.packageName === pkg)) games.push({ name, packageName: pkg, cat: 'Instalado', fav: false, isNative: true, added: Date.now() });
+      const app = cachedUserApps.find(a => a.packageName === pkg);
+      if (!games.find(g => g.isNative && g.packageName === pkg)) {
+        games.push({
+          name, packageName: pkg, cat: 'Instalado', fav: false, isNative: true, added: Date.now(),
+          iconBase64: app && app.icon ? app.icon : null
+        });
+      }
     });
   }
   saveGames(); renderGames(); gameModal.classList.remove('open'); toast('Salvo!', 'ok');
+});
+
+// Cleanup global para evitar vazamentos
+window.addEventListener('beforeunload', async () => {
+  try { await stopLiveStatus(); } catch(e){}
+  const so = getOrientationPlugin();
+  if (so && so.removeAllListeners) try { await so.removeAllListeners(); } catch(e){}
 });
 
 window.addEventListener('load', () => { loadGames(); renderGames(); loadDeviceSpecs(); log('GameZone v3.2', 'ok'); });
