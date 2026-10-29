@@ -31,7 +31,12 @@
   --muted: #7d8590;
   --panel: rgba(255, 255, 255, 0.045);
   --brd: rgba(255, 255, 255, 0.09);
-  --nav-h: 78px;
+  --nav-h: 54px; /* Nav encolhida */
+
+  /* Tamanho dinâmico dos ícones (controlado via JS) */
+  --icon-size: 40px;
+  --icon-radius: 12px;
+  --icon-font: 18px;
 }
 
 html, body {
@@ -379,7 +384,7 @@ main {
 .hw-card.amber .hw-bar-fill { background: linear-gradient(90deg, var(--amber), var(--green)); }
 
 /* ============================================================
-   BOTÕES E NAVEGAÇÃO
+   BOTÕES
    ============================================================ */
 .actions {
   display: grid;
@@ -449,6 +454,9 @@ main {
   background: rgba(0, 255, 180, 0.09);
 }
 
+/* ============================================================
+   NAVEGAÇÃO ENCOLHIDA
+   ============================================================ */
 .bottom-nav {
   position: fixed;
   left: 0;
@@ -457,9 +465,9 @@ main {
   z-index: 100;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-  padding: 9px 10px calc(9px + env(safe-area-inset-bottom));
-  background: rgba(13, 17, 23, 0.78);
+  gap: 2px;
+  padding: 4px 8px calc(4px + env(safe-area-inset-bottom));
+  background: rgba(13, 17, 23, 0.82);
   backdrop-filter: blur(20px) saturate(170%);
   border-top: 1px solid rgba(0, 255, 180, 0.18);
   box-shadow: 0 -18px 44px -24px rgba(0, 255, 180, 0.5);
@@ -471,21 +479,21 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 8px 4px 7px;
+  gap: 2px;
+  padding: 4px 2px;
   border: 0;
-  border-radius: 14px;
+  border-radius: 10px;
   background: transparent;
   color: var(--muted);
   font-family: inherit;
-  font-size: 9.5px;
+  font-size: 8px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
   transition: color 0.25s, background 0.25s;
 }
 
-.nav-btn svg { width: 22px; height: 22px; stroke-width: 1.8; transition: transform 0.25s; }
+.nav-btn svg { width: 18px; height: 18px; stroke-width: 1.8; transition: transform 0.25s; }
 
 .nav-btn.active {
   color: var(--green);
@@ -500,12 +508,12 @@ main {
 .nav-btn.active::after {
   content: '';
   position: absolute;
-  top: 3px;
+  top: 1px;
   left: 50%;
   transform: translateX(-50%);
-  width: 22px;
-  height: 3px;
-  border-radius: 3px;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
   background: var(--green);
   box-shadow: 0 0 12px var(--green);
 }
@@ -672,19 +680,21 @@ main {
 
 .game-card:active { transform: scale(0.955); }
 
+/* Ícones dinâmicos */
 .game-fav, .game-fav-fallback {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  border-radius: var(--icon-radius);
   display: grid;
   place-items: center;
-  font-size: 18px;
+  font-size: var(--icon-font);
   font-weight: 700;
   color: #04120e;
   background: linear-gradient(135deg, var(--green), var(--cyan));
   box-shadow: 0 0 18px -6px var(--green);
   text-transform: uppercase;
   object-fit: cover;
+  transition: width 0.3s, height 0.3s, border-radius 0.3s, font-size 0.3s;
 }
 
 .game-fav-fallback.native {
@@ -753,7 +763,6 @@ main {
     flex: 0 0 auto;
   }
 
-  /* Quando a aba Jogos está ativa, esconde as coisas do modo retrato e mostra o Console */
   #pane-jogos.active .games-head,
   #pane-jogos.active .search-bar,
   #pane-jogos.active .chips,
@@ -833,10 +842,10 @@ main {
 
   .console-card .game-fav-fallback,
   .console-card .game-fav-img {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-    border-radius: 8px;
+    width: calc(var(--icon-size) * 0.8);
+    height: calc(var(--icon-size) * 0.8);
+    font-size: calc(var(--icon-font) * 0.8);
+    border-radius: calc(var(--icon-radius) * 0.7);
   }
 
   .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; }
@@ -857,7 +866,12 @@ main {
 
   .detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; z-index: 1; flex: 0 0 auto; }
   .detail-header .game-fav-fallback,
-  .detail-header .game-fav-img { width: 52px; height: 52px; font-size: 22px; border-radius: 14px; }
+  .detail-header .game-fav-img {
+    width: calc(var(--icon-size) * 1.3);
+    height: calc(var(--icon-size) * 1.3);
+    font-size: calc(var(--icon-font) * 1.2);
+    border-radius: calc(var(--icon-radius) * 1.1);
+  }
   .detail-title h2 { font-size: 18px; color: #fff; line-height: 1.2; }
   .detail-title p { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-top: 4px; text-transform: uppercase; }
 
@@ -900,6 +914,87 @@ main {
     text-align: center;
     gap: 10px;
   }
+}
+
+/* ============================================================
+   ANEL ANALÓGICO DE RAM (NOVO)
+   ============================================================ */
+.ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 10px;
+}
+.ring-svg {
+  width: 160px;
+  height: 160px;
+  transform: rotate(-90deg);
+}
+.ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 10;
+}
+.ring-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), stroke 0.5s;
+}
+.ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ring-pct {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.ring-label {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Botão de otimização (NOVO) */
+.btn-opt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  background: rgba(0, 229, 255, 0.08);
+  color: var(--cyan);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-opt:active { transform: scale(0.97); }
+.btn-opt.optimizing {
+  animation: optPulse 0.8s infinite alternate;
+  border-color: var(--green);
+  color: var(--green);
+}
+@keyframes optPulse {
+  from { box-shadow: 0 0 5px rgba(0, 255, 180, 0.2); }
+  to { box-shadow: 0 0 25px rgba(0, 255, 180, 0.6); }
 }
 
 /* ============================================================
@@ -1024,6 +1119,11 @@ main {
   border-color: transparent;
 }
 
+/* Slider de configurações (NOVO) */
+.slider-group { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; }
+.slider-val { font-size: 12px; font-weight: 700; color: var(--green); min-width: 30px; text-align: center; }
+
 /* ============================================================
    ABA SOBRE
    ============================================================ */
@@ -1062,24 +1162,25 @@ main {
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .toast.ok { color: #c6ffec; background: rgba(0, 255, 180, 0.13); border-color: rgba(0, 255, 180, 0.5); }
 
-/* Ícone de imagem real */
+/* Fallback para imagens */
 .game-fav-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  border-radius: var(--icon-radius);
   object-fit: cover;
   flex: 0 0 auto;
   box-shadow: 0 0 18px -6px var(--green);
+  transition: width 0.3s, height 0.3s, border-radius 0.3s;
 }
 .console-card .game-fav-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: calc(var(--icon-size) * 0.8);
+  height: calc(var(--icon-size) * 0.8);
+  border-radius: calc(var(--icon-radius) * 0.7);
 }
 .detail-header .game-fav-img {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: calc(var(--icon-size) * 1.3);
+  height: calc(var(--icon-size) * 1.3);
+  border-radius: calc(var(--icon-radius) * 1.1);
 }
 .app-icon img {
   width: 100%;
@@ -1207,6 +1308,7 @@ main {
         <button class="btn-small cyan" id="btnRotate">Girar Tela</button>
       </div>
       <div class="games-actions">
+        <button class="btn-small" id="btnSettings">⚙️</button>
         <button class="btn-small" id="btnExport">Exp</button>
         <button class="btn-small" id="btnImport">Imp</button>
         <button class="fab" id="btnAddGame" aria-label="Adicionar jogo">
@@ -1256,7 +1358,7 @@ main {
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.2.0</div>
+      <div class="ver">versão 3.3.0</div>
       <div class="divider"></div>
       <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem.</p>
       <ul class="about-list">
@@ -1324,6 +1426,26 @@ main {
   </div>
 </div>
 
+<!-- MODAL DE CONFIGURAÇÕES -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <h3>⚙️ Configurações</h3>
+    <p class="sub">Ajustes visuais</p>
+    <div class="field">
+      <label>Tamanho dos Ícones dos Jogos</label>
+      <div class="slider-group">
+        <span style="font-size:10px; color:var(--muted)">P</span>
+        <input type="range" id="sliderIconSize" min="24" max="72" value="40">
+        <span style="font-size:10px; color:var(--muted)">G</span>
+      </div>
+      <div class="hw-sub" style="margin-top:6px">Valor atual: <span id="iconSizeVal" style="color:var(--green)">40px</span></div>
+    </div>
+    <div class="modal-actions" style="grid-template-columns:1fr">
+      <button class="btn-solid ghost" id="btnCloseSettings">Fechar</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1366,10 +1488,27 @@ function log(text, type) {
   terminal.scrollTop = terminal.scrollHeight;
 }
 
+// Configurações de ícone
+const ICON_KEY = 'gamezone_icon_size';
+function applyIconSize(px) {
+  document.documentElement.style.setProperty('--icon-size', px + 'px');
+  document.documentElement.style.setProperty('--icon-radius', Math.round(px * 0.3) + 'px');
+  document.documentElement.style.setProperty('--icon-font', Math.round(px * 0.45) + 'px');
+  localStorage.setItem(ICON_KEY, px);
+  const valEl = $('#iconSizeVal');
+  if (valEl) valEl.textContent = px + 'px';
+}
+function loadIconSize() {
+  const saved = localStorage.getItem(ICON_KEY);
+  const px = saved ? parseInt(saved, 10) : 40;
+  applyIconSize(px);
+  const slider = $('#sliderIconSize');
+  if (slider) slider.value = px;
+}
+
 // Navegação
-const navBtns = $$('.nav-btn'); const panes = $$('.pane'); let currentTab = 'aparelho';
+const navBtns = $$('.nav-btn'); const panes = $$('.pane');
 async function switchTab(tab) {
-  currentTab = tab;
   navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   panes.forEach(p => p.classList.toggle('active', p.id === 'pane-' + tab));
   
@@ -1418,8 +1557,9 @@ async function loadDeviceSpecs() {
 }
 $('#btnRefreshSpecs').addEventListener('click', () => { terminal.innerHTML = ''; loadDeviceSpecs(); toast('Atualizado', 'ok'); });
 
-// Monitor Status
+// Monitor Status + Anel Analógico
 let statusStarted = false; let statusListener = null;
+
 async function startLiveStatus() {
   if (statusStarted) return; statusStarted = true;
   const di = getDeviceInfoPlugin(); if (!di) return;
@@ -1428,41 +1568,81 @@ async function startLiveStatus() {
     if (di.startMonitoring) await di.startMonitoring({ intervalMs: 2000 });
   } catch(e) {}
 }
+
 async function stopLiveStatus() {
   if (!statusStarted) return; statusStarted = false;
   if (statusListener) { try { await statusListener.remove(); } catch(e){} statusListener = null; }
   const di = getDeviceInfoPlugin(); if (di && di.stopMonitoring) await di.stopMonitoring();
 }
+
+// Atualiza UI geral
 function updateStatusUI(sample) {
   if (!sample) return;
   const mem = sample.memory || {};
   if (mem.totalBytes) {
-    const used = mem.usedBytes || (mem.totalBytes - (mem.freeBytes || 0)); const pct = mem.usedPercent != null ? mem.usedPercent : (used / mem.totalBytes) * 100;
-    $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>'; $('#liveRamSub').textContent = 'de ' + fmtGB(mem.totalBytes) + ' · ' + pct.toFixed(1) + '%';
+    const used = mem.usedBytes || (mem.totalBytes - (mem.freeBytes || 0));
+    const pct = mem.usedPercent != null ? mem.usedPercent : (used / mem.totalBytes) * 100;
+    $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>';
+    $('#liveRamSub').textContent = 'de ' + fmtGB(mem.totalBytes) + ' · ' + pct.toFixed(1) + '%';
     $('#liveRamBar').style.width = Math.min(100, pct) + '%';
+    
+    // Atualiza anel analógico
+    updateRing(pct, used, mem.totalBytes);
   }
   const cpu = sample.cpu || {};
   if (cpu.usagePercent != null) {
-    $('#liveCpu').innerHTML = cpu.usagePercent.toFixed(1) + ' <small>%</small>'; $('#liveCpuSub').textContent = (cpu.cores || '?') + ' núcleos';
+    $('#liveCpu').innerHTML = cpu.usagePercent.toFixed(1) + ' <small>%</small>';
+    $('#liveCpuSub').textContent = (cpu.cores || '?') + ' núcleos';
     $('#liveCpuBar').style.width = cpu.usagePercent + '%';
   }
   const bat = sample.battery || {};
   if (bat.level != null) {
     const batPct = bat.level <= 1 ? Math.round(bat.level * 100) : Math.round(bat.level);
-    $('#liveBattery').innerHTML = batPct + ' <small>%</small>'; $('#liveBatterySub').textContent = bat.isCharging ? 'Carregando' : 'Descarregando'; $('#liveBatteryBar').style.width = batPct + '%';
+    $('#liveBattery').innerHTML = batPct + ' <small>%</small>';
+    $('#liveBatterySub').textContent = bat.isCharging ? 'Carregando' : 'Descarregando';
+    $('#liveBatteryBar').style.width = batPct + '%';
   }
-  const thermal = sample.thermal || {}; const tempC = thermal.cpuTemperatureC || thermal.batteryTemperatureC;
+  const thermal = sample.thermal || {};
+  const tempC = thermal.cpuTemperatureC || thermal.batteryTemperatureC;
   if (tempC != null) $('#liveTemp').innerHTML = tempC.toFixed(1) + ' <small>°C</small>';
   const st = sample.storage || {};
   if (st.totalBytes) {
     const free = st.freeBytes || 0; const used = st.usedBytes || (st.totalBytes - free); const pct = (used / st.totalBytes) * 100;
-    $('#liveStorage').innerHTML = fmtGB(free) + ' <small>livres</small>'; $('#liveStorageSub').textContent = 'de ' + fmtGB(st.totalBytes); $('#liveStorageBar').style.width = pct + '%';
+    $('#liveStorage').innerHTML = fmtGB(free) + ' <small>livres</small>';
+    $('#liveStorageSub').textContent = 'de ' + fmtGB(st.totalBytes);
+    $('#liveStorageBar').style.width = pct + '%';
   }
+}
+
+// Função de atualização do anel SVG
+function updateRing(pct, usedBytes, totalBytes) {
+  const circle = $('#ringFill');
+  if (!circle) return;
+  const radius = circle.r.baseVal.value;
+  const circumference = radius * 2 * Math.PI;
+  const offset = circumference - (Math.min(100, pct) / 100) * circumference;
+  
+  // Cor baseada no uso
+  let color = 'var(--green)';
+  if (pct > 75) color = 'var(--red)';
+  else if (pct > 50) color = 'var(--amber)';
+  
+  circle.style.stroke = color;
+  circle.style.strokeDashoffset = offset;
+  
+  // Textos do centro
+  const pctEl = $('#ringPct');
+  const gbEl = $('#ringGb');
+  const lblEl = $('#ringLabel');
+  if (pctEl) pctEl.textContent = pct.toFixed(0) + '%';
+  if (gbEl) gbEl.textContent = fmtGB(usedBytes) + ' / ' + fmtGB(totalBytes);
+  if (lblEl) lblEl.textContent = 'MEMÓRIA';
 }
 
 // Jogos e Filtro
 const GAMES_KEY = 'gamezone_games_v3';
-let games = []; let currentCat = 'Todos'; let searchQ = ''; let selectedGameIndex = -1;
+let games = []; let currentCat = 'Todos'; let searchQ = ''; let consoleSelectedIdx = -1;
+
 function loadGames() { try { games = JSON.parse(localStorage.getItem(GAMES_KEY)) || []; } catch(e) { games = []; } }
 function saveGames() { localStorage.setItem(GAMES_KEY, JSON.stringify(games)); }
 
@@ -1471,7 +1651,6 @@ function renderGames() {
   renderConsoleLandscape();
 }
 
-// Favicon helper
 function getFaviconUrl(url) {
   try {
     const domain = new URL(url).hostname;
@@ -1516,17 +1695,10 @@ function renderGridPortrait() {
 async function openGame(g) {
   const launcher = getAppLauncherPlugin();
   try {
-    if (g.isNative) {
-      await launcher.openUrl({ url: g.packageName });
-    } else {
-      await launcher.openUrl({ url: g.url });
-    }
-  } catch(e) {
-    toast('Não foi possível abrir: ' + e.message);
-  }
+    if (g.isNative) await launcher.openUrl({ url: g.packageName });
+    else await launcher.openUrl({ url: g.url });
+  } catch(e) { toast('Não foi possível abrir: ' + e.message); }
 }
-
-let consoleSelectedIdx = -1;
 
 function renderConsoleLandscape() {
   const left = $('#consoleLeft'); const right = $('#consoleRight');
@@ -1548,6 +1720,8 @@ function renderConsoleLandscape() {
   
   if (consoleSelectedIdx >= 0 && games[consoleSelectedIdx]) {
     const g = games[consoleSelectedIdx];
+    
+    // Painel de detalhes com anel e botão de otimização
     right.innerHTML = `
       <div class="detail-header">
         ${getGameIconHtml(g, 'game-fav')}
@@ -1561,42 +1735,92 @@ function renderConsoleLandscape() {
           <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           INICIAR
         </button>
-        <div class="detail-stats">
-          <div class="stat-box"><div class="k">Espaço Ocupado</div><div class="v" id="detailSpace">Carregando...</div></div>
-          <div class="stat-box"><div class="k">Uso de RAM</div><div class="v" id="detailRam">Carregando...</div></div>
-          <div class="stat-box"><div class="k">Bateria</div><div class="v" id="detailBat">Carregando...</div></div>
-          <div class="stat-box full"><div class="k">Armazenamento</div><div class="v" id="detailStorage">Carregando...</div></div>
+        
+        <div class="ring-wrap">
+          <svg class="ring-svg" viewBox="0 0 160 160">
+            <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
+            <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="70" stroke-dasharray="439.8" stroke-dashoffset="439.8"></circle>
+          </svg>
+          <div class="ring-text">
+            <div class="ring-pct" id="ringPct">—</div>
+            <div class="ring-gb" id="ringGb" style="font-size:10px;color:var(--muted);"></div>
+            <div class="ring-label" id="ringLabel">MEMÓRIA</div>
+          </div>
+        </div>
+        
+        <button class="btn-opt" id="btnOptimize">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+          OTIMIZAR MEMÓRIA
+        </button>
+        
+        <div class="detail-stats" style="margin-top:8px">
+          <div class="stat-box"><div class="k">Bateria</div><div class="v" id="detailBat">—</div></div>
+          <div class="stat-box"><div class="k">Armazenamento</div><div class="v" id="detailStorage">—</div></div>
         </div>
       </div>
     `;
     
+    // Listener do botão iniciar
     $('#btnStartGame').addEventListener('click', () => openGame(g));
     
-    // Espaço ocupado
-    if (g.isNative) {
-      $('#detailSpace').textContent = 'Restrito pelo Android';
-    } else {
-      if (navigator.storage && navigator.storage.estimate) {
-        navigator.storage.estimate().then(est => {
-          const used = est.usage || 0;
-          $('#detailSpace').textContent = used > 0 ? fmtGB(used) + ' (cache)' : '—';
-        }).catch(() => { $('#detailSpace').textContent = '—'; });
-      } else {
-        $('#detailSpace').textContent = '—';
-      }
-    }
+    // Listener do botão otimizar
+    $('#btnOptimize').addEventListener('click', (e) => {
+      const btn = e.currentTarget;
+      btn.classList.add('optimizing');
+      btn.textContent = 'OTIMIZANDO...';
+      buzz([50, 50, 50]);
+      
+      // Simula processo de limpeza (trimMemory nativo + coleta)
+      setTimeout(() => {
+        // Força atualização do monitor
+        const di = getDeviceInfoPlugin();
+        if (di && di.getInfo) {
+          di.getInfo().then(info => {
+            if (info.memory) {
+              const used = info.memory.usedBytes || 0;
+              const total = info.memory.totalBytes || 1;
+              const pct = (used / total) * 100;
+              updateRing(pct, used, total);
+              // Atualiza o card de texto do painel de status também
+              const ramEl = $('#liveRam');
+              if (ramEl) ramEl.innerHTML = fmtGB(used) + ' <small>usados</small>';
+              const ramSub = $('#liveRamSub');
+              if (ramSub) ramSub.textContent = 'de ' + fmtGB(total) + ' · ' + pct.toFixed(1) + '%';
+              const ramBar = $('#liveRamBar');
+              if (ramBar) ramBar.style.width = Math.min(100, pct) + '%';
+            }
+          });
+        }
+        btn.classList.remove('optimizing');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> LIMPAR NOVAMENTE`;
+        toast('Memória otimizada', 'ok');
+      }, 1500);
+    });
     
-    // Stats do Painel
+    // Carrega dados iniciais
     const di = getDeviceInfoPlugin();
     if (di && di.getInfo) {
       di.getInfo().then(info => {
-        if (info.memory) { $('#detailRam').textContent = fmtGB(info.memory.usedBytes) + ' / ' + fmtGB(info.memory.totalBytes); }
-        if (info.storage) { $('#detailStorage').textContent = fmtGB(info.storage.freeBytes) + ' livres'; }
+        if (info.memory) {
+          const used = info.memory.usedBytes || 0;
+          const total = info.memory.totalBytes || 1;
+          const pct = (used / total) * 100;
+          updateRing(pct, used, total);
+        }
+        if (info.storage) {
+          const stEl = $('#detailStorage');
+          if (stEl) stEl.textContent = fmtGB(info.storage.freeBytes) + ' livres';
+        }
       });
     }
     const dev = getDevicePlugin();
     if (dev && dev.getBatteryInfo) {
-      dev.getBatteryInfo().then(b => { $('#detailBat').textContent = Math.round(b.batteryLevel*100) + '%'; });
+      dev.getBatteryInfo().then(b => {
+        const batEl = $('#detailBat');
+        if (batEl) batEl.textContent = Math.round(b.batteryLevel * 100) + '%';
+      });
     }
   } else {
     right.innerHTML = '<div class="console-empty"><div class="ico">🎮</div><p>Selecione um jogo na lista</p></div>';
@@ -1605,16 +1829,35 @@ function renderConsoleLandscape() {
 
 // Modal Adicionar
 const gameModal = $('#gameModal'); let modalMode = 'web'; let selectedApps = new Set();
-let modalFilter = 'all'; // 'all' | 'browsers' | 'installed'
-let cachedUserApps = [];
+let modalFilter = 'all'; let cachedUserApps = [];
 
-function setModalMode(mode) { modalMode = mode; $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode)); $('#modePane-web').classList.toggle('active', mode === 'web'); $('#modePane-installed').classList.toggle('active', mode === 'installed'); if (mode === 'installed') loadAppsForModal(); }
+function setModalMode(mode) {
+  modalMode = mode;
+  $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('#modePane-web').classList.toggle('active', mode === 'web');
+  $('#modePane-installed').classList.toggle('active', mode === 'installed');
+  if (mode === 'installed') loadAppsForModal();
+}
 $$('.mode-btn').forEach(b => b.addEventListener('click', () => setModalMode(b.dataset.mode)));
 
 function openModal() { gameModal.classList.add('open'); setModalMode('web'); }
 $('#btnAddGame').addEventListener('click', openModal);
 $('#btnAddGameLandscape').addEventListener('click', openModal);
 $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
+
+// Configurações
+const settingsModal = $('#settingsModal');
+$('#btnSettings').addEventListener('click', () => {
+  settingsModal.classList.add('open');
+  loadIconSize();
+});
+$('#btnCloseSettings').addEventListener('click', () => settingsModal.classList.remove('open'));
+$('#sliderIconSize').addEventListener('input', (e) => {
+  const px = parseInt(e.target.value, 10);
+  applyIconSize(px);
+  // Re-renderiza a grade para aplicar o tamanho
+  renderGames();
+});
 
 // Filtros da modal
 const BROWSER_PACKAGES = [
@@ -1675,7 +1918,6 @@ async function loadAppsForModal() {
   try {
     const { granted } = await us.isUsageStatsPermissionGranted();
     if (!granted) { await us.openUsageStatsSettings(); return; }
-    // includeIcon: true para obter Base64
     const { packages } = await us.queryAllPackages({ includeIcon: true });
     
     const blacklist = ['com.android', 'android', 'com.samsung', 'com.motorola', 'com.sec', 'com.qualcomm', 'com.mediatek', 'com.miui', 'com.xiaomi', 'com.google.android.gms'];
@@ -1712,14 +1954,20 @@ $('#btnSaveGame').addEventListener('click', () => {
   saveGames(); renderGames(); gameModal.classList.remove('open'); toast('Salvo!', 'ok');
 });
 
-// Cleanup global para evitar vazamentos
+// Cleanup global
 window.addEventListener('beforeunload', async () => {
   try { await stopLiveStatus(); } catch(e){}
   const so = getOrientationPlugin();
   if (so && so.removeAllListeners) try { await so.removeAllListeners(); } catch(e){}
 });
 
-window.addEventListener('load', () => { loadGames(); renderGames(); loadDeviceSpecs(); log('GameZone v3.2', 'ok'); });
+window.addEventListener('load', () => {
+  loadIconSize();
+  loadGames();
+  renderGames();
+  loadDeviceSpecs();
+  log('GameZone v3.3', 'ok');
+});
 })();
 </script>
 </body>
