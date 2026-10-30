@@ -31,7 +31,9 @@
   --muted: #7d8590;
   --panel: rgba(255, 255, 255, 0.045);
   --brd: rgba(255, 255, 255, 0.09);
-  --nav-h: 54px;
+  
+  /* NAV BAR AUMENTADA */
+  --nav-h: 72px;
 
   --icon-size: 40px;
   --icon-radius: 12px;
@@ -169,7 +171,7 @@ body::after {
 }
 
 /* ============================================================
-   LAYOUT PRINCIPAL E ABAS
+   LAYOUT PRINCIPAL
    ============================================================ */
 main {
   position: relative;
@@ -215,7 +217,7 @@ main {
 }
 
 /* ============================================================
-   TERMINAL E LOGS
+   TERMINAL E LOGS (HOME)
    ============================================================ */
 .terminal {
   border-radius: 18px;
@@ -235,13 +237,7 @@ main {
   border-bottom: 1px solid rgba(0, 255, 180, 0.16);
 }
 
-.dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex: 0 0 auto;
-}
-
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
 .dot.r { background: #ff5f56; box-shadow: 0 0 8px #ff5f56; }
 .dot.y { background: #ffbd2e; box-shadow: 0 0 8px #ffbd2e; }
 .dot.g { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
@@ -252,16 +248,14 @@ main {
   letter-spacing: 0.08em;
   color: rgba(0, 255, 180, 0.75);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .terminal-body {
-  height: 130px;
+  height: 140px;
   overflow-y: auto;
   padding: 13px 14px;
-  font-size: 12px;
-  line-height: 1.7;
+  font-size: 11.5px;
+  line-height: 1.6;
   color: var(--green);
   scrollbar-width: thin;
 }
@@ -269,19 +263,9 @@ main {
 .line {
   white-space: pre-wrap;
   word-break: break-word;
-  animation: lineIn 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+  animation: lineIn 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
-
-@keyframes lineIn {
-  from { opacity: 0; transform: translateX(-8px); }
-  to { opacity: 1; transform: none; }
-}
-
-.line .ts {
-  color: rgba(0, 255, 180, 0.35);
-  margin-right: 7px;
-  font-size: 11px;
-}
+@keyframes lineIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
 
 .line.ok { color: var(--green); }
 .line.info { color: var(--cyan); }
@@ -297,952 +281,310 @@ main {
   box-shadow: 0 0 10px var(--green);
   animation: blink 1s steps(1) infinite;
 }
-
 @keyframes blink { 50% { opacity: 0; } }
 
-/* ============================================================
-   CARDS DE HARDWARE
-   ============================================================ */
-.hw-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.hw-card {
-  padding: 14px 12px;
-  border-radius: 16px;
-  background: var(--panel);
-  border: 1px solid var(--brd);
-  backdrop-filter: blur(12px);
+/* BARRA DE PESQUISA GOOGLE */
+.home-search {
+  margin-top: 16px;
   position: relative;
-  overflow: hidden;
-}
-
-.hw-card.full { grid-column: 1 / -1; }
-
-.hw-k {
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-
-.hw-v {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--green);
-  text-shadow: 0 0 14px rgba(0, 255, 180, 0.45);
-  word-break: break-word;
-  line-height: 1.2;
-}
-
-.hw-v small {
-  font-size: 10px;
-  font-weight: 400;
-  color: var(--muted);
-  margin-left: 4px;
-}
-
-.hw-sub {
-  font-size: 9.5px;
-  color: rgba(125, 133, 144, 0.8);
-  margin-top: 5px;
-  letter-spacing: 0.04em;
-  line-height: 1.4;
-}
-
-.hw-bar {
-  height: 6px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.07);
-  margin-top: 9px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 255, 180, 0.15);
-}
-
-.hw-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--green), var(--cyan));
-  border-radius: 4px;
-  box-shadow: 0 0 12px rgba(0, 255, 180, 0.6);
-  transition: width 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
-  width: 0;
-}
-
-.hw-card.cyan .hw-v { color: var(--cyan); text-shadow: 0 0 14px rgba(0, 229, 255, 0.45); }
-.hw-card.cyan .hw-bar-fill { background: linear-gradient(90deg, var(--cyan), #7c5cff); }
-
-.hw-card.magenta .hw-v { color: var(--magenta); text-shadow: 0 0 14px rgba(255, 47, 185, 0.45); }
-.hw-card.magenta .hw-bar-fill { background: linear-gradient(90deg, var(--magenta), #ff7a45); }
-
-.hw-card.amber .hw-v { color: var(--amber); text-shadow: 0 0 14px rgba(255, 209, 102, 0.45); }
-.hw-card.amber .hw-bar-fill { background: linear-gradient(90deg, var(--amber), var(--green)); }
-
-/* ============================================================
-   BOTÕES
-   ============================================================ */
-.actions {
-  display: grid;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.btn {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  width: 100%;
-  padding: 15px 16px;
-  border-radius: 16px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  text-align: left;
-  background: var(--panel);
-  border: 1px solid var(--brd);
-  backdrop-filter: blur(14px);
-  cursor: pointer;
-  transition: transform 0.14s, box-shadow 0.28s;
-}
-
-.btn:active { transform: scale(0.972); }
-
-.btn .ico {
-  width: 36px;
-  height: 36px;
-  flex: 0 0 36px;
-  border-radius: 11px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.btn .ico svg { width: 18px; height: 18px; stroke-width: 1.8; }
-
-.btn .txt {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-}
-
-.btn .txt small {
-  font-size: 9.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 400;
-}
-
-.btn.green {
-  border-color: rgba(0, 255, 180, 0.32);
-  box-shadow: 0 0 28px -18px var(--green);
-}
-
-.btn.green .ico {
-  color: var(--green);
-  border-color: rgba(0, 255, 180, 0.3);
-  background: rgba(0, 255, 180, 0.09);
-}
-
-/* ============================================================
-   NAVEGAÇÃO ENCOLHIDA (5 COLUNAS)
-   ============================================================ */
-.bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2px;
-  padding: 4px 8px calc(4px + env(safe-area-inset-bottom));
-  background: rgba(13, 17, 23, 0.82);
-  backdrop-filter: blur(20px) saturate(170%);
-  border-top: 1px solid rgba(0, 255, 180, 0.18);
-  box-shadow: 0 -18px 44px -24px rgba(0, 255, 180, 0.5);
-}
-
-.nav-btn {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 4px 2px;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--muted);
-  font-family: inherit;
-  font-size: 8px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.25s, background 0.25s;
-}
-
-.nav-btn svg { width: 18px; height: 18px; stroke-width: 1.8; transition: transform 0.25s; }
-
-.nav-btn.active {
-  color: var(--green);
-  background: rgba(0, 255, 180, 0.085);
-}
-
-.nav-btn.active svg {
-  transform: translateY(-1px);
-  filter: drop-shadow(0 0 8px rgba(0, 255, 180, 0.75));
-}
-
-.nav-btn.active::after {
-  content: '';
-  position: absolute;
-  top: 1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 16px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--green);
-  box-shadow: 0 0 12px var(--green);
-}
-
-/* ============================================================
-   ABA JOGOS (MODO RETRATO)
-   ============================================================ */
-.games-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 6px 0 10px;
-}
-
-.games-head h2 {
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-}
-
-.games-head h2::before { content: '// '; color: var(--cyan); }
-
-.games-actions {
   display: flex;
   gap: 8px;
-  align-items: center;
 }
-
-.btn-small {
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text);
-  transition: background 0.2s;
-}
-
-.btn-small:active { background: rgba(255, 255, 255, 0.15); }
-
-.btn-small.cyan {
-  color: var(--cyan);
-  border-color: rgba(0, 229, 255, 0.3);
-  background: rgba(0, 229, 255, 0.1);
-}
-
-.fab {
-  width: 46px;
-  height: 46px;
-  flex: 0 0 46px;
-  border-radius: 15px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  border: 1px solid rgba(0, 255, 180, 0.45);
-  background: linear-gradient(135deg, rgba(0, 255, 180, 0.2), rgba(0, 229, 255, 0.14));
-  color: var(--green);
-  box-shadow: 0 0 24px -8px var(--green);
-  transition: transform 0.15s;
-}
-
-.fab:active { transform: scale(0.9) rotate(90deg); }
-
-.fab svg { width: 22px; height: 22px; stroke-width: 2.2; }
-
-.search-bar { position: relative; margin-bottom: 12px; }
-
-.search-bar input {
-  width: 100%;
-  padding: 13px 15px 13px 42px;
+.home-search input {
+  flex: 1;
+  padding: 14px 14px 14px 42px;
   border-radius: 14px;
   background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--brd);
   color: var(--text);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
   outline: none;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
 }
-
-.search-bar input:focus {
-  border-color: rgba(0, 255, 180, 0.5);
-  box-shadow: 0 0 0 3px rgba(0, 255, 180, 0.1);
+.home-search input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
 }
-
-.search-bar svg {
+.home-search svg {
   position: absolute;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  stroke: var(--muted);
+  width: 18px;
+  height: 18px;
+  stroke: var(--cyan);
   pointer-events: none;
 }
 
-.chips {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  scrollbar-width: none;
+/* ============================================================
+   CARDS DE HARDWARE
+   ============================================================ */
+.hw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.hw-card {
+  padding: 14px 12px; border-radius: 16px; background: var(--panel); border: 1px solid var(--brd);
+  backdrop-filter: blur(12px); position: relative; overflow: hidden;
 }
-
-.chips::-webkit-scrollbar { display: none; }
-
-.chip {
-  flex: 0 0 auto;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 10.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.22s;
+.hw-card.full { grid-column: 1 / -1; }
+.hw-k { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.hw-v {
+  font-size: 18px; font-weight: 700; color: var(--green); text-shadow: 0 0 14px rgba(0, 255, 180, 0.45);
+  word-break: break-word; line-height: 1.2;
 }
-
-.chip.active {
-  color: #04120e;
-  background: linear-gradient(135deg, var(--green), var(--cyan));
-  border-color: transparent;
-  box-shadow: 0 0 20px -6px var(--green);
+.hw-v small { font-size: 10px; font-weight: 400; color: var(--muted); margin-left: 4px; }
+.hw-sub { font-size: 9.5px; color: rgba(125, 133, 144, 0.8); margin-top: 5px; line-height: 1.4; }
+.hw-bar { height: 6px; border-radius: 4px; background: rgba(255, 255, 255, 0.07); margin-top: 9px; overflow: hidden; border: 1px solid rgba(0, 255, 180, 0.15); }
+.hw-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); border-radius: 4px;
+  box-shadow: 0 0 12px rgba(0, 255, 180, 0.6); transition: width 0.6s; width: 0;
 }
-
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-@media (min-width: 540px) {
-  .games-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-.game-card {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 128px;
-  padding: 18px 10px 14px;
-  border-radius: 18px;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018));
-  border: 1px solid var(--brd);
-  backdrop-filter: blur(14px);
-  cursor: pointer;
-  transition: transform 0.16s, border-color 0.28s;
-}
-
-.game-card:active { transform: scale(0.955); }
-
-.game-fav, .game-fav-fallback {
-  width: var(--icon-size);
-  height: var(--icon-size);
-  border-radius: var(--icon-radius);
-  display: grid;
-  place-items: center;
-  font-size: var(--icon-font);
-  font-weight: 700;
-  color: #04120e;
-  background: linear-gradient(135deg, var(--green), var(--cyan));
-  box-shadow: 0 0 18px -6px var(--green);
-  text-transform: uppercase;
-  object-fit: cover;
-  transition: width 0.3s, height 0.3s, border-radius 0.3s, font-size 0.3s;
-}
-
-.game-fav-fallback.native {
-  background: linear-gradient(135deg, var(--cyan), var(--magenta));
-  color: #fff;
-  box-shadow: 0 0 18px -6px var(--cyan);
-}
-
-.game-name {
-  font-size: 11px;
-  line-height: 1.35;
-  text-align: center;
-  color: var(--text);
-  word-break: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.game-cat {
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 48px 20px;
-  text-align: center;
-  border: 1px dashed rgba(0, 255, 180, 0.22);
-  border-radius: 18px;
-  margin-top: 16px;
-  background: rgba(0, 255, 180, 0.025);
-}
-
-.empty .ico { font-size: 32px; color: rgba(0, 255, 180, 0.5); margin-bottom: 4px; }
-.empty p { font-size: 13px; color: var(--text); }
-.empty span { font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.hw-card.cyan .hw-v { color: var(--cyan); text-shadow: 0 0 14px rgba(0, 229, 255, 0.45); }
+.hw-card.cyan .hw-bar-fill { background: linear-gradient(90deg, var(--cyan), #7c5cff); }
+.hw-card.magenta .hw-v { color: var(--magenta); text-shadow: 0 0 14px rgba(255, 47, 185, 0.45); }
+.hw-card.magenta .hw-bar-fill { background: linear-gradient(90deg, var(--magenta), #ff7a45); }
+.hw-card.amber .hw-v { color: var(--amber); text-shadow: 0 0 14px rgba(255, 209, 102, 0.45); }
+.hw-card.amber .hw-bar-fill { background: linear-gradient(90deg, var(--amber), var(--green)); }
 
 /* ============================================================
-   CONSOLE MODE (PAISAGEM)
+   BOTÕES E NAV BAR (AUMENTADA)
    ============================================================ */
+.actions { display: grid; gap: 10px; margin-top: 14px; }
+.btn {
+  position: relative; overflow: hidden; display: flex; align-items: center; gap: 13px; width: 100%;
+  padding: 15px 16px; border-radius: 16px; font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--text); text-align: left; background: var(--panel); border: 1px solid var(--brd);
+  backdrop-filter: blur(14px); cursor: pointer; transition: transform 0.14s;
+}
+.btn:active { transform: scale(0.972); }
+.btn .ico { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); }
+.btn .ico svg { width: 18px; height: 18px; }
+.btn .txt { display: flex; flex-direction: column; gap: 3px; }
+.btn .txt small { font-size: 9.5px; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.btn.green { border-color: rgba(0, 255, 180, 0.32); box-shadow: 0 0 28px -18px var(--green); }
+.btn.green .ico { color: var(--green); border-color: rgba(0, 255, 180, 0.3); background: rgba(0, 255, 180, 0.09); }
+
+.bottom-nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 100; display: grid;
+  grid-template-columns: repeat(5, 1fr); gap: 2px; 
+  padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+  background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(20px) saturate(170%);
+  border-top: 1px solid rgba(0, 255, 180, 0.18); box-shadow: 0 -18px 44px -24px rgba(0, 255, 180, 0.5);
+}
+
+.nav-btn {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 8px 2px; border: 0; border-radius: 12px; background: transparent;
+  color: var(--muted); font-family: inherit; font-size: 9.5px; letter-spacing: 0.05em;
+  text-transform: uppercase; cursor: pointer; transition: all 0.25s;
+}
+
+.nav-btn svg { width: 24px; height: 24px; stroke-width: 1.8; transition: transform 0.25s; }
+.nav-btn.active { color: var(--green); background: rgba(0, 255, 180, 0.085); }
+.nav-btn.active svg { transform: translateY(-2px); filter: drop-shadow(0 0 8px rgba(0, 255, 180, 0.75)); }
+.nav-btn.active::after {
+  content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%);
+  width: 20px; height: 3px; border-radius: 3px; background: var(--green); box-shadow: 0 0 12px var(--green);
+}
+
+/* ============================================================
+   ABA JOGOS E CONSOLE MODE
+   ============================================================ */
+.games-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 6px 0 10px; }
+.games-head h2 { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.games-head h2::before { content: '// '; color: var(--cyan); }
+.games-actions { display: flex; gap: 8px; align-items: center; }
+.btn-small { padding: 8px 12px; border-radius: 10px; font-family: inherit; font-size: 10px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: var(--text); }
+.fab { width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; cursor: pointer; border: 1px solid rgba(0, 255, 180, 0.45); background: linear-gradient(135deg, rgba(0, 255, 180, 0.2), rgba(0, 229, 255, 0.14)); color: var(--green); box-shadow: 0 0 24px -8px var(--green); }
+.fab svg { width: 22px; height: 22px; stroke-width: 2.2; }
+.search-bar { position: relative; margin-bottom: 12px; }
+.search-bar input { width: 100%; padding: 13px 15px 13px 42px; border-radius: 14px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-family: inherit; font-size: 13px; outline: none; }
+.search-bar svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: var(--muted); }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; }
+.chip { flex: 0 0 auto; padding: 8px 14px; border-radius: 999px; font-size: 10.5px; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); cursor: pointer; font-family: inherit; }
+.chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
+.games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 540px) { .games-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.game-card { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 128px; padding: 18px 10px 14px; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)); border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; }
+.game-fav, .game-fav-fallback, .game-fav-img { width: var(--icon-size); height: var(--icon-size); border-radius: var(--icon-radius); object-fit: cover; box-shadow: 0 0 18px -6px var(--green); transition: all 0.3s; }
+.game-fav-fallback { display: grid; place-items: center; font-size: var(--icon-font); font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); text-transform: uppercase; }
+.game-fav-fallback.native { background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: #fff; box-shadow: 0 0 18px -6px var(--cyan); }
+.game-name { font-size: 11px; line-height: 1.35; text-align: center; color: var(--text); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.game-cat { font-size: 8px; text-transform: uppercase; color: var(--muted); }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 20px; text-align: center; border: 1px dashed rgba(0, 255, 180, 0.22); border-radius: 18px; margin-top: 16px; }
+.empty .ico { font-size: 32px; color: rgba(0, 255, 180, 0.5); }
+.empty p { font-size: 13px; color: var(--text); }
+.empty span { font-size: 10.5px; text-transform: uppercase; color: var(--muted); }
+
+/* CONSOLE MODE (PAISAGEM) */
 .console-container { display: none; }
-
 @media (orientation: landscape) {
-  body, html {
-    overflow: hidden;
-    height: 100dvh;
-  }
-
-  main {
-    max-width: 100%;
-    padding: 0 12px 10px;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .app-header {
-    padding: calc(8px + env(safe-area-inset-top)) 16px 8px;
-    flex: 0 0 auto;
-  }
-
-  #pane-jogos.active .games-head,
-  #pane-jogos.active .search-bar,
-  #pane-jogos.active .chips,
-  #pane-jogos.active .games-grid,
-  #pane-jogos.active .empty {
-    display: none !important;
-  }
-
-  #pane-jogos.active .console-container {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    height: calc(100dvh - 120px);
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .console-left {
-    flex: 0 0 35%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-height: 0;
-  }
-
-  .console-left-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 10px;
-    border-radius: 14px;
-    border: 1px solid var(--brd);
-    flex: 0 0 auto;
-  }
+  body, html { overflow: hidden; height: 100dvh; }
+  main { max-width: 100%; padding: 0 12px 10px; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+  .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; flex: 0 0 auto; }
   
-  .console-left-header h2 {
-    font-size: 11px;
-    color: var(--cyan);
-    text-transform: uppercase;
-  }
+  #pane-jogos.active .games-head, #pane-jogos.active .search-bar, #pane-jogos.active .chips, #pane-jogos.active .games-grid, #pane-jogos.active .empty { display: none !important; }
+  #pane-jogos.active .console-container { display: flex; flex-direction: row; gap: 12px; height: calc(100dvh - 130px); width: 100%; }
 
-  .console-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    overflow-y: auto;
-    padding-right: 4px;
-    scrollbar-width: thin;
-    min-height: 0;
-  }
-
-  .console-grid::-webkit-scrollbar { width: 4px; }
-  .console-grid::-webkit-scrollbar-thumb { background: var(--green); border-radius: 4px; }
-
-  .console-card {
-    background: var(--panel);
-    border: 1px solid var(--brd);
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 6px;
-    gap: 5px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .console-card.active {
-    border-color: var(--green);
-    box-shadow: 0 0 15px -5px var(--green);
-    background: rgba(0, 255, 180, 0.1);
-  }
-
-  .console-card .game-fav-fallback,
-  .console-card .game-fav-img {
-    width: calc(var(--icon-size) * 0.8);
-    height: calc(var(--icon-size) * 0.8);
-    font-size: calc(var(--icon-font) * 0.8);
-    border-radius: calc(var(--icon-radius) * 0.7);
-  }
-
+  .console-left { flex: 0 0 35%; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+  .console-left-header { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 14px; border: 1px solid var(--brd); }
+  .console-left-header h2 { font-size: 11px; color: var(--cyan); text-transform: uppercase; }
+  .console-grid { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; overflow-y: auto; min-height: 0; }
+  .console-card { background: var(--panel); border: 1px solid var(--brd); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 6px; gap: 5px; cursor: pointer; }
+  .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgba(0,255,180,0.1); }
+  .console-card .game-fav-fallback, .console-card .game-fav-img { width: calc(var(--icon-size) * 0.8); height: calc(var(--icon-size) * 0.8); }
   .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; }
 
-  .console-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--brd);
-    border-radius: 18px;
-    padding: 18px;
-    overflow: hidden;
-    position: relative;
-    min-height: 0;
-  }
-
-  .detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; z-index: 1; flex: 0 0 auto; }
-  .detail-header .game-fav-fallback,
-  .detail-header .game-fav-img {
-    width: calc(var(--icon-size) * 1.3);
-    height: calc(var(--icon-size) * 1.3);
-    font-size: calc(var(--icon-font) * 1.2);
-    border-radius: calc(var(--icon-radius) * 1.1);
-  }
-  .detail-title h2 { font-size: 18px; color: #fff; line-height: 1.2; }
-  .detail-title p { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-top: 4px; text-transform: uppercase; }
-
-  .detail-content { flex: 1; display: flex; flex-direction: column; gap: 10px; z-index: 1; overflow-y: auto; min-height: 0; }
-  
-  .btn-start {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 14px;
-    border-radius: 14px;
-    border: none;
-    background: linear-gradient(135deg, var(--green), var(--cyan));
-    color: #04120e;
-    font-size: 15px;
-    font-weight: 800;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0 0 30px -10px var(--green);
-    margin-bottom: 8px;
-    flex: 0 0 auto;
-  }
-  
-  .btn-start:active { transform: scale(0.98); }
-
+  .console-right { flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,0.4); border: 1px solid var(--brd); border-radius: 18px; padding: 18px; overflow: hidden; min-height: 0; }
+  .detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex: 0 0 auto; }
+  .detail-header .game-fav-fallback, .detail-header .game-fav-img { width: calc(var(--icon-size) * 1.3); height: calc(var(--icon-size) * 1.3); }
+  .detail-title h2 { font-size: 18px; color: #fff; }
+  .detail-title p { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+  .detail-content { flex: 1; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; min-height: 0; }
+  .btn-start { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border-radius: 14px; border: none; background: linear-gradient(135deg, var(--green), var(--cyan)); color: #04120e; font-size: 15px; font-weight: 800; text-transform: uppercase; cursor: pointer; flex: 0 0 auto; margin-bottom: 8px; }
   .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .stat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+  .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 10px; }
   .stat-box.full { grid-column: 1 / -1; }
   .stat-box .k { font-size: 9px; color: var(--muted); text-transform: uppercase; }
   .stat-box .v { font-size: 14px; font-weight: 700; color: var(--text); }
-  
-  .console-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--muted);
-    text-align: center;
-    gap: 10px;
-  }
+  .console-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); text-align: center; gap: 10px; }
 }
+
+/* ANEL ANALÓGICO */
+.ring-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 10px; }
+.ring-svg { width: 140px; height: 140px; transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 10; }
+.ring-fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 0.8s, stroke 0.5s; }
+.ring-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; display: flex; flex-direction: column; gap: 2px; }
+.ring-pct { font-size: 22px; font-weight: 800; color: #fff; }
+.ring-label { font-size: 8px; text-transform: uppercase; color: var(--muted); }
+
+.btn-opt { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; border: 1px solid rgba(0, 229, 255, 0.4); background: rgba(0, 229, 255, 0.08); color: var(--cyan); font-family: inherit; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+.btn-opt.optimizing { animation: optPulse 0.8s infinite alternate; border-color: var(--green); color: var(--green); }
+@keyframes optPulse { from { box-shadow: 0 0 5px rgba(0, 255, 180, 0.2); } to { box-shadow: 0 0 25px rgba(0, 255, 180, 0.6); } }
 
 /* ============================================================
-   ANEL ANALÓGICO DE RAM
-   ============================================================ */
-.ring-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 10px;
-}
-.ring-svg {
-  width: 160px;
-  height: 160px;
-  transform: rotate(-90deg);
-}
-.ring-bg {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.08);
-  stroke-width: 10;
-}
-.ring-fill {
-  fill: none;
-  stroke-width: 10;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), stroke 0.5s;
-}
-.ring-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.ring-pct {
-  font-size: 22px;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1;
-}
-.ring-label {
-  font-size: 8px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* Botão de otimização */
-.btn-opt {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 229, 255, 0.4);
-  background: rgba(0, 229, 255, 0.08);
-  color: var(--cyan);
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-.btn-opt:active { transform: scale(0.97); }
-.btn-opt.optimizing {
-  animation: optPulse 0.8s infinite alternate;
-  border-color: var(--green);
-  color: var(--green);
-}
-@keyframes optPulse {
-  from { box-shadow: 0 0 5px rgba(0, 255, 180, 0.2); }
-  to { box-shadow: 0 0 25px rgba(0, 255, 180, 0.6); }
-}
-
-/* ============================================================
-   MODAIS
-   ============================================================ */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 16px;
-  background: rgba(3, 6, 10, 0.72);
-  backdrop-filter: blur(8px);
-}
-
-.modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.modal {
-  width: 100%;
-  max-width: 460px;
-  max-height: 88vh;
-  overflow-y: auto;
-  border-radius: 22px;
-  padding: 22px 20px calc(20px + env(safe-area-inset-bottom));
-  background: rgba(13, 17, 23, 0.96);
-  border: 1px solid rgba(0, 255, 180, 0.26);
-  box-shadow: 0 0 70px -22px var(--green);
-  animation: modalIn 0.32s cubic-bezier(0.2, 0.9, 0.3, 1);
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(38px) scale(0.96); }
-  to { opacity: 1; transform: none; }
-}
-
-.modal h3 { font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
-.modal .sub { font-size: 10.5px; color: var(--muted); text-transform: uppercase; }
-
-.mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 4px; }
-.mode-btn {
-  padding: 13px 8px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--muted);
-  font-family: inherit;
-  font-size: 11px;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.mode-btn.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
-
-.mode-pane { display: none; margin-top: 6px; }
-.mode-pane.active { display: block; }
-
-.field { margin-top: 14px; }
-.field label { display: block; margin-bottom: 7px; font-size: 10px; text-transform: uppercase; color: var(--muted); }
-
-.input {
-  width: 100%;
-  padding: 13px 14px;
-  border-radius: 13px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text);
-  font-family: inherit;
-  font-size: 14px;
-  outline: none;
-}
-
-.input:focus { border-color: rgba(0, 255, 180, 0.6); }
-
-.modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
-.btn-solid { padding: 14px 12px; border-radius: 14px; border: 0; font-family: inherit; font-size: 12.5px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
-.btn-solid.primary { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); }
-.btn-solid.ghost { color: var(--muted); background: rgba(255, 255, 255, 0.055); border: 1px solid rgba(255, 255, 255, 0.1); }
-
-.app-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; max-height: 52vh; overflow-y: auto; }
-.app-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--brd); cursor: pointer; }
-.app-item.selected { border-color: rgba(0, 255, 180, 0.6); background: rgba(0, 255, 180, 0.06); }
-.app-icon { width: 38px; height: 38px; flex: 0 0 38px; border-radius: 10px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); display: grid; place-items: center; font-size: 16px; font-weight: bold; color: #fff; object-fit: cover; }
-.app-info { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
-.app-name { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.app-pkg { font-size: 9.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
-.app-check { width: 20px; height: 20px; flex: 0 0 20px; border-radius: 6px; border: 2px solid rgba(0, 255, 180, 0.4); }
-.app-item.selected .app-check { background: var(--green); border-color: var(--green); }
-
-/* Filtros na modal */
-.modal-chips {
-  display: flex;
-  gap: 6px;
-  margin-top: 12px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-}
-.modal-chips::-webkit-scrollbar { display: none; }
-
-.modal-chip {
-  flex: 0 0 auto;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 9.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.2s;
-}
-
-.modal-chip.active {
-  color: #04120e;
-  background: linear-gradient(135deg, var(--green), var(--cyan));
-  border-color: transparent;
-}
-
-/* Slider de configurações */
-.slider-group { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-.slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; }
-.slider-val { font-size: 12px; font-weight: 700; color: var(--green); min-width: 30px; text-align: center; }
-
-/* ============================================================
-   ABA CLIMA (NOVO)
+   CLIMA
    ============================================================ */
 .wx-search { display: flex; gap: 10px; margin-bottom: 16px; }
-.wx-search input {
-  flex: 1; padding: 14px 16px; border-radius: 14px; background: rgba(0,0,0,.4);
-  border: 1px solid rgba(255,255,255,.1); color: var(--text);
-  font-family: inherit; font-size: 14px; outline: none; transition: all .25s;
-}
-.wx-search input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,.1); }
-.wx-search button {
-  width: 52px; height: 52px; flex: 0 0 52px; border-radius: 15px; display: grid; place-items: center;
-  cursor: pointer; border: 1px solid rgba(0,229,255,.42);
-  background: linear-gradient(135deg, rgba(0,229,255,.22), rgba(0,255,180,.12));
-  color: var(--cyan); box-shadow: 0 0 26px -10px var(--cyan); transition: transform .15s;
-}
-.wx-search button:active { transform: scale(.92); }
-.wx-search button svg { width: 20px; height: 20px; stroke-width: 2; }
-
-.wx-main {
-  position: relative; overflow: hidden; padding: 30px 20px; border-radius: 22px; text-align: center;
-  background: linear-gradient(150deg, rgba(0,229,255,.16), rgba(0,255,180,.06) 48%, rgba(255,255,255,.02));
-  border: 1px solid rgba(0,229,255,.28); backdrop-filter: blur(16px);
-  box-shadow: 0 26px 62px -34px var(--cyan); animation: paneIn .4s ease;
-}
-.wx-main::after {
-  content: ''; position: absolute; top: -40%; right: -20%; width: 220px; height: 220px;
-  border-radius: 50%; background: radial-gradient(circle, rgba(0,255,180,.24), transparent 68%); pointer-events: none;
-}
-.wx-city { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.wx-search input { flex: 1; padding: 14px 16px; border-radius: 14px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.1); color: var(--text); font-family: inherit; font-size: 14px; outline: none; }
+.wx-search button { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; cursor: pointer; border: 1px solid rgba(0,229,255,.42); background: linear-gradient(135deg, rgba(0,229,255,.22), rgba(0,255,180,.12)); color: var(--cyan); }
+.wx-main { position: relative; overflow: hidden; padding: 30px 20px; border-radius: 22px; text-align: center; background: linear-gradient(150deg, rgba(0,229,255,.16), rgba(0,255,180,.06) 48%, rgba(255,255,255,.02)); border: 1px solid rgba(0,229,255,.28); }
+.wx-city { font-size: 12px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .wx-city b { color: var(--cyan); }
-.wx-icon { font-size: 48px; line-height: 1; margin-bottom: 10px; }
-.wx-temp {
-  font-size: 72px; font-weight: 700; line-height: 1; letter-spacing: -.045em;
-  background: linear-gradient(180deg, #fff, var(--cyan)); -webkit-background-clip: text;
-  background-clip: text; color: transparent; filter: drop-shadow(0 0 26px rgba(0,229,255,.5));
-}
-.wx-temp sup { font-size: 28px; vertical-align: super; }
-.wx-desc { margin-top: 10px; font-size: 14px; color: var(--text); text-transform: capitalize; }
-
+.wx-icon { font-size: 48px; margin-bottom: 10px; }
+.wx-temp { font-size: 72px; font-weight: 700; background: linear-gradient(180deg, #fff, var(--cyan)); -webkit-background-clip: text; color: transparent; }
+.wx-temp sup { font-size: 28px; }
+.wx-desc { margin-top: 10px; font-size: 14px; text-transform: capitalize; }
 .wx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
-.wx-card {
-  padding: 16px 12px; border-radius: 16px; background: var(--panel); border: 1px solid var(--brd);
-  backdrop-filter: blur(12px); text-align: center; animation: paneIn .45s ease backwards;
-}
-.wx-card:nth-child(1) { animation-delay: .05s; } .wx-card:nth-child(2) { animation-delay: .1s; }
-.wx-card:nth-child(3) { animation-delay: .15s; } .wx-card:nth-child(4) { animation-delay: .2s; }
-.wx-card .k { font-size: 9px; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); }
-.wx-card .v { margin-top: 7px; font-size: 18px; font-weight: 700; color: var(--green); text-shadow: 0 0 16px rgba(0,255,180,.45); }
-.wx-card .v small { font-size: 10px; color: var(--muted); margin-left: 2px; }
-
+.wx-card { padding: 16px 12px; border-radius: 16px; background: var(--panel); border: 1px solid var(--brd); text-align: center; }
+.wx-card .k { font-size: 9px; text-transform: uppercase; color: var(--muted); }
+.wx-card .v { margin-top: 7px; font-size: 18px; font-weight: 700; color: var(--green); }
 .wx-loading { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 46px 20px; color: var(--muted); font-size: 11.5px; text-transform: uppercase; }
-.spinner { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgba(0,255,180,.15); border-top-color: var(--green); box-shadow: 0 0 20px -6px var(--green); animation: spin .85s linear infinite; }
+.spinner { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgba(0,255,180,.15); border-top-color: var(--green); animation: spin .85s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================
-   ABA SOBRE
+   SOBRE
    ============================================================ */
 .about-card { margin-top: 8px; padding: 26px 20px; border-radius: 22px; background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015)); border: 1px solid var(--brd); text-align: center; }
-.about-logo { width: 66px; height: 66px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); box-shadow: 0 0 40px -8px var(--green); }
+.about-logo { width: 66px; height: 66px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); }
 .about-card h2 { font-size: 19px; color: #eaf6f2; }
 .about-card h2 span { color: var(--green); }
-.ver { display: inline-block; margin: 10px 0 0; padding: 6px 14px; border-radius: 999px; font-size: 10px; text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.3); background: rgba(0, 229, 255, 0.08); }
-.divider { height: 1px; margin: 22px 0; background: linear-gradient(90deg, transparent, rgba(0, 255, 180, 0.35), transparent); }
-.about-text { margin: 0 0 20px; font-size: 12.5px; line-height: 1.75; color: var(--muted); }
-.about-list { list-style: none; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.07); text-align: left; }
-.about-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 15px; font-size: 11.5px; background: rgba(255, 255, 255, 0.028); }
-.about-list li+li { border-top: 1px solid rgba(255, 255, 255, 0.05); }
+.ver { display: inline-block; margin: 10px 0 0; padding: 6px 14px; border-radius: 999px; font-size: 10px; text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(0,229,255,.3); }
+.divider { height: 1px; margin: 22px 0; background: linear-gradient(90deg, transparent, rgba(0,255,180,.35), transparent); }
+.about-text { margin: 0 0 20px; font-size: 12.5px; color: var(--muted); }
+.about-list { list-style: none; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); text-align: left; }
+.about-list li { display: flex; justify-content: space-between; padding: 13px 15px; font-size: 11.5px; background: rgba(255,255,255,0.028); }
 .about-list li span { color: var(--muted); text-transform: uppercase; font-size: 9.5px; }
-.about-list li b { color: var(--text); font-weight: 600; }
-.footer-note { margin: 22px 0 0; text-align: center; font-size: 9.5px; text-transform: uppercase; color: rgba(125, 133, 144, 0.6); }
+.about-list li b { color: var(--text); }
+.footer-note { margin: 22px 0 0; text-align: center; font-size: 9.5px; text-transform: uppercase; color: rgba(125,133,144,0.6); }
+
+/* ============================================================
+   MODAIS (JANELA FLUTUANTE ARRASTÁVEL EM X e Y)
+   ============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200; display: none; 
+  align-items: center; justify-content: center; /* Centraliza a janela */
+  padding: 16px; background: rgba(3, 6, 10, 0.8); backdrop-filter: blur(8px);
+}
+.modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  width: calc(100% - 32px); max-width: 460px; max-height: 80vh;
+  border-radius: 20px; /* Borda em todos os cantos */
+  padding: 16px 20px 20px;
+  background: rgba(13, 17, 23, 0.98);
+  border: 1px solid rgba(0, 255, 180, 0.26);
+  box-shadow: 0 20px 70px -22px var(--green);
+  display: flex; flex-direction: column;
+  opacity: 0; /* Para animação suave */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* Transform inicial em 0,0 - O JS vai alterar isso */
+  transform: translate(0px, 0px); 
+}
+.modal-overlay.open .modal { opacity: 1; }
+
+/* Puxador para arrastar em qualquer direção */
+.drag-handle {
+  width: 50px; height: 5px; background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px; margin: 0 auto 15px; flex: 0 0 auto; cursor: grab;
+  /* Aumentando a área de toque */
+  padding: 10px 0; margin-top: -10px;
+  touch-action: none; /* Impede o scroll da página enquanto arrasta */
+}
+
+.modal h3 { font-size: 14px; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.modal .sub { font-size: 10.5px; color: var(--muted); text-transform: uppercase; }
+
+.mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 4px; }
+.mode-btn { padding: 13px 8px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); font-family: inherit; font-size: 11px; text-transform: uppercase; font-weight: 600; }
+.mode-btn.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
+
+.mode-pane { display: none; margin-top: 6px; flex: 1; overflow: hidden; flex-direction: column; }
+.mode-pane.active { display: flex; }
+
+.field { margin-top: 14px; }
+.field label { display: block; margin-bottom: 7px; font-size: 10px; text-transform: uppercase; color: var(--muted); }
+.input { width: 100%; padding: 13px 14px; border-radius: 13px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.12); color: var(--text); font-family: inherit; font-size: 14px; outline: none; }
+.input:focus { border-color: rgba(0,255,180,0.6); }
+
+.modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; flex: 0 0 auto; }
+.btn-solid { padding: 14px 12px; border-radius: 14px; border: 0; font-family: inherit; font-size: 12.5px; font-weight: 700; text-transform: uppercase; }
+.btn-solid.primary { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); }
+.btn-solid.ghost { color: var(--muted); background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.1); }
+
+.app-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; overflow-y: auto; flex: 1; min-height: 0; padding-bottom: 10px; }
+.app-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--brd); }
+.app-item.selected { border-color: rgba(0,255,180,0.6); background: rgba(0,255,180,0.06); }
+.app-icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); display: grid; place-items: center; font-size: 16px; font-weight: bold; color: #fff; object-fit: cover; }
+.app-info { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.app-name { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-pkg { font-size: 9.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.app-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid rgba(0,255,180,0.4); }
+.app-item.selected .app-check { background: var(--green); border-color: var(--green); }
+
+.modal-chips { display: flex; gap: 6px; margin-top: 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.modal-chip { padding: 6px 12px; border-radius: 999px; font-size: 9.5px; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+.modal-chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
+
+.slider-group { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; }
 
 /* TOAST */
 .toast {
-  position: fixed;
-  left: 50%;
-  bottom: calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));
-  transform: translate(-50%, 22px);
-  z-index: 300;
-  padding: 14px 20px;
-  border-radius: 14px;
-  text-align: center;
-  font-size: 12.5px;
-  color: #ffd9ef;
-  background: rgba(255, 47, 185, 0.15);
-  border: 1px solid rgba(255, 47, 185, 0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.32s;
+  position: fixed; left: 50%; bottom: calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 22px); z-index: 300; padding: 14px 20px; border-radius: 14px;
+  text-align: center; font-size: 12.5px; color: #ffd9ef; background: rgba(255,47,185,0.15);
+  border: 1px solid rgba(255,47,185,0.5); opacity: 0; pointer-events: none; transition: all 0.32s;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
-.toast.ok { color: #c6ffec; background: rgba(0, 255, 180, 0.13); border-color: rgba(0, 255, 180, 0.5); }
-
-/* Fallback para imagens */
-.game-fav-img {
-  width: var(--icon-size);
-  height: var(--icon-size);
-  border-radius: var(--icon-radius);
-  object-fit: cover;
-  flex: 0 0 auto;
-  box-shadow: 0 0 18px -6px var(--green);
-  transition: width 0.3s, height 0.3s, border-radius 0.3s;
-}
-.console-card .game-fav-img {
-  width: calc(var(--icon-size) * 0.8);
-  height: calc(var(--icon-size) * 0.8);
-  border-radius: calc(var(--icon-radius) * 0.7);
-}
-.detail-header .game-fav-img {
-  width: calc(var(--icon-size) * 1.3);
-  height: calc(var(--icon-size) * 1.3);
-  border-radius: calc(var(--icon-radius) * 1.1);
-}
-.app-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-}
+.toast.ok { color: #c6ffec; background: rgba(0,255,180,0.13); border-color: rgba(0,255,180,0.5); }
 </style>
 </head>
 <body>
 
-<!-- CABEÇALHO -->
 <header class="app-header">
   <div class="logo">
     <div class="logo-mark">◈</div>
@@ -1265,6 +607,12 @@ main {
         <span class="terminal-title">root@gamezone:~</span>
       </div>
       <div class="terminal-body" id="terminal"></div>
+    </div>
+
+    <!-- BARRA DE PESQUISA GOOGLE -->
+    <div class="home-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="googleQuery" type="text" placeholder="Buscar no Google..." autocomplete="off">
     </div>
 
     <div class="hw-grid">
@@ -1350,8 +698,6 @@ main {
 
   <!-- ABA 3: JOGOS -->
   <section class="pane" id="pane-jogos">
-    
-    <!-- Header (Aparece no Retrato) -->
     <div class="games-head">
       <div style="display:flex; align-items:center; gap:8px;">
         <h2>Biblioteca</h2>
@@ -1361,13 +707,12 @@ main {
         <button class="btn-small" id="btnSettings">⚙️</button>
         <button class="btn-small" id="btnExport">Exp</button>
         <button class="btn-small" id="btnImport">Imp</button>
-        <button class="fab" id="btnAddGame" aria-label="Adicionar jogo">
+        <button class="fab" id="btnAddGame">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- Conteúdo Retrato -->
     <div class="search-bar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
       <input id="searchGames" type="text" placeholder="Buscar jogo...">
@@ -1380,7 +725,6 @@ main {
       <span>toque em + para adicionar</span>
     </div>
 
-    <!-- CONSOLE MODE (Aparece no Paisagem) -->
     <div class="console-container">
       <div class="console-left">
         <div class="console-left-header">
@@ -1392,9 +736,7 @@ main {
             </button>
           </div>
         </div>
-        <div class="console-grid" id="consoleLeft">
-          <!-- Lista de jogos injetada via JS -->
-        </div>
+        <div class="console-grid" id="consoleLeft"></div>
       </div>
       <div class="console-right" id="consoleRight">
         <div class="console-empty" id="consoleEmpty">
@@ -1403,16 +745,15 @@ main {
         </div>
       </div>
     </div>
-
   </section>
 
-  <!-- ABA 4: CLIMA (NOVO) -->
+  <!-- ABA 4: CLIMA -->
   <section class="pane" id="pane-clima">
     <div class="section-title"><h2>Previsão do Tempo</h2></div>
     
     <div class="wx-search">
       <input type="text" id="wxCity" placeholder="Digite a cidade..." autocomplete="off">
-      <button id="wxBtn" aria-label="Buscar">
+      <button id="wxBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
       </button>
     </div>
@@ -1425,9 +766,9 @@ main {
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.4.0</div>
+      <div class="ver">versão 3.6.0</div>
       <div class="divider"></div>
-      <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem.</p>
+      <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem e janelas flutuantes.</p>
       <ul class="about-list">
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
         <li><span>Device Info</span><b>@capgo/capacitor-device-info</b></li>
@@ -1440,7 +781,7 @@ main {
   </section>
 </main>
 
-<!-- NAVEGAÇÃO -->
+<!-- NAVEGAÇÃO (AUMENTADA) -->
 <nav class="bottom-nav">
   <button class="nav-btn active" data-tab="aparelho">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
@@ -1464,15 +805,18 @@ main {
   </button>
 </nav>
 
-<!-- MODAL DE JOGO -->
+<!-- MODAL DE JOGO (JANELA FLUTUANTE) -->
 <div class="modal-overlay" id="gameModal">
-  <div class="modal">
+  <div class="modal" id="gameModalSheet">
+    <div class="drag-handle" id="dragHandleGame"></div>
     <h3>+ Novo Jogo</h3>
     <p class="sub">adicionar à biblioteca</p>
+    
     <div class="mode-selector">
       <button class="mode-btn active" data-mode="web">🌐 Web</button>
       <button class="mode-btn" data-mode="installed">📱 Instalado</button>
     </div>
+    
     <div class="mode-pane active" id="modePane-web">
       <div class="field"><label>Nome do jogo</label><input class="input" id="gameName" type="text" placeholder="Ex: Roblox"></div>
       <div class="field"><label>Link (URL)</label><input class="input" id="gameUrl" type="url" placeholder="https://..."></div>
@@ -1482,6 +826,7 @@ main {
         </select>
       </div>
     </div>
+    
     <div class="mode-pane" id="modePane-installed">
       <div class="modal-chips" id="modalFilterChips">
         <button class="modal-chip active" data-filter="all">Todos</button>
@@ -1489,8 +834,11 @@ main {
         <button class="modal-chip" data-filter="installed">Instalados</button>
       </div>
       <p class="sub" style="margin-top:6px">Selecione apps para adicionar</p>
-      <div class="app-list" id="modalAppList"><div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Toque em "Instalado" para carregar</div></div>
+      <div class="app-list" id="modalAppList">
+        <div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Toque em "Instalado" para carregar</div>
+      </div>
     </div>
+    
     <div class="modal-actions">
       <button class="btn-solid ghost" id="btnCancelGame">Fechar</button>
       <button class="btn-solid primary" id="btnSaveGame">Salvar</button>
@@ -1498,9 +846,10 @@ main {
   </div>
 </div>
 
-<!-- MODAL DE CONFIGURAÇÕES -->
+<!-- MODAL DE CONFIGURAÇÕES (JANELA FLUTUANTE) -->
 <div class="modal-overlay" id="settingsModal">
-  <div class="modal">
+  <div class="modal" id="settingsModalSheet">
+    <div class="drag-handle" id="dragHandleSettings"></div>
     <h3>⚙️ Configurações</h3>
     <p class="sub">Ajustes visuais</p>
     <div class="field">
@@ -1524,14 +873,13 @@ main {
 (function(){
 'use strict';
 
-// Helpers
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 const fmtGB = b => (b == null || isNaN(b) || b < 0) ? '—' : (b / (1024**3)).toFixed(2) + ' GB';
 const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch(e){} };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-// Plugins
 const isNative = () => !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
 const getPlugin = name => (window.Capacitor && window.Capacitor.Plugins) ? window.Capacitor.Plugins[name] : null;
 const getDeviceInfoPlugin = () => getPlugin('DeviceInfo') || getPlugin('CapacitorDeviceInfo');
@@ -1541,34 +889,20 @@ const getOrientationPlugin = () => getPlugin('ScreenOrientation');
 const getAppLauncherPlugin = () => getPlugin('AppLauncher');
 const getNavBarPlugin = () => getPlugin('NavigationBar');
 
-// Controle do Modo Imersivo (Esconder botões do Android)
 async function toggleImmersiveMode(hide) {
   const nav = getNavBarPlugin();
   if (!nav) return;
-  try {
-    if (hide) {
-      await nav.setNavigationBarVisibility({ isVisible: false });
-    } else {
-      await nav.setNavigationBarVisibility({ isVisible: true });
-    }
-  } catch (e) {
-    try {
-      if (hide) await nav.hide();
-      else await nav.show();
-    } catch (err) {}
-  }
+  try { await (hide ? nav.setNavigationBarVisibility({ isVisible: false }) : nav.setNavigationBarVisibility({ isVisible: true })); } 
+  catch (e) { try { await (hide ? nav.hide() : nav.show()); } catch(err){} }
 }
 
-// UI Toast
 const toastEl = $('#toast'); let toastT = null;
 function toast(m, t) {
-  toastEl.textContent = m;
-  toastEl.className = 'toast show' + (t === 'ok' ? ' ok' : '');
-  clearTimeout(toastT);
-  toastT = setTimeout(() => toastEl.classList.remove('show'), 3000);
+  toastEl.textContent = m; toastEl.className = 'toast show' + (t === 'ok' ? ' ok' : '');
+  clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 3000);
 }
 
-// Terminal
+// TERMINAL LOG
 const terminal = $('#terminal');
 function log(text, type) {
   if (!terminal) return;
@@ -1578,60 +912,104 @@ function log(text, type) {
   terminal.appendChild(line);
   terminal.scrollTop = terminal.scrollHeight;
 }
+function logCaret() {
+  if (!terminal) return;
+  const l = document.createElement('div'); l.className = 'line';
+  const c = document.createElement('span'); c.className = 'caret';
+  l.appendChild(c); terminal.appendChild(l); terminal.scrollTop = terminal.scrollHeight;
+}
 
-// Configurações de ícone
+// LÓGICA DE ARRASTAR O MODAL (X e Y)
+function setupDraggableModal(modalId, handleId, overlayId) {
+  const modal = document.getElementById(modalId);
+  const handle = document.getElementById(handleId);
+  const overlay = document.getElementById(overlayId);
+  let startX = 0, startY = 0;
+  let currentX = 0, currentY = 0;
+
+  handle.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX - currentX;
+    startY = e.touches[0].clientY - currentY;
+    modal.style.transition = 'none'; // Remove transição durante o movimento
+  }, { passive: true });
+
+  handle.addEventListener('touchmove', e => {
+    currentX = e.touches[0].clientX - startX;
+    currentY = e.touches[0].clientY - startY;
+    modal.style.transform = `translate(${currentX}px, ${currentY}px)`;
+  }, { passive: true });
+
+  handle.addEventListener('touchend', () => {
+    modal.style.transition = 'transform 0.3s ease';
+    // Se o usuário jogar a janela muito pra cima ou pra baixo (fora da tela), volta pro centro
+    if (Math.abs(currentX) > 200 || Math.abs(currentY) > 300) {
+      currentX = 0; currentY = 0;
+      modal.style.transform = `translate(0px, 0px)`;
+    }
+  });
+
+  // Função para resetar a posição ao abrir
+  modal.resetPosition = () => {
+    currentX = 0; currentY = 0;
+    modal.style.transition = 'none';
+    modal.style.transform = `translate(0px, 0px)`;
+    setTimeout(() => { modal.style.transition = 'transform 0.3s ease, opacity 0.3s ease'; }, 50);
+  };
+}
+setupDraggableModal('gameModalSheet', 'dragHandleGame', 'gameModal');
+setupDraggableModal('settingsModalSheet', 'dragHandleSettings', 'settingsModal');
+
+
+// CONFIGURAÇÕES DE ÍCONE
 const ICON_KEY = 'gamezone_icon_size';
 function applyIconSize(px) {
   document.documentElement.style.setProperty('--icon-size', px + 'px');
   document.documentElement.style.setProperty('--icon-radius', Math.round(px * 0.3) + 'px');
   document.documentElement.style.setProperty('--icon-font', Math.round(px * 0.45) + 'px');
   localStorage.setItem(ICON_KEY, px);
-  const valEl = $('#iconSizeVal');
-  if (valEl) valEl.textContent = px + 'px';
+  const valEl = $('#iconSizeVal'); if (valEl) valEl.textContent = px + 'px';
 }
 function loadIconSize() {
-  const saved = localStorage.getItem(ICON_KEY);
-  const px = saved ? parseInt(saved, 10) : 40;
-  applyIconSize(px);
-  const slider = $('#sliderIconSize');
-  if (slider) slider.value = px;
+  const saved = localStorage.getItem(ICON_KEY); const px = saved ? parseInt(saved, 10) : 40;
+  applyIconSize(px); const slider = $('#sliderIconSize'); if (slider) slider.value = px;
 }
 
-// Navegação
+// NAVEGAÇÃO
 const navBtns = $$('.nav-btn'); const panes = $$('.pane');
 async function switchTab(tab) {
   navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   panes.forEach(p => p.classList.toggle('active', p.id === 'pane-' + tab));
-  
   const so = getOrientationPlugin();
-  if (tab === 'jogos') { 
-    try { await so.lock({ orientation: 'landscape' }); } catch(e){} 
-    renderGames(); 
-    toggleImmersiveMode(true);
-  } 
-  else { 
-    try { await so.unlock(); } catch(e){} 
-    toggleImmersiveMode(false);
-  }
-  
+  if (tab === 'jogos') { try { await so.lock({ orientation: 'landscape' }); } catch(e){} renderGames(); toggleImmersiveMode(true); } 
+  else { try { await so.unlock(); } catch(e){} toggleImmersiveMode(false); }
   if (tab === 'status') startLiveStatus(); else stopLiveStatus();
   if (tab === 'aparelho') loadDeviceSpecs();
-  
-  // Lógica de carregar cidade no clima
   if (tab === 'clima') {
     const lastCity = localStorage.getItem('gz_last_city');
-    if (lastCity && !$('#wxCity').value) {
-      $('#wxCity').value = lastCity;
-      buscarClima();
-    }
+    if (lastCity && !$('#wxCity').value) { $('#wxCity').value = lastCity; buscarClima(); }
   }
-  
   buzz(8);
 }
 navBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
-$('#btnRotate').addEventListener('click', async () => { try { await getOrientationPlugin().unlock(); } catch(e){} toast('Gire o celular', 'ok'); });
 
-// Hardware Especificações
+// PESQUISA GOOGLE
+$('#googleQuery').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const q = e.target.value.trim();
+    if (!q) return toast('Digite algo para buscar');
+    window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank');
+    buzz(15);
+  }
+});
+$('#googleQuery').addEventListener('click', () => {
+  if (!$('#googleQuery').value) {
+    const model = $('#specModel').textContent || 'meu celular';
+    $('#googleQuery').value = `como otimizar o ${model} de maneira segura para jogos`;
+    buzz(8);
+  }
+});
+
+// HARDWARE ESPEC
 async function loadDeviceSpecs() {
   const di = getDeviceInfoPlugin(); const dev = getDevicePlugin();
   if (!di && !dev) return;
@@ -1659,15 +1037,12 @@ async function loadDeviceSpecs() {
     
     const os = (info && info.os) || {}; const osName = os.name || (capInfo && capInfo.platform) || 'Android'; const osVer = os.version || (capInfo && capInfo.osVersion) || '';
     $('#specOs').textContent = (osName + ' ' + osVer).trim();
-    
-    log('✓ especificações carregadas', 'ok');
-  } catch(e) { log('erro: ' + e.message, 'err'); }
+  } catch(e) {}
 }
 $('#btnRefreshSpecs').addEventListener('click', () => { terminal.innerHTML = ''; loadDeviceSpecs(); toast('Atualizado', 'ok'); });
 
-// Monitor Status + Anel Analógico
+// STATUS E ANEL
 let statusStarted = false; let statusListener = null;
-
 async function startLiveStatus() {
   if (statusStarted) return; statusStarted = true;
   const di = getDeviceInfoPlugin(); if (!di) return;
@@ -1676,14 +1051,12 @@ async function startLiveStatus() {
     if (di.startMonitoring) await di.startMonitoring({ intervalMs: 2000 });
   } catch(e) {}
 }
-
 async function stopLiveStatus() {
   if (!statusStarted) return; statusStarted = false;
   if (statusListener) { try { await statusListener.remove(); } catch(e){} statusListener = null; }
   const di = getDeviceInfoPlugin(); if (di && di.stopMonitoring) await di.stopMonitoring();
 }
 
-// Atualiza UI geral
 function updateStatusUI(sample) {
   if (!sample) return;
   const mem = sample.memory || {};
@@ -1720,80 +1093,58 @@ function updateStatusUI(sample) {
   }
 }
 
-// Função de atualização do anel SVG
 function updateRing(pct, usedBytes, totalBytes) {
-  const circle = $('#ringFill');
-  if (!circle) return;
-  const radius = circle.r.baseVal.value;
-  const circumference = radius * 2 * Math.PI;
-  const offset = circumference - (Math.min(100, pct) / 100) * circumference;
-  
-  let color = 'var(--green)';
-  if (pct > 75) color = 'var(--red)';
-  else if (pct > 50) color = 'var(--amber)';
-  
-  circle.style.stroke = color;
-  circle.style.strokeDashoffset = offset;
-  
-  const pctEl = $('#ringPct');
-  const gbEl = $('#ringGb');
-  const lblEl = $('#ringLabel');
-  if (pctEl) pctEl.textContent = pct.toFixed(0) + '%';
-  if (gbEl) gbEl.textContent = fmtGB(usedBytes) + ' / ' + fmtGB(totalBytes);
-  if (lblEl) lblEl.textContent = 'MEMÓRIA';
+  const circle = $('#ringFill'); if (!circle) return;
+  const radius = circle.r.baseVal.value; const circumference = radius * 2 * Math.PI;
+  circle.style.strokeDashoffset = circumference - (Math.min(100, pct) / 100) * circumference;
+  circle.style.stroke = pct > 75 ? 'var(--red)' : (pct > 50 ? 'var(--amber)' : 'var(--green)');
+  if ($('#ringPct')) $('#ringPct').textContent = pct.toFixed(0) + '%';
+  if ($('#ringGb')) $('#ringGb').textContent = fmtGB(usedBytes) + ' / ' + fmtGB(totalBytes);
 }
 
-// Jogos e Filtro
+// JOGOS
 const GAMES_KEY = 'gamezone_games_v3';
 let games = []; let currentCat = 'Todos'; let searchQ = ''; let consoleSelectedIdx = -1;
 
 function loadGames() { try { games = JSON.parse(localStorage.getItem(GAMES_KEY)) || []; } catch(e) { games = []; } }
 function saveGames() { localStorage.setItem(GAMES_KEY, JSON.stringify(games)); }
 
-function renderGames() {
-  renderGridPortrait();
-  renderConsoleLandscape();
-}
-
 function getFaviconUrl(url) {
-  try {
-    const domain = new URL(url).hostname;
-    return 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(domain) + '&sz=64';
-  } catch(e) { return null; }
+  try { return 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(new URL(url).hostname) + '&sz=64'; } catch(e) { return null; }
 }
 
 function getGameIconHtml(g, sizeClass) {
   const cls = sizeClass || 'game-fav';
-  if (g.iconBase64) {
-    return `<img class="${cls}" src="${esc(g.iconBase64)}" alt="${esc(g.name)}" loading="lazy">`;
-  }
+  if (g.iconBase64) return `<img class="${cls}" src="${esc(g.iconBase64)}" loading="lazy">`;
   if (!g.isNative && g.url) {
     const fav = getFaviconUrl(g.url);
-    if (fav) return `<img class="${cls}" src="${fav}" alt="${esc(g.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="${cls}-fallback ${g.isNative ? 'native' : ''}" style="display:none">${(g.name.charAt(0) || '?').toUpperCase()}</div>`;
+    if (fav) return `<img class="${cls}" src="${fav}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="${cls}-fallback ${g.isNative ? 'native' : ''}" style="display:none">${(g.name.charAt(0) || '?').toUpperCase()}</div>`;
   }
   return `<div class="${cls}-fallback ${g.isNative ? 'native' : ''}">${(g.name.charAt(0) || '?').toUpperCase()}</div>`;
 }
 
-function renderGridPortrait() {
+function renderGames() {
   const grid = $('#gamesGrid'); const empty = $('#gamesEmpty');
   grid.innerHTML = ''; let list = games.slice();
   if (currentCat === 'Favoritos') list = list.filter(g => g.fav); else if (currentCat !== 'Todos') list = list.filter(g => g.cat === currentCat);
   if (searchQ) list = list.filter(g => (g.name || '').toLowerCase().includes(searchQ.toLowerCase()));
   
-  if (!list.length) { grid.style.display = 'none'; empty.style.display = 'flex'; return; }
-  grid.style.display = 'grid'; empty.style.display = 'none';
-  
-  const frag = document.createDocumentFragment();
-  list.forEach((g) => {
-    const card = document.createElement('div'); card.className = 'game-card';
-    card.innerHTML = getGameIconHtml(g, 'game-fav');
-    const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
-    const cat = document.createElement('div'); cat.className = 'game-cat'; cat.textContent = g.isNative ? 'Instalado' : (g.cat || 'Outro');
-    card.appendChild(name); card.appendChild(cat);
-    card.addEventListener('click', () => openGame(g));
-    frag.appendChild(card);
-  });
-  grid.appendChild(frag);
+  if (!list.length) { grid.style.display = 'none'; empty.style.display = 'flex'; } 
+  else {
+    grid.style.display = 'grid'; empty.style.display = 'none';
+    const frag = document.createDocumentFragment();
+    list.forEach((g) => {
+      const card = document.createElement('div'); card.className = 'game-card';
+      card.innerHTML = getGameIconHtml(g, 'game-fav');
+      const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
+      const cat = document.createElement('div'); cat.className = 'game-cat'; cat.textContent = g.isNative ? 'Instalado' : (g.cat || 'Outro');
+      card.appendChild(name); card.appendChild(cat);
+      card.addEventListener('click', () => openGame(g));
+      frag.appendChild(card);
+    });
+    grid.appendChild(frag);
+  }
+  renderConsoleLandscape();
 }
 
 async function openGame(g) {
@@ -1801,7 +1152,7 @@ async function openGame(g) {
   try {
     if (g.isNative) await launcher.openUrl({ url: g.packageName });
     else await launcher.openUrl({ url: g.url });
-  } catch(e) { toast('Não foi possível abrir: ' + e.message); }
+  } catch(e) { toast('Não foi possível abrir'); }
 }
 
 function renderConsoleLandscape() {
@@ -1824,181 +1175,121 @@ function renderConsoleLandscape() {
   
   if (consoleSelectedIdx >= 0 && games[consoleSelectedIdx]) {
     const g = games[consoleSelectedIdx];
-    
     right.innerHTML = `
       <div class="detail-header">
         ${getGameIconHtml(g, 'game-fav')}
-        <div class="detail-title">
-          <h2>${esc(g.name)}</h2>
-          <p>${g.isNative ? 'App Instalado' : esc(g.cat || 'Jogo Web')}</p>
-        </div>
+        <div class="detail-title"><h2>${esc(g.name)}</h2><p>${g.isNative ? 'App Instalado' : esc(g.cat || 'Jogo Web')}</p></div>
       </div>
       <div class="detail-content">
         <button class="btn-start" id="btnStartGame">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          INICIAR
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg> INICIAR
         </button>
-        
         <div class="ring-wrap">
           <svg class="ring-svg" viewBox="0 0 160 160">
             <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
             <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="70" stroke-dasharray="439.8" stroke-dashoffset="439.8"></circle>
           </svg>
-          <div class="ring-text">
-            <div class="ring-pct" id="ringPct">—</div>
-            <div class="ring-gb" id="ringGb" style="font-size:10px;color:var(--muted);"></div>
-            <div class="ring-label" id="ringLabel">MEMÓRIA</div>
-          </div>
+          <div class="ring-text"><div class="ring-pct" id="ringPct">—</div><div class="ring-gb" id="ringGb" style="font-size:10px;color:var(--muted);"></div><div class="ring-label" id="ringLabel">MEMÓRIA</div></div>
         </div>
-        
         <button class="btn-opt" id="btnOptimize">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-          </svg>
-          OTIMIZAR MEMÓRIA
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> OTIMIZAR MEMÓRIA
         </button>
-        
         <div class="detail-stats" style="margin-top:8px">
           <div class="stat-box"><div class="k">Bateria</div><div class="v" id="detailBat">—</div></div>
           <div class="stat-box"><div class="k">Armazenamento</div><div class="v" id="detailStorage">—</div></div>
         </div>
       </div>
     `;
-    
     $('#btnStartGame').addEventListener('click', () => openGame(g));
-    
     $('#btnOptimize').addEventListener('click', (e) => {
-      const btn = e.currentTarget;
-      btn.classList.add('optimizing');
-      btn.textContent = 'OTIMIZANDO...';
-      buzz([50, 50, 50]);
-      
+      const btn = e.currentTarget; btn.classList.add('optimizing'); btn.textContent = 'OTIMIZANDO...'; buzz([50,50,50]);
       setTimeout(() => {
         const di = getDeviceInfoPlugin();
         if (di && di.getInfo) {
           di.getInfo().then(info => {
             if (info.memory) {
-              const used = info.memory.usedBytes || 0;
-              const total = info.memory.totalBytes || 1;
-              const pct = (used / total) * 100;
+              const used = info.memory.usedBytes || 0; const total = info.memory.totalBytes || 1; const pct = (used/total)*100;
               updateRing(pct, used, total);
-              const ramEl = $('#liveRam');
-              if (ramEl) ramEl.innerHTML = fmtGB(used) + ' <small>usados</small>';
-              const ramSub = $('#liveRamSub');
-              if (ramSub) ramSub.textContent = 'de ' + fmtGB(total) + ' · ' + pct.toFixed(1) + '%';
-              const ramBar = $('#liveRamBar');
-              if (ramBar) ramBar.style.width = Math.min(100, pct) + '%';
+              if($('#liveRam')) $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>';
+              if($('#liveRamSub')) $('#liveRamSub').textContent = 'de ' + fmtGB(total) + ' · ' + pct.toFixed(1) + '%';
+              if($('#liveRamBar')) $('#liveRamBar').style.width = Math.min(100, pct) + '%';
             }
           });
         }
-        btn.classList.remove('optimizing');
-        btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> LIMPAR NOVAMENTE`;
+        btn.classList.remove('optimizing'); btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> LIMPAR NOVAMENTE`;
         toast('Memória otimizada', 'ok');
       }, 1500);
     });
-    
     const di = getDeviceInfoPlugin();
     if (di && di.getInfo) {
       di.getInfo().then(info => {
-        if (info.memory) {
-          const used = info.memory.usedBytes || 0;
-          const total = info.memory.totalBytes || 1;
-          const pct = (used / total) * 100;
-          updateRing(pct, used, total);
-        }
-        if (info.storage) {
-          const stEl = $('#detailStorage');
-          if (stEl) stEl.textContent = fmtGB(info.storage.freeBytes) + ' livres';
-        }
+        if (info.memory) { updateRing((info.memory.usedBytes/(info.memory.totalBytes||1))*100, info.memory.usedBytes, info.memory.totalBytes); }
+        if (info.storage && $('#detailStorage')) $('#detailStorage').textContent = fmtGB(info.storage.freeBytes) + ' livres';
       });
     }
     const dev = getDevicePlugin();
     if (dev && dev.getBatteryInfo) {
-      dev.getBatteryInfo().then(b => {
-        const batEl = $('#detailBat');
-        if (batEl) batEl.textContent = Math.round(b.batteryLevel * 100) + '%';
-      });
+      dev.getBatteryInfo().then(b => { if($('#detailBat')) $('#detailBat').textContent = Math.round(b.batteryLevel*100) + '%'; });
     }
   } else {
     right.innerHTML = '<div class="console-empty"><div class="ico">🎮</div><p>Selecione um jogo na lista</p></div>';
   }
 }
 
-// Modal Adicionar
+// MODAIS
 const gameModal = $('#gameModal'); let modalMode = 'web'; let selectedApps = new Set();
 let modalFilter = 'all'; let cachedUserApps = [];
 
 function setModalMode(mode) {
-  modalMode = mode;
-  $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  $('#modePane-web').classList.toggle('active', mode === 'web');
-  $('#modePane-installed').classList.toggle('active', mode === 'installed');
+  modalMode = mode; $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('#modePane-web').classList.toggle('active', mode === 'web'); $('#modePane-installed').classList.toggle('active', mode === 'installed');
   if (mode === 'installed') loadAppsForModal();
 }
 $$('.mode-btn').forEach(b => b.addEventListener('click', () => setModalMode(b.dataset.mode)));
 
-function openModal() { gameModal.classList.add('open'); setModalMode('web'); }
+function openModal() { 
+  gameModal.classList.add('open'); 
+  setModalMode('web'); 
+  if($('#gameModalSheet').resetPosition) $('#gameModalSheet').resetPosition();
+}
 $('#btnAddGame').addEventListener('click', openModal);
 $('#btnAddGameLandscape').addEventListener('click', openModal);
 $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
 
-// Configurações
 const settingsModal = $('#settingsModal');
-$('#btnSettings').addEventListener('click', () => {
-  settingsModal.classList.add('open');
-  loadIconSize();
+$('#btnSettings').addEventListener('click', () => { 
+  settingsModal.classList.add('open'); loadIconSize(); 
+  if($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
 });
-$('#btnSettingsLandscape').addEventListener('click', () => {
-  settingsModal.classList.add('open');
-  loadIconSize();
+$('#btnSettingsLandscape').addEventListener('click', () => { 
+  settingsModal.classList.add('open'); loadIconSize(); 
+  if($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
 });
 $('#btnCloseSettings').addEventListener('click', () => settingsModal.classList.remove('open'));
-$('#sliderIconSize').addEventListener('input', (e) => {
-  const px = parseInt(e.target.value, 10);
-  applyIconSize(px);
-  renderGames();
-});
+$('#sliderIconSize').addEventListener('input', (e) => { applyIconSize(parseInt(e.target.value, 10)); renderGames(); });
 
-// Filtros da modal
-const BROWSER_PACKAGES = [
-  'com.android.chrome', 'org.mozilla.firefox', 'com.microsoft.emmx',
-  'com.brave.browser', 'com.opera.browser', 'com.opera.mini.native',
-  'com.sec.android.app.sbrowser', 'com.google.android.apps.nbu.files'
-];
-
-function isBrowser(pkg) {
-  return BROWSER_PACKAGES.includes(pkg) || pkg.toLowerCase().includes('browser') || pkg.toLowerCase().includes('chrome') || pkg.toLowerCase().includes('firefox');
-}
+const BROWSER_PACKAGES = ['com.android.chrome', 'org.mozilla.firefox', 'com.microsoft.emmx', 'com.brave.browser', 'com.opera.browser', 'com.opera.mini.native', 'com.sec.android.app.sbrowser'];
+function isBrowser(pkg) { return BROWSER_PACKAGES.includes(pkg) || pkg.toLowerCase().includes('browser') || pkg.toLowerCase().includes('chrome') || pkg.toLowerCase().includes('firefox'); }
 
 $$('#modalFilterChips .modal-chip').forEach(chip => {
   chip.addEventListener('click', () => {
     $$('#modalFilterChips .modal-chip').forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    modalFilter = chip.dataset.filter;
-    renderModalAppList();
+    chip.classList.add('active'); modalFilter = chip.dataset.filter; renderModalAppList();
   });
 });
 
 function renderModalAppList() {
-  const listEl = $('#modalAppList');
-  let filtered = cachedUserApps;
+  const listEl = $('#modalAppList'); let filtered = cachedUserApps;
   if (modalFilter === 'browsers') filtered = filtered.filter(a => isBrowser(a.packageName));
   else if (modalFilter === 'installed') filtered = filtered.filter(a => !isBrowser(a.packageName));
   
-  if (!filtered.length) {
-    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Nenhum app nesta categoria</div>';
-    return;
-  }
+  if (!filtered.length) { listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Nenhum app nesta categoria</div>'; return; }
   
   listEl.innerHTML = filtered.map(app => {
     const sel = selectedApps.has(app.packageName) ? ' selected' : '';
-    const iconHtml = app.icon
-      ? `<img src="${esc(app.icon)}" alt="" style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex:0 0 38px">`
-      : `<div class="app-icon">${esc(app.appName.charAt(0))}</div>`;
+    const iconHtml = app.icon ? `<img src="${esc(app.icon)}" style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex:0 0 38px">` : `<div class="app-icon">${esc(app.appName.charAt(0))}</div>`;
     return `<div class="app-item ${sel}" data-pkg="${esc(app.packageName)}" data-name="${esc(app.appName)}">
-      ${iconHtml}
-      <div class="app-info"><div class="app-name">${esc(app.appName)}</div><div class="app-pkg">${esc(app.packageName)}</div></div>
-      <div class="app-check"></div>
+      ${iconHtml} <div class="app-info"><div class="app-name">${esc(app.appName)}</div><div class="app-pkg">${esc(app.packageName)}</div></div><div class="app-check"></div>
     </div>`;
   }).join('');
   
@@ -2019,14 +1310,8 @@ async function loadAppsForModal() {
     const { granted } = await us.isUsageStatsPermissionGranted();
     if (!granted) { await us.openUsageStatsSettings(); return; }
     const { packages } = await us.queryAllPackages({ includeIcon: true });
-    
     const blacklist = ['com.android', 'android', 'com.samsung', 'com.motorola', 'com.sec', 'com.qualcomm', 'com.mediatek', 'com.miui', 'com.xiaomi', 'com.google.android.gms'];
-    cachedUserApps = packages.filter(p => {
-       if (!p.appName) return false;
-       const pkg = p.packageName.toLowerCase();
-       return !blacklist.some(b => pkg.startsWith(b));
-    }).sort((a,b) => a.appName.localeCompare(b.appName));
-    
+    cachedUserApps = packages.filter(p => { const pkg = p.packageName.toLowerCase(); return p.appName && !blacklist.some(b => pkg.startsWith(b)); }).sort((a,b) => a.appName.localeCompare(b.appName));
     renderModalAppList();
   } catch(e) { listEl.innerHTML = '<div style="color:var(--red)">Erro ao listar.</div>'; }
 }
@@ -2043,75 +1328,69 @@ $('#btnSaveGame').addEventListener('click', () => {
       const el = $('#modalAppList .app-item[data-pkg="' + CSS.escape(pkg) + '"]');
       const name = el ? el.dataset.name : pkg;
       const app = cachedUserApps.find(a => a.packageName === pkg);
-      if (!games.find(g => g.isNative && g.packageName === pkg)) {
-        games.push({
-          name, packageName: pkg, cat: 'Instalado', fav: false, isNative: true, added: Date.now(),
-          iconBase64: app && app.icon ? app.icon : null
-        });
-      }
+      if (!games.find(g => g.isNative && g.packageName === pkg)) games.push({ name, packageName: pkg, cat: 'Instalado', fav: false, isNative: true, added: Date.now(), iconBase64: app && app.icon ? app.icon : null });
     });
   }
   saveGames(); renderGames(); gameModal.classList.remove('open'); toast('Salvo!', 'ok');
 });
 
-// ============================================================
-// LÓGICA DO CLIMA (wttr.in)
-// ============================================================
+// CLIMA
 const WEATHER_ICONS={113:'☀️',116:'⛅',119:'☁️',122:'☁️',143:'🌫️',248:'🌫️',260:'🌫️',176:'🌦️',263:'🌦️',266:'🌦️',293:'🌧️',296:'🌧️',299:'🌧️',302:'🌧️',305:'🌧️',308:'🌧️',200:'⛈️',386:'⛈️',389:'⛈️',392:'⛈️',395:'❄️',179:'❄️',182:'❄️',185:'❄️',227:'❄️',230:'❄️',317:'❄️',320:'❄️',323:'❄️',326:'❄️',329:'❄️',332:'❄️',335:'❄️',338:'❄️',350:'❄️',362:'❄️',365:'❄️',368:'❄️',371:'❄️',374:'❄️',377:'❄️'};
 const wIcon = c => WEATHER_ICONS[+c] || '🌡️';
 
 async function buscarClima() {
-  const cidade = document.getElementById('wxCity').value.trim();
-  if (!cidade) return toast('Digite uma cidade');
-  
-  const resEl = document.getElementById('wxResult');
-  resEl.innerHTML = '<div class="wx-loading"><div class="spinner"></div><span>consultando...</span></div>';
-  buzz(10);
-
+  const cidade = $('#wxCity').value.trim(); if (!cidade) return toast('Digite uma cidade');
+  const resEl = $('#wxResult'); resEl.innerHTML = '<div class="wx-loading"><div class="spinner"></div><span>consultando...</span></div>'; buzz(10);
   try {
     const res = await fetch(`https://wttr.in/${encodeURIComponent(cidade)}?format=j1&lang=pt`);
-    if (!res.ok) throw new Error('Erro na rede');
-    const data = await res.json();
-    const cur = data.current_condition && data.current_condition[0];
+    if (!res.ok) throw new Error('Erro'); const data = await res.json(); const cur = data.current_condition && data.current_condition[0];
     if (!cur) throw new Error('sem dados');
-
     const area = (data.nearest_area && data.nearest_area[0]) || {};
     const areaName = (area.areaName && area.areaName[0].value) || cidade;
     const country = (area.country && area.country[0].value) || '';
     const descPt = (cur.lang_pt && cur.lang_pt[0] && cur.lang_pt[0].value) || cur.weatherDesc[0].value || '—';
-
     resEl.innerHTML = `
       <div class="wx-main">
-        <div class="wx-city">${esc(areaName)} ${country ? '· <b>'+esc(country)+'</b>' : ''}</div>
-        <div class="wx-icon">${wIcon(cur.weatherCode)}</div>
-        <div class="wx-temp">${esc(cur.temp_C)}<sup>°C</sup></div>
-        <div class="wx-desc">${esc(descPt)}</div>
+        <div class="wx-city">${esc(areaName)} ${country ? '· <b>'+esc(country)+'</b>' : ''}</div><div class="wx-icon">${wIcon(cur.weatherCode)}</div>
+        <div class="wx-temp">${esc(cur.temp_C)}<sup>°C</sup></div><div class="wx-desc">${esc(descPt)}</div>
       </div>
       <div class="wx-grid">
         <div class="wx-card"><div class="k">Sensação</div><div class="v">${esc(cur.FeelsLikeC)}<small>°C</small></div></div>
         <div class="wx-card"><div class="k">Umidade</div><div class="v">${esc(cur.humidity)}<small>%</small></div></div>
         <div class="wx-card"><div class="k">Vento</div><div class="v">${esc(cur.windspeedKmph)}<small>km/h</small></div></div>
         <div class="wx-card"><div class="k">Pressão</div><div class="v">${esc(cur.pressure)}<small>hPa</small></div></div>
-      </div>
-    `;
-    
-    localStorage.setItem('gz_last_city', cidade);
-    toast('Clima atualizado', 'ok'); buzz([15, 30, 15]);
-  } catch(err) {
-    resEl.innerHTML = '';
-    toast('Cidade não encontrada ou sem rede');
-    buzz([60, 50, 60]);
-  }
+      </div>`;
+    localStorage.setItem('gz_last_city', cidade); toast('Clima atualizado', 'ok'); buzz([15,30,15]);
+  } catch(err) { resEl.innerHTML = ''; toast('Cidade não encontrada ou sem rede'); buzz([60,50,60]); }
+}
+$('#wxBtn').addEventListener('click', buscarClima);
+$('#wxCity').addEventListener('keydown', e => { if (e.key === 'Enter') buscarClima(); });
+
+// BOOT SEQUENCE (TERMINAL ANIMADO)
+async function bootSequence() {
+  terminal.innerHTML = '';
+  log('> GameZone Kernel v3.6', 'info');
+  await sleep(200);
+  log('> Iniciando varredura de sistema...', 'warn');
+  await sleep(300);
+  log('  [OK] Memória base alocada', 'ok');
+  await sleep(100);
+  log('  [OK] Comunicação com barramento', 'ok');
+  await sleep(200);
+  log('> Lendo hardware nativo...', 'info');
+  await loadDeviceSpecs();
+  await sleep(200);
+  log('  [OK] Plugins ativos', 'ok');
+  await sleep(100);
+  log('  [WARN] Otimização recomendada', 'warn');
+  await sleep(300);
+  log('> Pronto. Aguardando comandos.', 'ok');
+  logCaret();
 }
 
-document.getElementById('wxBtn').addEventListener('click', buscarClima);
-document.getElementById('wxCity').addEventListener('keydown', e => { if (e.key === 'Enter') buscarClima(); });
-
-// Cleanup global
+// CLEANUP E INICIALIZAÇÃO
 window.addEventListener('beforeunload', async () => {
   try { await stopLiveStatus(); } catch(e){}
-  const so = getOrientationPlugin();
-  if (so && so.removeAllListeners) try { await so.removeAllListeners(); } catch(e){}
   toggleImmersiveMode(false);
 });
 
@@ -2119,8 +1398,7 @@ window.addEventListener('load', () => {
   loadIconSize();
   loadGames();
   renderGames();
-  loadDeviceSpecs();
-  log('GameZone v3.4', 'ok');
+  bootSequence(); // Chama a animação do terminal
 });
 })();
 </script>
