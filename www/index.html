@@ -405,7 +405,18 @@ main {
 .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 540px) { .games-grid { grid-template-columns: repeat(3, 1fr); } }
 
-.game-card { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 128px; padding: 18px 10px 14px; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)); border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; }
+.game-card { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 128px; padding: 18px 10px 14px; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)); border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; transition: all 0.2s; }
+
+/* MODO SEM FUNDO (BORDERLESS) */
+.game-card.borderless {
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+  padding: 0;
+  min-height: 90px; /* Reduz o espaço extra */
+}
+.game-card.borderless .game-cat { display: none; } /* Opcional: esconde a categoria pra ficar mais limpo */
+
 .game-fav, .game-fav-fallback, .game-fav-img { width: var(--icon-size); height: var(--icon-size); border-radius: var(--icon-radius); object-fit: cover; box-shadow: 0 0 18px -6px var(--green); transition: all 0.3s; }
 .game-fav-fallback { display: grid; place-items: center; font-size: var(--icon-font); font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); text-transform: uppercase; }
 .game-fav-fallback.native { background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: #fff; box-shadow: 0 0 18px -6px var(--cyan); }
@@ -431,6 +442,13 @@ main {
   .console-left-header h2 { font-size: 11px; color: var(--cyan); text-transform: uppercase; }
   .console-grid { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; overflow-y: auto; min-height: 0; }
   .console-card { background: var(--panel); border: 1px solid var(--brd); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 6px; gap: 5px; cursor: pointer; }
+  
+  /* MODO SEM FUNDO (PAISAGEM) */
+  .console-card.borderless {
+    background: transparent;
+    border-color: transparent;
+  }
+
   .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgba(0,255,180,0.1); }
   .console-card .game-fav-fallback, .console-card .game-fav-img { width: calc(var(--icon-size) * 0.8); height: calc(var(--icon-size) * 0.8); }
   .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; }
@@ -501,11 +519,11 @@ main {
 .footer-note { margin: 22px 0 0; text-align: center; font-size: 9.5px; text-transform: uppercase; color: rgba(125,133,144,0.6); }
 
 /* ============================================================
-   MODAIS (JANELA FLUTUANTE ARRASTÁVEL EM X e Y)
+   MODAIS (JANELA FLUTUANTE ARRASTÁVEL)
    ============================================================ */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 200; display: none; 
-  align-items: center; justify-content: center; /* Centraliza a janela */
+  align-items: center; justify-content: center;
   padding: 16px; background: rgba(3, 6, 10, 0.8); backdrop-filter: blur(8px);
 }
 .modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
@@ -513,26 +531,23 @@ main {
 
 .modal {
   width: calc(100% - 32px); max-width: 460px; max-height: 80vh;
-  border-radius: 20px; /* Borda em todos os cantos */
+  border-radius: 20px;
   padding: 16px 20px 20px;
   background: rgba(13, 17, 23, 0.98);
   border: 1px solid rgba(0, 255, 180, 0.26);
   box-shadow: 0 20px 70px -22px var(--green);
   display: flex; flex-direction: column;
-  opacity: 0; /* Para animação suave */
+  opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  /* Transform inicial em 0,0 - O JS vai alterar isso */
   transform: translate(0px, 0px); 
 }
 .modal-overlay.open .modal { opacity: 1; }
 
-/* Puxador para arrastar em qualquer direção */
 .drag-handle {
   width: 50px; height: 5px; background: rgba(255, 255, 255, 0.2);
   border-radius: 5px; margin: 0 auto 15px; flex: 0 0 auto; cursor: grab;
-  /* Aumentando a área de toque */
   padding: 10px 0; margin-top: -10px;
-  touch-action: none; /* Impede o scroll da página enquanto arrasta */
+  touch-action: none;
 }
 
 .modal h3 { font-size: 14px; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
@@ -571,6 +586,44 @@ main {
 
 .slider-group { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
 .slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; }
+
+/* TOGGLE SWITCH (Para o fundo dos cards) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255,255,255,0.1);
+  transition: .4s;
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: var(--green);
+}
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
 
 /* TOAST */
 .toast {
@@ -766,7 +819,7 @@ main {
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.6.0</div>
+      <div class="ver">versão 3.8.0</div>
       <div class="divider"></div>
       <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem e janelas flutuantes.</p>
       <ul class="about-list">
@@ -781,7 +834,7 @@ main {
   </section>
 </main>
 
-<!-- NAVEGAÇÃO (AUMENTADA) -->
+<!-- NAVEGAÇÃO -->
 <nav class="bottom-nav">
   <button class="nav-btn active" data-tab="aparelho">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
@@ -852,7 +905,17 @@ main {
     <div class="drag-handle" id="dragHandleSettings"></div>
     <h3>⚙️ Configurações</h3>
     <p class="sub">Ajustes visuais</p>
-    <div class="field">
+    
+    <!-- Toggle para fundo dos cards -->
+    <div class="field" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+      <label style="margin-bottom:0; font-size:12px; color:var(--text); text-transform:none;">Mostrar Fundo dos Cards</label>
+      <label class="switch">
+        <input type="checkbox" id="toggleCardBg" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="field" style="margin-top:20px;">
       <label>Tamanho dos Ícones dos Jogos</label>
       <div class="slider-group">
         <span style="font-size:10px; color:var(--muted)">P</span>
@@ -861,7 +924,8 @@ main {
       </div>
       <div class="hw-sub" style="margin-top:6px">Valor atual: <span id="iconSizeVal" style="color:var(--green)">40px</span></div>
     </div>
-    <div class="modal-actions" style="grid-template-columns:1fr">
+    
+    <div class="modal-actions" style="grid-template-columns:1fr; margin-top:24px;">
       <button class="btn-solid ghost" id="btnCloseSettings">Fechar</button>
     </div>
   </div>
@@ -919,7 +983,7 @@ function logCaret() {
   l.appendChild(c); terminal.appendChild(l); terminal.scrollTop = terminal.scrollHeight;
 }
 
-// LÓGICA DE ARRASTAR O MODAL (X e Y)
+// LÓGICA DE ARRASTAR O MODAL (X e Y) - CORRIGIDA PARA FICAR NO LUGAR
 function setupDraggableModal(modalId, handleId, overlayId) {
   const modal = document.getElementById(modalId);
   const handle = document.getElementById(handleId);
@@ -930,7 +994,7 @@ function setupDraggableModal(modalId, handleId, overlayId) {
   handle.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX - currentX;
     startY = e.touches[0].clientY - currentY;
-    modal.style.transition = 'none'; // Remove transição durante o movimento
+    modal.style.transition = 'none';
   }, { passive: true });
 
   handle.addEventListener('touchmove', e => {
@@ -941,11 +1005,17 @@ function setupDraggableModal(modalId, handleId, overlayId) {
 
   handle.addEventListener('touchend', () => {
     modal.style.transition = 'transform 0.3s ease';
-    // Se o usuário jogar a janela muito pra cima ou pra baixo (fora da tela), volta pro centro
-    if (Math.abs(currentX) > 200 || Math.abs(currentY) > 300) {
-      currentX = 0; currentY = 0;
-      modal.style.transform = `translate(0px, 0px)`;
-    }
+    
+    // Pega o tamanho do modal
+    const rect = modal.getBoundingClientRect();
+    const maxX = (window.innerWidth / 2) - (rect.width / 2) - 16;
+    const maxY = (window.innerHeight / 2) - (rect.height / 2) - 16;
+
+    // Trava o valor para não passar dos limites
+    currentX = Math.max(-maxX, Math.min(maxX, currentX));
+    currentY = Math.max(-maxY, Math.min(maxY, currentY));
+    
+    modal.style.transform = `translate(${currentX}px, ${currentY}px)`;
   });
 
   // Função para resetar a posição ao abrir
@@ -960,8 +1030,11 @@ setupDraggableModal('gameModalSheet', 'dragHandleGame', 'gameModal');
 setupDraggableModal('settingsModalSheet', 'dragHandleSettings', 'settingsModal');
 
 
-// CONFIGURAÇÕES DE ÍCONE
+// CONFIGURAÇÕES DE ÍCONE E FUNDO
 const ICON_KEY = 'gamezone_icon_size';
+const BG_KEY = 'gamezone_show_card_bg';
+let showCardBg = true;
+
 function applyIconSize(px) {
   document.documentElement.style.setProperty('--icon-size', px + 'px');
   document.documentElement.style.setProperty('--icon-radius', Math.round(px * 0.3) + 'px');
@@ -969,9 +1042,33 @@ function applyIconSize(px) {
   localStorage.setItem(ICON_KEY, px);
   const valEl = $('#iconSizeVal'); if (valEl) valEl.textContent = px + 'px';
 }
-function loadIconSize() {
-  const saved = localStorage.getItem(ICON_KEY); const px = saved ? parseInt(saved, 10) : 40;
-  applyIconSize(px); const slider = $('#sliderIconSize'); if (slider) slider.value = px;
+
+function updateSliderRange() {
+  const slider = $('#sliderIconSize');
+  if (!slider) return;
+  if (showCardBg) {
+    slider.max = 72;
+  } else {
+    slider.max = 120; // Permite ícones gigantes quando o fundo está desligado
+  }
+  // Se o valor atual for maior que o novo máximo, ajusta
+  if (parseInt(slider.value, 10) > parseInt(slider.max, 10)) {
+    slider.value = slider.max;
+    applyIconSize(parseInt(slider.max, 10));
+  }
+}
+
+function loadSettings() {
+  const savedPx = localStorage.getItem(ICON_KEY);
+  const px = savedPx ? parseInt(savedPx, 10) : 40;
+  applyIconSize(px);
+  
+  showCardBg = localStorage.getItem(BG_KEY) !== 'false';
+  const toggle = $('#toggleCardBg');
+  if (toggle) toggle.checked = showCardBg;
+  
+  const slider = $('#sliderIconSize'); if (slider) slider.value = px;
+  updateSliderRange();
 }
 
 // NAVEGAÇÃO
@@ -1134,7 +1231,8 @@ function renderGames() {
     grid.style.display = 'grid'; empty.style.display = 'none';
     const frag = document.createDocumentFragment();
     list.forEach((g) => {
-      const card = document.createElement('div'); card.className = 'game-card';
+      const card = document.createElement('div'); 
+      card.className = 'game-card' + (showCardBg ? '' : ' borderless');
       card.innerHTML = getGameIconHtml(g, 'game-fav');
       const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
       const cat = document.createElement('div'); cat.className = 'game-cat'; cat.textContent = g.isNative ? 'Instalado' : (g.cat || 'Outro');
@@ -1166,7 +1264,8 @@ function renderConsoleLandscape() {
   
   const frag = document.createDocumentFragment();
   games.forEach((g, idx) => {
-    const card = document.createElement('div'); card.className = 'console-card' + (idx === consoleSelectedIdx ? ' active' : '');
+    const card = document.createElement('div'); 
+    card.className = 'console-card' + (showCardBg ? '' : ' borderless') + (idx === consoleSelectedIdx ? ' active' : '');
     card.innerHTML = getGameIconHtml(g, 'game-fav') + `<div class="game-name">${esc(g.name)}</div>`;
     card.addEventListener('click', () => { consoleSelectedIdx = idx; renderConsoleLandscape(); });
     frag.appendChild(card);
@@ -1258,15 +1357,29 @@ $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('
 
 const settingsModal = $('#settingsModal');
 $('#btnSettings').addEventListener('click', () => { 
-  settingsModal.classList.add('open'); loadIconSize(); 
+  settingsModal.classList.add('open'); loadSettings(); 
   if($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
 });
 $('#btnSettingsLandscape').addEventListener('click', () => { 
-  settingsModal.classList.add('open'); loadIconSize(); 
+  settingsModal.classList.add('open'); loadSettings(); 
   if($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
 });
 $('#btnCloseSettings').addEventListener('click', () => settingsModal.classList.remove('open'));
-$('#sliderIconSize').addEventListener('input', (e) => { applyIconSize(parseInt(e.target.value, 10)); renderGames(); });
+
+// Listener do Slider de Ícone
+$('#sliderIconSize').addEventListener('input', (e) => { 
+  applyIconSize(parseInt(e.target.value, 10)); 
+  renderGames(); 
+});
+
+// Listener do Toggle de Fundo
+$('#toggleCardBg').addEventListener('change', (e) => {
+  showCardBg = e.target.checked;
+  localStorage.setItem(BG_KEY, showCardBg);
+  updateSliderRange();
+  renderGames();
+  buzz(10);
+});
 
 const BROWSER_PACKAGES = ['com.android.chrome', 'org.mozilla.firefox', 'com.microsoft.emmx', 'com.brave.browser', 'com.opera.browser', 'com.opera.mini.native', 'com.sec.android.app.sbrowser'];
 function isBrowser(pkg) { return BROWSER_PACKAGES.includes(pkg) || pkg.toLowerCase().includes('browser') || pkg.toLowerCase().includes('chrome') || pkg.toLowerCase().includes('firefox'); }
@@ -1369,7 +1482,7 @@ $('#wxCity').addEventListener('keydown', e => { if (e.key === 'Enter') buscarCli
 // BOOT SEQUENCE (TERMINAL ANIMADO)
 async function bootSequence() {
   terminal.innerHTML = '';
-  log('> GameZone Kernel v3.6', 'info');
+  log('> GameZone Kernel v3.8', 'info');
   await sleep(200);
   log('> Iniciando varredura de sistema...', 'warn');
   await sleep(300);
@@ -1395,10 +1508,10 @@ window.addEventListener('beforeunload', async () => {
 });
 
 window.addEventListener('load', () => {
-  loadIconSize();
+  loadSettings();
   loadGames();
   renderGames();
-  bootSequence(); // Chama a animação do terminal
+  bootSequence();
 });
 })();
 </script>
