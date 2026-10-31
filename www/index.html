@@ -831,7 +831,7 @@ input:checked + .slider:before {
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.9.0</div>
+      <div class="ver">versão 3.9.1</div>
       <div class="divider"></div>
       <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem e janelas flutuantes.</p>
       <ul class="about-list">
@@ -1265,9 +1265,12 @@ function renderGames() {
   if (currentCat === 'Favoritos') list = list.filter(g => g.fav); else if (currentCat !== 'Todos') list = list.filter(g => g.cat === currentCat);
   if (searchQ) list = list.filter(g => (g.name || '').toLowerCase().includes(searchQ.toLowerCase()));
   
-  if (!list.length) { grid.style.display = 'none'; empty.style.display = 'flex'; } 
-  else {
-    grid.style.display = 'grid'; empty.style.display = 'none';
+  if (!list.length) { 
+    grid.style.display = 'none'; 
+    empty.style.display = 'flex'; 
+  } else {
+    grid.style.display = ''; // <<< CORREÇÃO AQUI: Deixa o CSS controlar o display
+    empty.style.display = 'none';
     const frag = document.createDocumentFragment();
     list.forEach((g) => {
       const card = document.createElement('div'); 
@@ -1530,7 +1533,7 @@ $('#wxCity').addEventListener('keydown', e => { if (e.key === 'Enter') buscarCli
 // BOOT SEQUENCE (TERMINAL ANIMADO)
 async function bootSequence() {
   terminal.innerHTML = '';
-  log('> GameZone Kernel v3.9', 'info');
+  log('> GameZone Kernel v3.9.1', 'info');
   await sleep(200);
   log('> Iniciando varredura de sistema...', 'warn');
   await sleep(300);
