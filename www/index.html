@@ -978,10 +978,8 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
           <div class="config-row-label">
             <label>Motor de Busca Padrão</label>
           </div>
-          <div class="seg-selector">
-            <button class="seg-btn engine-btn active" data-engine="duckduckgo">DuckDuckGo</button>
-            <button class="seg-btn engine-btn" data-engine="google">Google</button>
-            <button class="seg-btn engine-btn" data-engine="bing">Bing</button>
+                <div class="seg-selector" style="grid-template-columns: 1fr;">
+            <button class="seg-btn engine-btn active" data-engine="bing">Bing</button>
           </div>
           <div class="config-hint">
             <b>Fallback automático:</b> se o site bloquear a exibição dentro do app, o navegador integrado do sistema abrirá automaticamente. Você nunca vê tela de erro.
@@ -1188,12 +1186,12 @@ function bindThemeSwatches() {
    ============================================================ */
 const ENGINE_KEY = 'gamezone_search_engine';
 const INAPP_KEY = 'gamezone_search_inapp';
-const VALID_ENGINES = ['duckduckgo', 'google', 'bing'];
-let currentEngine = 'duckduckgo';
+const VALID_ENGINES = ['bing'];
+let currentEngine = 'bing';
 let useInAppSearch = true;
 
 function applyEngine(engine) {
-  if (!VALID_ENGINES.includes(engine)) engine = 'duckduckgo';
+  if (!VALID_ENGINES.includes(engine)) engine = 'bing';
   currentEngine = engine;
   try { localStorage.setItem(ENGINE_KEY, engine); } catch(e) {}
   document.querySelectorAll('.engine-btn').forEach(b => b.classList.toggle('active', b.dataset.engine === engine));
@@ -1201,26 +1199,24 @@ function applyEngine(engine) {
 
 function loadEnginePrefs() {
   try {
-    const e = localStorage.getItem(ENGINE_KEY) || 'duckduckgo';
-    currentEngine = VALID_ENGINES.includes(e) ? e : 'duckduckgo';
+    currentEngine = 'bing'; // Força o Bing sempre
     const ia = localStorage.getItem(INAPP_KEY);
     useInAppSearch = ia !== 'false';
   } catch(err) {
-    currentEngine = 'duckduckgo';
+    currentEngine = 'bing';
     useInAppSearch = true;
   }
-  document.querySelectorAll('.engine-btn').forEach(b => b.classList.toggle('active', b.dataset.engine === currentEngine));
+  document.querySelectorAll('.engine-btn').forEach(b => b.classList.toggle('active', b.dataset.engine === 'bing'));
   const t = $('#toggleInAppSearch'); if (t) t.checked = useInAppSearch;
 }
 
 const ENGINE_URLS = {
-  duckduckgo: q => 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(q),
-  google: q => 'https://www.google.com/search?q=' + encodeURIComponent(q),
   bing: q => 'https://www.bing.com/search?q=' + encodeURIComponent(q)
 };
 
-const ENGINE_LABELS = { duckduckgo: 'DuckDuckGo', google: 'Google', bing: 'Bing' };
-
+const ENGINE_LABELS = { 
+  bing: 'Bing' 
+};
 /* TERMINAL LOG */
 const terminal = $('#terminal');
 function log(text, type) {
@@ -1460,12 +1456,17 @@ async function openExternalUrl(url) {
 
 // Evento: iframe terminou de carregar
 browserFrame.addEventListener('load', () => {
-  // Detecta about:blank (ainda não navegou)
   try {
     const href = browserFrame.contentWindow.location.href;
     if (!href || href === 'about:blank') return;
+    
+    // NOVO: Detecta se o WebView carregou uma página de erro (bloqueio do site)
+    if (href.startsWith('chrome-error://') || href.startsWith('about:neterror')) {
+      showBrowserFallback();
+      return;
+    }
   } catch(e) {
-    // Cross-origin: não conseguimos ler, mas isso significa que carregou conteúdo externo
+    // Cross-origin: não conseguimos ler a URL, mas isso significa que o site abriu de verdade!
   }
   clearTimeout(browserLoadTimeout);
   browserLoading.style.display = 'none';
