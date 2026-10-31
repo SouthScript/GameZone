@@ -11,7 +11,7 @@
 <title>GameZone</title>
 <style>
 /* ============================================================
-   RESET E VARIÁVEIS GLOBAIS
+   BLOCO 1: RESET E VARIÁVEIS GLOBAIS
    ============================================================ */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -33,7 +33,7 @@
   --icon-radius: 12px;
   --icon-font: 18px;
 
-  /* === Tema Verde (padrão) === */
+  /* Tema Verde (padrão) */
   --green: #00ffb4;
   --green-rgb: 0 255 180;
   --cyan: #00e5ff;
@@ -42,45 +42,11 @@
   --magenta-rgb: 255 47 185;
 }
 
-/* === Tema Roxo === */
-:root[data-theme="roxo"] {
-  --green: #b76bff;
-  --green-rgb: 183 107 255;
-  --cyan: #d17aff;
-  --cyan-rgb: 209 122 255;
-  --magenta: #ff2fb9;
-  --magenta-rgb: 255 47 185;
-}
-
-/* === Tema Vermelho === */
-:root[data-theme="vermelho"] {
-  --green: #ff4d4d;
-  --green-rgb: 255 77 77;
-  --cyan: #ff7a45;
-  --cyan-rgb: 255 122 69;
-  --magenta: #ff2fb9;
-  --magenta-rgb: 255 47 185;
-}
-
-/* === Tema Viva Magenta (Pantone 18-1750) === */
-:root[data-theme="magenta"] {
-  --green: #d41f5b;
-  --green-rgb: 212 31 91;
-  --cyan: #ff2fb9;
-  --cyan-rgb: 255 47 185;
-  --magenta: #bb2649;
-  --magenta-rgb: 187 38 73;
-}
-
-/* === Tema Azul === */
-:root[data-theme="azul"] {
-  --green: #00b0ff;
-  --green-rgb: 0 176 255;
-  --cyan: #4d7cff;
-  --cyan-rgb: 77 124 255;
-  --magenta: #ff2fb9;
-  --magenta-rgb: 255 47 185;
-}
+/* Temas alternativos */
+:root[data-theme="roxo"] { --green: #b76bff; --green-rgb: 183 107 255; --cyan: #d17aff; --cyan-rgb: 209 122 255; }
+:root[data-theme="vermelho"] { --green: #ff4d4d; --green-rgb: 255 77 77; --cyan: #ff7a45; --cyan-rgb: 255 122 69; }
+:root[data-theme="magenta"] { --green: #d41f5b; --green-rgb: 212 31 91; --cyan: #ff2fb9; --cyan-rgb: 255 47 185; --magenta: #bb2649; --magenta-rgb: 187 38 73; }
+:root[data-theme="azul"] { --green: #00b0ff; --green-rgb: 0 176 255; --cyan: #4d7cff; --cyan-rgb: 77 124 255; }
 
 html, body { width: 100%; overflow-x: hidden; }
 
@@ -93,6 +59,7 @@ body {
   transition: background 0.4s ease;
 }
 
+/* Efeitos de fundo */
 body::before {
   content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background: radial-gradient(circle at 10% 4%, rgb(var(--green-rgb) / 0.13), transparent 45%),
@@ -112,7 +79,7 @@ body::after {
 }
 
 /* ============================================================
-   CABEÇALHO
+   BLOCO 2: CABEÇALHO E LAYOUT PRINCIPAL
    ============================================================ */
 .app-header { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: calc(14px + env(safe-area-inset-top)) 18px 14px; }
 .logo { display: flex; align-items: center; gap: 11px; min-width: 0; }
@@ -144,9 +111,6 @@ body::after {
 .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 1.5s ease-in-out infinite; display: inline-block; transition: background 0.4s, box-shadow 0.4s; }
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.7); } }
 
-/* ============================================================
-   LAYOUT PRINCIPAL
-   ============================================================ */
 main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px + env(safe-area-inset-bottom)); max-width: 720px; margin: 0 auto; }
 .pane { display: none; }
 .pane.active { display: block; animation: paneIn 0.38s cubic-bezier(0.22, 0.85, 0.25, 1); }
@@ -157,7 +121,7 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .section-title h2::before { content: '// '; color: var(--green); transition: color 0.4s; }
 
 /* ============================================================
-   TERMINAL
+   BLOCO 3: TERMINAL E CARDS DE HARDWARE
    ============================================================ */
 .terminal {
   border-radius: 18px; overflow: hidden;
@@ -187,9 +151,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .home-search input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgb(var(--cyan-rgb) / 0.1); }
 .home-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; stroke: var(--cyan); pointer-events: none; transition: stroke 0.4s; }
 
-/* ============================================================
-   CARDS DE HARDWARE
-   ============================================================ */
 .hw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
 .hw-card { padding: 14px 12px; border-radius: 16px; background: var(--panel); border: 1px solid var(--brd); backdrop-filter: blur(12px); position: relative; overflow: hidden; }
 .hw-card.full { grid-column: 1 / -1; }
@@ -204,9 +165,8 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .hw-card.magenta .hw-v { color: var(--magenta); text-shadow: 0 0 14px rgb(var(--magenta-rgb) / 0.45); }
 .hw-card.magenta .hw-bar-fill { background: linear-gradient(90deg, var(--magenta), #ff7a45); }
 .hw-card.amber .hw-v { color: var(--amber); text-shadow: 0 0 14px rgba(255, 209, 102, 0.45); }
-.hw-card.amber .hw-bar-fill { background: linear-gradient(90deg, var(--amber), var(--green)); }
-/* ============================================================
-   BOTÕES E NAV BAR
+.hw-card.amber .hw-bar-fill { background: linear-gradient(90deg, var(--amber), var(--green)); }/* ============================================================
+   BLOCO 4: BOTÕES, NAV BAR E JOGOS
    ============================================================ */
 .actions { display: grid; gap: 10px; margin-top: 14px; }
 .btn {
@@ -238,9 +198,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .nav-btn.active svg { transform: translateY(-2px); filter: drop-shadow(0 0 8px rgb(var(--green-rgb) / 0.75)); }
 .nav-btn.active::after { content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%); width: 20px; height: 3px; border-radius: 3px; background: var(--green); box-shadow: 0 0 12px var(--green); transition: background 0.4s, box-shadow 0.4s; }
 
-/* ============================================================
-   ABA JOGOS E CONSOLE MODE
-   ============================================================ */
 .games-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 6px 0 10px; }
 .games-head h2 { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 .games-head h2::before { content: '// '; color: var(--cyan); transition: color 0.4s; }
@@ -256,34 +213,24 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; transition: background 0.4s; }
 
 .games-grid { display: grid; gap: 12px; transition: all 0.3s; }
-
-/* Layout: LISTA */
 .games-grid.list-layout { display: flex; flex-direction: column; gap: 8px; }
 .games-grid.list-layout .game-card { flex-direction: row; justify-content: flex-start; padding: 10px 16px; min-height: 64px; gap: 15px; text-align: left; }
 .games-grid.list-layout .game-name { text-align: left; font-size: 14px; -webkit-line-clamp: 1; }
 .games-grid.list-layout .game-cat { display: none; }
-.games-grid.list-layout .game-fav,
-.games-grid.list-layout .game-fav-img,
-.games-grid.list-layout .game-fav-fallback { width: 40px; height: 40px; flex: 0 0 40px; }
+.games-grid.list-layout .game-fav, .games-grid.list-layout .game-fav-img, .games-grid.list-layout .game-fav-fallback { width: 40px; height: 40px; flex: 0 0 40px; }
 
-/* Layout: BLOQUINHO */
 .games-grid.small-layout { grid-template-columns: repeat(4, 1fr); gap: 8px; }
 @media (min-width: 540px) { .games-grid.small-layout { grid-template-columns: repeat(5, 1fr); } }
 .games-grid.small-layout .game-card { min-height: 100px; padding: 12px 6px; gap: 6px; }
 .games-grid.small-layout .game-name { font-size: 9px; }
 .games-grid.small-layout .game-cat { display: none; }
 
-/* Layout: PADRÃO = APP DRAWER */
 .games-grid.default-layout { grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 8px 4px; }
 @media (min-width: 540px) { .games-grid.default-layout { grid-template-columns: repeat(5, 1fr); } }
-.games-grid.default-layout .game-card,
-.games-grid.default-layout .game-card.borderless { background: transparent; border-color: transparent; backdrop-filter: none; padding: 4px; min-height: auto; box-shadow: none; transition: transform 0.15s ease; }
+.games-grid.default-layout .game-card, .games-grid.default-layout .game-card.borderless { background: transparent; border-color: transparent; backdrop-filter: none; padding: 4px; min-height: auto; box-shadow: none; transition: transform 0.15s ease; }
 .games-grid.default-layout .game-card:active { transform: scale(0.85); }
-.games-grid.default-layout .game-name,
-.games-grid.default-layout .game-cat { display: none; }
-.games-grid.default-layout .game-fav,
-.games-grid.default-layout .game-fav-img,
-.games-grid.default-layout .game-fav-fallback { width: calc(var(--icon-size) * 1.4); height: calc(var(--icon-size) * 1.4); border-radius: calc(var(--icon-size) * 0.42); }
+.games-grid.default-layout .game-name, .games-grid.default-layout .game-cat { display: none; }
+.games-grid.default-layout .game-fav, .games-grid.default-layout .game-fav-img, .games-grid.default-layout .game-fav-fallback { width: calc(var(--icon-size) * 1.4); height: calc(var(--icon-size) * 1.4); border-radius: calc(var(--icon-size) * 0.42); }
 
 .game-card { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)); border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; transition: all 0.2s; }
 .game-card.borderless { background: transparent; border-color: transparent; backdrop-filter: none; padding: 0; min-height: 90px; }
@@ -301,64 +248,41 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .empty span { font-size: 10.5px; text-transform: uppercase; color: var(--muted); }
 
 /* ============================================================
-   CONSOLE MODE (PAISAGEM)
+   BLOCO 5: CONSOLE MODE (PAISAGEM), CLIMA E CONFIGURAÇÕES
    ============================================================ */
 .console-container { display: none; }
-
 @media (orientation: landscape) {
   body, html { overflow: hidden; height: 100dvh; }
   main { max-width: 100%; padding: 0 12px 10px; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
   .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; flex: 0 0 auto; }
-
-  #pane-jogos.active .games-head,
-  #pane-jogos.active .search-bar,
-  #pane-jogos.active .chips,
-  #pane-jogos.active .games-grid,
-  #pane-jogos.active .empty { display: none !important; }
-
+  #pane-jogos.active .games-head, #pane-jogos.active .search-bar, #pane-jogos.active .chips, #pane-jogos.active .games-grid, #pane-jogos.active .empty { display: none !important; }
   #pane-jogos.active .console-container { display: flex; flex-direction: row; gap: 12px; height: calc(100dvh - 130px); width: 100%; }
-
   .console-left { flex: 0 0 35%; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
   .console-left-header { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 14px; border: 1px solid var(--brd); }
   .console-left-header h2 { font-size: 11px; color: var(--cyan); text-transform: uppercase; transition: color 0.4s; }
   .console-grid { flex: 1; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; min-height: 0; padding-right: 4px; padding-bottom: 16px; }
-
   .console-card { background: var(--panel); border: 1px solid var(--brd); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 6px; gap: 5px; cursor: pointer; width: 100%; }
-  .console-card .game-fav-fallback,
-  .console-card .game-fav-img { width: calc(var(--icon-size) * 0.8); height: calc(var(--icon-size) * 0.8); }
+  .console-card .game-fav-fallback, .console-card .game-fav-img { width: calc(var(--icon-size) * 0.8); height: calc(var(--icon-size) * 0.8); }
   .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; width: 100%; }
-
   .console-card.borderless { background: transparent; border-color: transparent; }
   .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgb(var(--green-rgb) / 0.1); transition: border-color 0.4s, box-shadow 0.4s, background 0.4s; }
-
   .console-grid.list-layout .console-card { flex-direction: row; justify-content: flex-start; padding: 10px 12px; gap: 12px; }
   .console-grid.list-layout .console-card .game-name { text-align: left; font-size: 12px; }
-  .console-grid.list-layout .console-card .game-fav-fallback,
-  .console-grid.list-layout .console-card .game-fav-img { width: 32px; height: 32px; flex: 0 0 32px; }
-
+  .console-grid.list-layout .console-card .game-fav-fallback, .console-grid.list-layout .console-card .game-fav-img { width: 32px; height: 32px; flex: 0 0 32px; }
   .console-grid.small-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .console-grid.small-layout .console-card { padding: 8px 4px; }
-  .console-grid.small-layout .console-card .game-fav-fallback,
-  .console-grid.small-layout .console-card .game-fav-img { width: 28px; height: 28px; }
+  .console-grid.small-layout .console-card .game-fav-fallback, .console-grid.small-layout .console-card .game-fav-img { width: 28px; height: 28px; }
   .console-grid.small-layout .console-card .game-name { font-size: 8px; }
-
   .console-grid.default-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-content: start; }
-  .console-grid.default-layout .console-card,
-  .console-grid.default-layout .console-card.borderless { background: transparent; border-color: transparent; padding: 6px; min-height: auto; transition: transform 0.15s ease; }
+  .console-grid.default-layout .console-card, .console-grid.default-layout .console-card.borderless { background: transparent; border-color: transparent; padding: 6px; min-height: auto; transition: transform 0.15s ease; }
   .console-grid.default-layout .console-card:active { transform: scale(0.85); }
   .console-grid.default-layout .console-card .game-name { display: none; }
-  .console-grid.default-layout .console-card .game-fav,
-  .console-grid.default-layout .console-card .game-fav-fallback,
-  .console-grid.default-layout .console-card .game-fav-img { width: calc(var(--icon-size) * 1.1); height: calc(var(--icon-size) * 1.1); border-radius: calc(var(--icon-size) * 0.33); }
+  .console-grid.default-layout .console-card .game-fav, .console-grid.default-layout .console-card .game-fav-fallback, .console-grid.default-layout .console-card .game-fav-img { width: calc(var(--icon-size) * 1.1); height: calc(var(--icon-size) * 1.1); border-radius: calc(var(--icon-size) * 0.33); }
   .console-grid.default-layout .console-card.active { background: transparent; border-color: transparent; box-shadow: none; }
-  .console-grid.default-layout .console-card.active .game-fav,
-  .console-grid.default-layout .console-card.active .game-fav-fallback,
-  .console-grid.default-layout .console-card.active .game-fav-img { box-shadow: 0 0 0 3px var(--green), 0 0 20px var(--green); transition: box-shadow 0.4s; }
-
+  .console-grid.default-layout .console-card.active .game-fav, .console-grid.default-layout .console-card.active .game-fav-fallback, .console-grid.default-layout .console-card.active .game-fav-img { box-shadow: 0 0 0 3px var(--green), 0 0 20px var(--green); transition: box-shadow 0.4s; }
   .console-right { flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,0.4); border: 1px solid var(--brd); border-radius: 18px; padding: 18px; overflow: hidden; min-height: 0; }
   .detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex: 0 0 auto; }
-  .detail-header .game-fav-fallback,
-  .detail-header .game-fav-img { width: calc(var(--icon-size) * 1.3); height: calc(var(--icon-size) * 1.3); }
+  .detail-header .game-fav-fallback, .detail-header .game-fav-img { width: calc(var(--icon-size) * 1.3); height: calc(var(--icon-size) * 1.3); }
   .detail-title h2 { font-size: 18px; color: #fff; }
   .detail-title p { font-size: 10px; color: var(--muted); text-transform: uppercase; }
   .detail-content { flex: 1; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; min-height: 0; }
@@ -371,7 +295,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
   .console-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); text-align: center; gap: 10px; }
 }
 
-/* ANEL */
 .ring-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 10px; }
 .ring-svg { width: 140px; height: 140px; transform: rotate(-90deg); }
 .ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 10; }
@@ -379,13 +302,10 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .ring-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; display: flex; flex-direction: column; gap: 2px; }
 .ring-pct { font-size: 22px; font-weight: 800; color: #fff; }
 .ring-label { font-size: 8px; text-transform: uppercase; color: var(--muted); }
-
 .btn-opt { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; border: 1px solid rgb(var(--cyan-rgb) / 0.4); background: rgb(var(--cyan-rgb) / 0.08); color: var(--cyan); font-family: inherit; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: border-color 0.4s, background 0.4s, color 0.4s; }
 .btn-opt.optimizing { animation: optPulse 0.8s infinite alternate; border-color: var(--green); color: var(--green); }
 @keyframes optPulse { from { box-shadow: 0 0 5px rgb(var(--green-rgb) / 0.2); } to { box-shadow: 0 0 25px rgb(var(--green-rgb) / 0.6); } }
-/* ============================================================
-   CLIMA
-   ============================================================ */
+
 .wx-search { display: flex; gap: 10px; margin-bottom: 16px; }
 .wx-search input { flex: 1; padding: 14px 16px; border-radius: 14px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.1); color: var(--text); font-family: inherit; font-size: 14px; outline: none; }
 .wx-search button { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; cursor: pointer; border: 1px solid rgb(var(--cyan-rgb) / 0.42); background: linear-gradient(135deg, rgb(var(--cyan-rgb) / 0.22), rgb(var(--green-rgb) / 0.12)); color: var(--cyan); transition: border-color 0.4s, background 0.4s, color 0.4s; }
@@ -404,270 +324,62 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .spinner { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgb(var(--green-rgb) / 0.15); border-top-color: var(--green); animation: spin .85s linear infinite; transition: border-color 0.4s; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ============================================================
-   ABA CONFIGURAÇÕES
-   ============================================================ */
-.config-section {
-  background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015));
-  border: 1px solid var(--brd);
-  border-radius: 20px;
-  padding: 18px 16px;
-  margin-bottom: 14px;
-  backdrop-filter: blur(14px);
-}
-
-.config-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 16px; padding-bottom: 14px;
-  border-bottom: 1px dashed rgb(var(--green-rgb) / 0.15);
-  transition: border-color 0.4s;
-}
-
+.config-section { background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015)); border: 1px solid var(--brd); border-radius: 20px; padding: 18px 16px; margin-bottom: 14px; backdrop-filter: blur(14px); }
+.config-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px dashed rgb(var(--green-rgb) / 0.15); transition: border-color 0.4s; }
 .config-icon { font-size: 22px; filter: drop-shadow(0 0 8px rgb(var(--green-rgb) / 0.7)); transition: filter 0.4s; }
-
-.config-header h3 {
-  font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--green); font-weight: 700;
-  transition: color 0.4s;
-}
-
-.config-header p {
-  font-size: 9.5px; color: var(--muted); text-transform: uppercase;
-  letter-spacing: 0.08em; margin-top: 3px;
-}
-
+.config-header h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--green); font-weight: 700; transition: color 0.4s; }
+.config-header p { font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
 .config-body { display: flex; flex-direction: column; gap: 18px; }
-
 .config-row { display: flex; flex-direction: column; gap: 8px; }
-
-.config-row-label {
-  display: flex; justify-content: space-between; align-items: center; gap: 10px;
-}
-
-.config-row-label label {
-  font-size: 11.5px; color: var(--text); font-weight: 600; text-transform: none;
-}
-
-.config-row-label small {
-  font-size: 9px; color: var(--muted); text-transform: uppercase;
-}
-
-.config-hint {
-  font-size: 10px; color: var(--muted); line-height: 1.55;
-  padding: 10px 12px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 10px;
-  border: 1px dashed rgb(var(--cyan-rgb) / 0.2);
-  transition: border-color 0.4s;
-}
-
+.config-row-label { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.config-row-label label { font-size: 11.5px; color: var(--text); font-weight: 600; text-transform: none; }
+.config-row-label small { font-size: 9px; color: var(--muted); text-transform: uppercase; }
+.config-hint { font-size: 10px; color: var(--muted); line-height: 1.55; padding: 10px 12px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px dashed rgb(var(--cyan-rgb) / 0.2); transition: border-color 0.4s; }
 .config-hint b { color: var(--cyan); transition: color 0.4s; }
 
-/* SELECTOR (reutilizável para tema/motor/layout) */
 .seg-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.seg-btn {
-  padding: 11px 8px; border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--muted); font-family: inherit;
-  font-size: 10.5px; text-transform: uppercase; font-weight: 700;
-  cursor: pointer; transition: all 0.25s;
-}
+.seg-btn { padding: 11px 8px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); font-family: inherit; font-size: 10.5px; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: all 0.25s; }
 .seg-btn:active { transform: scale(0.95); }
-.seg-btn.active {
-  color: #04120e;
-  background: linear-gradient(135deg, var(--green), var(--cyan));
-  border-color: transparent;
-  transition: background 0.4s;
-}
+.seg-btn.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; transition: background 0.4s; }
 
-/* SELETOR DE TEMAS (só os swatches) */
 .theme-swatches { display: flex; justify-content: space-between; gap: 8px; }
-
-.theme-swatch-wrap {
-  display: flex; flex-direction: column; align-items: center; gap: 7px;
-  flex: 1; background: transparent; border: none; cursor: pointer; padding: 0;
-  font-family: inherit; -webkit-tap-highlight-color: transparent;
-}
-
-.theme-swatch {
-  width: 100%; max-width: 44px; aspect-ratio: 1;
-  border-radius: 13px;
-  background: var(--swatch);
-  position: relative; border: 2px solid transparent;
-  transition: all 0.25s ease;
-  box-shadow: 0 0 18px -6px var(--swatch), inset 0 0 20px rgba(255,255,255,0.15);
-}
-
+.theme-swatch-wrap { display: flex; flex-direction: column; align-items: center; gap: 7px; flex: 1; background: transparent; border: none; cursor: pointer; padding: 0; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.theme-swatch { width: 100%; max-width: 44px; aspect-ratio: 1; border-radius: 13px; background: var(--swatch); position: relative; border: 2px solid transparent; transition: all 0.25s ease; box-shadow: 0 0 18px -6px var(--swatch), inset 0 0 20px rgba(255,255,255,0.15); }
 .theme-swatch-wrap:active .theme-swatch { transform: scale(0.9); }
+.theme-swatch-wrap.active .theme-swatch { border-color: #fff; box-shadow: 0 0 26px -2px var(--swatch), 0 0 0 3px rgb(var(--green-rgb) / 0.35), inset 0 0 20px rgba(255,255,255,0.28); transform: scale(1.08); }
+.theme-swatch-wrap.active .theme-swatch::after { content: '✓'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 16px; font-weight: 800; color: #fff; text-shadow: 0 0 4px rgba(0,0,0,0.9); }
+.theme-label { font-size: 7.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; text-align: center; font-weight: 600; min-height: 18px; transition: color 0.25s; }
+.theme-swatch-wrap.active .theme-label { color: var(--green); text-shadow: 0 0 8px rgb(var(--green-rgb) / 0.55); }
 
-.theme-swatch-wrap.active .theme-swatch {
-  border-color: #fff;
-  box-shadow: 0 0 26px -2px var(--swatch), 0 0 0 3px rgb(var(--green-rgb) / 0.35), inset 0 0 20px rgba(255,255,255,0.28);
-  transform: scale(1.08);
-}
-
-.theme-swatch-wrap.active .theme-swatch::after {
-  content: '✓'; position: absolute; inset: 0;
-  display: grid; place-items: center;
-  font-size: 16px; font-weight: 800; color: #fff;
-  text-shadow: 0 0 4px rgba(0,0,0,0.9);
-}
-
-.theme-label {
-  font-size: 7.5px; color: var(--muted); text-transform: uppercase;
-  letter-spacing: 0.03em; text-align: center; font-weight: 600;
-  min-height: 18px; transition: color 0.25s;
-}
-
-.theme-swatch-wrap.active .theme-label {
-  color: var(--green); text-shadow: 0 0 8px rgb(var(--green-rgb) / 0.55);
-}
-
-/* TOGGLE SWITCH */
 .switch { position: relative; display: inline-block; width: 46px; height: 24px; flex: 0 0 46px; }
 .switch input { opacity: 0; width: 0; height: 0; }
-.switch .slider {
-  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 24px;
-}
-.switch .slider:before {
-  position: absolute; content: ""; height: 18px; width: 18px;
-  left: 3px; bottom: 3px; background-color: #fff; transition: .4s; border-radius: 50%;
-}
+.switch .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 24px; }
+.switch .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #fff; transition: .4s; border-radius: 50%; }
 .switch input:checked + .slider { background-color: var(--green); }
 .switch input:checked + .slider:before { transform: translateX(22px); }
 
 .slider-group { display: flex; align-items: center; gap: 12px; }
 .slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; transition: accent-color 0.4s; }
-
 .config-list { list-style: none; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); }
 .config-list li { display: flex; justify-content: space-between; padding: 11px 14px; font-size: 11px; background: rgba(255,255,255,0.028); }
 .config-list li span { color: var(--muted); text-transform: uppercase; font-size: 9px; }
 .config-list li b { color: var(--text); font-weight: 600; }
 
 /* ============================================================
-   MODAL FULLSCREEN DO NAVEGADOR INTEGRADO
+   BLOCO 6: MODAIS, TOAST E DRAG
    ============================================================ */
-.browser-modal {
-  position: fixed; inset: 0; z-index: 500;
-  display: none; flex-direction: column;
-  background: var(--bg);
-}
-.browser-modal.open { display: flex; animation: browserIn 0.35s cubic-bezier(0.2, 0.9, 0.3, 1); }
-@keyframes browserIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
-
-.browser-header {
-  display: flex; align-items: center; gap: 8px;
-  padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
-  background: rgba(13, 17, 23, 0.98);
-  border-bottom: 1px solid rgb(var(--green-rgb) / 0.3);
-  flex: 0 0 auto; z-index: 3;
-  transition: border-color 0.4s;
-}
-
-.browser-url {
-  flex: 1; padding: 10px 14px; border-radius: 10px;
-  background: rgba(0,0,0,0.6); border: 1px solid rgb(var(--green-rgb) / 0.15);
-  color: var(--muted); font-size: 10px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-family: inherit;
-  transition: border-color 0.4s;
-}
-
-.browser-btn {
-  width: 40px; height: 40px; flex: 0 0 40px;
-  border-radius: 12px; display: grid; place-items: center;
-  cursor: pointer; font-size: 18px; font-weight: 700;
-  transition: transform 0.15s;
-}
-.browser-btn:active { transform: scale(0.9); }
-
-.browser-btn.close {
-  border: 1px solid rgba(255, 93, 122, 0.4);
-  background: rgba(255, 93, 122, 0.1);
-  color: var(--red);
-}
-
-.browser-btn.external {
-  border: 1px solid rgb(var(--cyan-rgb) / 0.4);
-  background: rgb(var(--cyan-rgb) / 0.1);
-  color: var(--cyan);
-}
-
-.browser-content {
-  flex: 1; position: relative; overflow: hidden;
-  background: #fff;
-}
-
-.browser-frame {
-  width: 100%; height: 100%; border: 0; background: #fff; display: block;
-}
-
-.browser-loading {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: var(--bg); gap: 16px; z-index: 2;
-  color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
-}
-
-.browser-fallback-view {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 30px 24px; text-align: center; gap: 16px;
-  background: var(--bg); z-index: 2;
-}
-
-.browser-fallback-view .ico { font-size: 46px; color: var(--amber); }
-.browser-fallback-view h4 { font-size: 14px; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
-.browser-fallback-view p { font-size: 11.5px; color: var(--muted); line-height: 1.55; max-width: 320px; }
-
-.browser-fallback-view .browser-action {
-  padding: 14px 22px; border-radius: 14px; font-family: inherit;
-  font-size: 12px; font-weight: 700; text-transform: uppercase;
-  border: 1px solid rgb(var(--green-rgb) / 0.4);
-  background: linear-gradient(135deg, rgb(var(--green-rgb) / 0.2), rgb(var(--cyan-rgb) / 0.15));
-  color: var(--green); cursor: pointer; letter-spacing: 0.05em;
-  box-shadow: 0 0 24px -8px var(--green);
-  transition: border-color 0.4s, background 0.4s, color 0.4s, box-shadow 0.4s;
-}
-
-/* ============================================================
-   MODAIS FLUTUANTES (Jogo + Config legados, se existirem)
-   ============================================================ */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 200; display: none;
-  align-items: center; justify-content: center;
-  padding: 16px; background: rgba(3, 6, 10, 0.8); backdrop-filter: blur(8px);
-}
+.modal-overlay { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(3, 6, 10, 0.8); backdrop-filter: blur(8px); }
 .modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.modal {
-  width: calc(100% - 32px); max-width: 460px; max-height: 80vh;
-  border-radius: 20px; padding: 16px 20px 20px;
-  background: rgba(13, 17, 23, 0.98);
-  border: 1px solid rgb(var(--green-rgb) / 0.26);
-  box-shadow: 0 20px 70px -22px var(--green);
-  display: flex; flex-direction: column; opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.4s, box-shadow 0.4s;
-  transform: translate(0px, 0px);
-}
+.modal { width: calc(100% - 32px); max-width: 460px; max-height: 80vh; border-radius: 20px; padding: 16px 20px 20px; background: rgba(13, 17, 23, 0.98); border: 1px solid rgb(var(--green-rgb) / 0.26); box-shadow: 0 20px 70px -22px var(--green); display: flex; flex-direction: column; opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.4s, box-shadow 0.4s; transform: translate(0px, 0px); }
 .modal-overlay.open .modal { opacity: 1; }
-
-.drag-handle {
-  width: 50px; height: 5px; background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px; margin: 0 auto 15px; flex: 0 0 auto; cursor: grab;
-  padding: 10px 0; margin-top: -10px; touch-action: none;
-}
-
+.drag-handle { width: 50px; height: 5px; background: rgba(255, 255, 255, 0.2); border-radius: 5px; margin: 0 auto 15px; flex: 0 0 auto; cursor: grab; padding: 10px 0; margin-top: -10px; touch-action: none; }
 .modal h3 { font-size: 14px; text-transform: uppercase; color: var(--green); margin-bottom: 4px; transition: color 0.4s; }
 .modal .sub { font-size: 10.5px; color: var(--muted); text-transform: uppercase; }
 
 .mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 4px; }
 .mode-btn { padding: 13px 8px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); font-family: inherit; font-size: 11px; text-transform: uppercase; font-weight: 600; }
 .mode-btn.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; transition: background 0.4s; }
-
 .mode-pane { display: none; margin-top: 6px; flex: 1; overflow: hidden; flex-direction: column; }
 .mode-pane.active { display: flex; }
 
@@ -695,16 +407,7 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 .modal-chip { padding: 6px 12px; border-radius: 999px; font-size: 9.5px; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
 .modal-chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; transition: background 0.4s; }
 
-/* TOAST */
-.toast {
-  position: fixed; left: 50%; bottom: calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));
-  transform: translate(-50%, 22px); z-index: 600; padding: 14px 20px; border-radius: 14px;
-  text-align: center; font-size: 12.5px; color: #ffd9ef;
-  background: rgb(var(--magenta-rgb) / 0.15);
-  border: 1px solid rgb(var(--magenta-rgb) / 0.5);
-  opacity: 0; pointer-events: none;
-  transition: all 0.32s, background 0.4s, border-color 0.4s;
-}
+.toast { position: fixed; left: 50%; bottom: calc(var(--nav-h) + 26px + env(safe-area-inset-bottom)); transform: translate(-50%, 22px); z-index: 600; padding: 14px 20px; border-radius: 14px; text-align: center; font-size: 12.5px; color: #ffd9ef; background: rgb(var(--magenta-rgb) / 0.15); border: 1px solid rgb(var(--magenta-rgb) / 0.5); opacity: 0; pointer-events: none; transition: all 0.32s, background 0.4s, border-color 0.4s; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .toast.ok { color: #c6ffec; background: rgb(var(--green-rgb) / 0.13); border-color: rgb(var(--green-rgb) / 0.5); }
 </style>
@@ -726,7 +429,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
   <!-- ABA 1: APARELHO -->
   <section class="pane active" id="pane-aparelho">
     <div class="section-title"><h2>Especificações do Aparelho</h2></div>
-
     <div class="terminal">
       <div class="terminal-bar">
         <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -734,12 +436,10 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
       </div>
       <div class="terminal-body" id="terminal"></div>
     </div>
-
     <div class="home-search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
       <input id="googleQuery" type="text" placeholder="Buscar na web (integrado)..." autocomplete="off">
     </div>
-
     <div class="hw-grid">
       <div class="hw-card full">
         <div class="hw-k">Modelo do Aparelho</div>
@@ -772,7 +472,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
         <div class="hw-sub" id="specOsSub">—</div>
       </div>
     </div>
-
     <div class="actions">
       <button class="btn green action-btn" id="btnRefreshSpecs">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span>
@@ -787,7 +486,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
       <h2>Monitor em Tempo Real</h2>
       <div class="status-pill"><span class="pulse"></span>LIVE</div>
     </div>
-
     <div class="hw-grid">
       <div class="hw-card full">
         <div class="hw-k">Uso de RAM</div>
@@ -820,6 +518,7 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
       </div>
     </div>
   </section>
+
   <!-- ABA 3: JOGOS -->
   <section class="pane" id="pane-jogos">
     <div class="games-head">
@@ -836,7 +535,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
         </button>
       </div>
     </div>
-
     <div class="search-bar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
       <input id="searchGames" type="text" placeholder="Buscar jogo...">
@@ -848,7 +546,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
       <p>Nenhum jogo ainda</p>
       <span>toque em + para adicionar</span>
     </div>
-
     <div class="console-container">
       <div class="console-left">
         <div class="console-left-header">
@@ -874,87 +571,50 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
   <!-- ABA 4: CLIMA -->
   <section class="pane" id="pane-clima">
     <div class="section-title"><h2>Previsão do Tempo</h2></div>
-
     <div class="wx-search">
       <input type="text" id="wxCity" placeholder="Digite a cidade..." autocomplete="off">
       <button id="wxBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
       </button>
     </div>
-
     <div id="wxResult"></div>
   </section>
 
-  <!-- ABA 5: CONFIGURAÇÕES (refeita) -->
+  <!-- ABA 5: CONFIGURAÇÕES -->
   <section class="pane" id="pane-config">
     <div class="section-title">
       <h2>Configurações</h2>
       <span class="status-pill" style="padding:6px 10px; font-size:9px;">v4.1.0</span>
     </div>
-
-    <!-- SEÇÃO: APARÊNCIA -->
     <div class="config-section">
       <div class="config-header">
         <span class="config-icon">🎨</span>
-        <div>
-          <h3>Aparência</h3>
-          <p>tema, layout, ícones</p>
-        </div>
+        <div><h3>Aparência</h3><p>tema, layout, ícones</p></div>
       </div>
       <div class="config-body">
         <div class="config-row">
-          <div class="config-row-label">
-            <label>Paleta de Cores</label>
-            <small id="themeName">Verde</small>
-          </div>
+          <div class="config-row-label"><label>Paleta de Cores</label><small id="themeName">Verde</small></div>
           <div class="theme-swatches">
-            <button class="theme-swatch-wrap" data-theme="verde" title="Verde (padrão)">
-              <span class="theme-swatch" style="--swatch: #00ffb4;"></span>
-              <span class="theme-label">Verde</span>
-            </button>
-            <button class="theme-swatch-wrap" data-theme="roxo" title="Roxo">
-              <span class="theme-swatch" style="--swatch: #b76bff;"></span>
-              <span class="theme-label">Roxo</span>
-            </button>
-            <button class="theme-swatch-wrap" data-theme="vermelho" title="Vermelho">
-              <span class="theme-swatch" style="--swatch: #ff4d4d;"></span>
-              <span class="theme-label">Vermelho</span>
-            </button>
-            <button class="theme-swatch-wrap" data-theme="magenta" title="Viva Magenta">
-              <span class="theme-swatch" style="--swatch: #d41f5b;"></span>
-              <span class="theme-label">Magenta</span>
-            </button>
-            <button class="theme-swatch-wrap" data-theme="azul" title="Azul">
-              <span class="theme-swatch" style="--swatch: #00b0ff;"></span>
-              <span class="theme-label">Azul</span>
-            </button>
+            <button class="theme-swatch-wrap" data-theme="verde" title="Verde (padrão)"><span class="theme-swatch" style="--swatch: #00ffb4;"></span><span class="theme-label">Verde</span></button>
+            <button class="theme-swatch-wrap" data-theme="roxo" title="Roxo"><span class="theme-swatch" style="--swatch: #b76bff;"></span><span class="theme-label">Roxo</span></button>
+            <button class="theme-swatch-wrap" data-theme="vermelho" title="Vermelho"><span class="theme-swatch" style="--swatch: #ff4d4d;"></span><span class="theme-label">Vermelho</span></button>
+            <button class="theme-swatch-wrap" data-theme="magenta" title="Viva Magenta"><span class="theme-swatch" style="--swatch: #d41f5b;"></span><span class="theme-label">Magenta</span></button>
+            <button class="theme-swatch-wrap" data-theme="azul" title="Azul"><span class="theme-swatch" style="--swatch: #00b0ff;"></span><span class="theme-label">Azul</span></button>
           </div>
         </div>
-
         <div class="config-row">
           <div class="config-row-label"><label>Modo de Exibição da Lista</label></div>
-                   <div class="seg-selector">
+          <div class="seg-selector">
             <button class="seg-btn layout-btn" data-layout="list">Lista</button>
             <button class="seg-btn layout-btn" data-layout="small">Bloco</button>
             <button class="seg-btn layout-btn active" data-layout="default">Padrão</button>
           </div>
         </div>
-
         <div class="config-row">
-          <div class="config-row-label">
-            <label>Mostrar Fundo dos Cards</label>
-            <label class="switch">
-              <input type="checkbox" id="toggleCardBg" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
+          <div class="config-row-label"><label>Mostrar Fundo dos Cards</label><label class="switch"><input type="checkbox" id="toggleCardBg" checked><span class="slider"></span></label></div>
         </div>
-
         <div class="config-row">
-          <div class="config-row-label">
-            <label>Tamanho dos Ícones</label>
-            <small id="iconSizeVal">40px</small>
-          </div>
+          <div class="config-row-label"><label>Tamanho dos Ícones</label><small id="iconSizeVal">40px</small></div>
           <div class="slider-group">
             <span style="font-size:10px; color:var(--muted)">P</span>
             <input type="range" id="sliderIconSize" min="24" max="120" value="40">
@@ -964,51 +624,32 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
       </div>
     </div>
 
-    <!-- SEÇÃO: NAVEGADOR -->
     <div class="config-section">
       <div class="config-header">
         <span class="config-icon">🌐</span>
-        <div>
-          <h3>Navegador Integrado</h3>
-          <p>buscas sem sair do app</p>
-        </div>
+        <div><h3>Navegador Integrado</h3><p>buscas sem sair do app</p></div>
       </div>
       <div class="config-body">
         <div class="config-row">
-          <div class="config-row-label">
-            <label>Motor de Busca Padrão</label>
-          </div>
-                <div class="seg-selector" style="grid-template-columns: 1fr;">
+          <div class="config-row-label"><label>Motor de Busca Padrão</label></div>
+          <div class="seg-selector" style="grid-template-columns: 1fr;">
             <button class="seg-btn engine-btn active" data-engine="bing">Bing</button>
           </div>
           <div class="config-hint">
-            <b>Fallback automático:</b> se o site bloquear a exibição dentro do app, o navegador integrado do sistema abrirá automaticamente. Você nunca vê tela de erro.
+            <b>Nativo WebView:</b> O navegador agora abre de forma nativa no Android, permitindo acessar qualquer site (incluindo Google e Bing) sem bloqueios.
           </div>
         </div>
-
         <div class="config-row">
-          <div class="config-row-label">
-            <label>Abrir links em janela interna</label>
-            <label class="switch">
-              <input type="checkbox" id="toggleInAppSearch" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div class="config-hint">
-            Ativado: buscas abrem dentro do GameZone. Desativado: sempre usa o navegador do sistema.
-          </div>
+          <div class="config-row-label"><label>Abrir links em janela interna</label><label class="switch"><input type="checkbox" id="toggleInAppSearch" checked><span class="slider"></span></label></div>
+          <div class="config-hint">Ativado: buscas abrem dentro do GameZone. Desativado: sempre usa o navegador externo.</div>
         </div>
       </div>
     </div>
 
-    <!-- SEÇÃO: SOBRE -->
     <div class="config-section">
       <div class="config-header">
         <span class="config-icon">◈</span>
-        <div>
-          <h3>Sobre</h3>
-          <p>gamezone v4.1.0</p>
-        </div>
+        <div><h3>Sobre</h3><p>gamezone v4.1.0</p></div>
       </div>
       <div class="config-body">
         <ul class="config-list">
@@ -1016,7 +657,7 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
           <li><span>Device Info</span><b>@capgo/capacitor-device-info</b></li>
           <li><span>Apps</span><b>UsageStatsManager</b></li>
           <li><span>Launcher</span><b>@capacitor/app-launcher</b></li>
-          <li><span>Browser</span><b>@capacitor/browser</b></li>
+          <li><span>Browser Nativo</span><b>@capawesome/capacitor-in-app-browser</b></li>
           <li><span>Clima</span><b>wttr.in API</b></li>
         </ul>
         <p style="text-align:center; font-size:9.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:6px;">// feito para rodar no seu bolso //</p>
@@ -1027,47 +668,12 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 
 <!-- NAVEGAÇÃO -->
 <nav class="bottom-nav">
-  <button class="nav-btn active" data-tab="aparelho">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-    <span>Aparelho</span>
-  </button>
-  <button class="nav-btn" data-tab="status">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
-    <span>Status</span>
-  </button>
-  <button class="nav-btn" data-tab="jogos">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="11" rx="4.5"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/></svg>
-    <span>Jogos</span>
-  </button>
-  <button class="nav-btn" data-tab="clima">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-    <span>Clima</span>
-  </button>
-  <button class="nav-btn" data-tab="config">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    <span>Config</span>
-  </button>
+  <button class="nav-btn active" data-tab="aparelho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg><span>Aparelho</span></button>
+  <button class="nav-btn" data-tab="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg><span>Status</span></button>
+  <button class="nav-btn" data-tab="jogos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="11" rx="4.5"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18.5 14.5h.01"/></svg><span>Jogos</span></button>
+  <button class="nav-btn" data-tab="clima"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span>Clima</span></button>
+  <button class="nav-btn" data-tab="config"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Config</span></button>
 </nav>
-
-<!-- BROWSER MODAL (navegador integrado fullscreen) -->
-<div class="browser-modal" id="browserModal">
-  <div class="browser-header">
-    <div class="browser-url" id="browserUrl">—</div>
-    <button class="browser-btn external" id="browserExternal" title="Abrir no navegador externo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-    </button>
-    <button class="browser-btn close" id="browserClose" title="Fechar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;height:18px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-  <div class="browser-content" id="browserContent">
-    <div class="browser-loading" id="browserLoading">
-      <div class="spinner"></div>
-      <span>carregando...</span>
-    </div>
-    <iframe class="browser-frame" id="browserFrame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms" referrerpolicy="no-referrer"></iframe>
-  </div>
-</div>
 
 <!-- MODAL DE JOGO -->
 <div class="modal-overlay" id="gameModal">
@@ -1075,12 +681,10 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
     <div class="drag-handle" id="dragHandleGame"></div>
     <h3>+ Novo Jogo</h3>
     <p class="sub">adicionar à biblioteca</p>
-
     <div class="mode-selector">
       <button class="mode-btn active" data-mode="web">🌐 Web</button>
       <button class="mode-btn" data-mode="installed">📱 Instalado</button>
     </div>
-
     <div class="mode-pane active" id="modePane-web">
       <div class="field"><label>Nome do jogo</label><input class="input" id="gameName" type="text" placeholder="Ex: Roblox"></div>
       <div class="field"><label>Link (URL)</label><input class="input" id="gameUrl" type="url" placeholder="https://..."></div>
@@ -1090,7 +694,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
         </select>
       </div>
     </div>
-
     <div class="mode-pane" id="modePane-installed">
       <div class="modal-chips" id="modalFilterChips">
         <button class="modal-chip active" data-filter="all">Todos</button>
@@ -1102,7 +705,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
         <div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Toque em "Instalado" para carregar</div>
       </div>
     </div>
-
     <div class="modal-actions">
       <button class="btn-solid ghost" id="btnCancelGame">Fechar</button>
       <button class="btn-solid primary" id="btnSaveGame">Salvar</button>
@@ -1116,7 +718,6 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
     <div class="drag-handle" id="dragHandleSettings"></div>
     <h3>⚙️ Configurações</h3>
     <p class="sub">Ajustes visuais</p>
-
     <div class="field" style="margin-top:20px;">
       <label>Modo de Exibição da Lista</label>
       <div class="seg-selector" style="grid-template-columns: repeat(3, 1fr); margin-top: 8px;">
@@ -1125,15 +726,10 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
         <button class="seg-btn layout-btn active" data-layout="default">Padrão</button>
       </div>
     </div>
-
     <div class="field" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
       <label style="margin-bottom:0; font-size:12px; color:var(--text); text-transform:none;">Mostrar Fundo dos Cards</label>
-      <label class="switch">
-        <input type="checkbox" id="toggleCardBgModal" checked>
-        <span class="slider"></span>
-      </label>
+      <label class="switch"><input type="checkbox" id="toggleCardBgModal" checked><span class="slider"></span></label>
     </div>
-
     <div class="field" style="margin-top:20px;">
       <label>Tamanho dos Ícones dos Jogos</label>
       <div class="slider-group">
@@ -1143,21 +739,21 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
       </div>
       <div class="hw-sub" style="margin-top:6px">Valor atual: <span id="iconSizeValModal" style="color:var(--green)">40px</span></div>
     </div>
-
     <div class="modal-actions" style="grid-template-columns:1fr; margin-top:24px;">
       <button class="btn-solid ghost" id="btnCloseSettings">Fechar</button>
     </div>
   </div>
 </div>
-<div class="toast" id="toast"></div>
-
-<script>
-  /* CONFIGURAÇÕES GERAIS */
+<div class="toast" id="toast"></div><script>
+/* ============================================================
+   BLOCO 7: CONFIGURAÇÕES GERAIS E VARIÁVEIS GLOBAIS
+   ============================================================ */
 const ICON_KEY = 'gamezone_icon_size';
 const BG_KEY = 'gamezone_show_card_bg';
 const LAYOUT_KEY = 'gamezone_layout';
 let showCardBg = true;
 let currentLayout = 'default';
+
 (function(){
 'use strict';
 
@@ -1192,7 +788,7 @@ function toast(m, t) {
 }
 
 /* ============================================================
-   SISTEMA DE TEMAS
+   BLOCO 8: SISTEMA DE TEMAS E BUSCA
    ============================================================ */
 const THEME_KEY = 'gamezone_theme';
 const VALID_THEMES = ['verde', 'roxo', 'vermelho', 'magenta', 'azul'];
@@ -1226,9 +822,6 @@ function bindThemeSwatches() {
   });
 }
 
-/* ============================================================
-   CONFIGURAÇÕES DE BUSCA (ENGINE + IN-APP)
-   ============================================================ */
 const ENGINE_KEY = 'gamezone_search_engine';
 const INAPP_KEY = 'gamezone_search_inapp';
 const VALID_ENGINES = ['bing'];
@@ -1262,7 +855,10 @@ const ENGINE_URLS = {
 const ENGINE_LABELS = { 
   bing: 'Bing' 
 };
-/* TERMINAL LOG */
+
+/* ============================================================
+   BLOCO 9: TERMINAL LOG E DRAG DOS MODAIS
+   ============================================================ */
 const terminal = $('#terminal');
 function log(text, type) {
   if (!terminal) return;
@@ -1279,7 +875,6 @@ function logCaret() {
   l.appendChild(c); terminal.appendChild(l); terminal.scrollTop = terminal.scrollHeight;
 }
 
-/* DRAG DOS MODAIS */
 function setupDraggableModal(modalId, handleId) {
   const modal = document.getElementById(modalId);
   const handle = document.getElementById(handleId);
@@ -1316,17 +911,15 @@ setupDraggableModal('gameModalSheet', 'dragHandleGame');
 setupDraggableModal('settingsModalSheet', 'dragHandleSettings');
 
 /* ============================================================
-   CORREÇÃO DOS BOTÕES DE LAYOUT E CONFIGURAÇÕES
+   BLOCO 10: CONFIGURAÇÕES DE LAYOUT E ÍCONES
    ============================================================ */
-// Escuta o clique em QUALQUER botão de layout (seja no modal ou na aba Config)
 $$('.layout-btn').forEach(btn => {
   btn.addEventListener('click', () => applyLayout(btn.dataset.layout));
 });
 
-// Lógica para abrir e fechar o Modal de Configurações
 const settingsModal = $('#settingsModal');
 function openSettingsModal() {
-  loadSettings(); // Adicione esta linha para sincronizar tudo antes de abrir
+  loadSettings();
   settingsModal.classList.add('open');
   if ($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
 }
@@ -1334,16 +927,14 @@ function closeSettingsModal() {
   settingsModal.classList.remove('open');
 }
 
-// Troca os botões de engrenagem da aba Jogos para abrir o modal
 $('#btnSettings').addEventListener('click', openSettingsModal);
 $('#btnSettingsLandscape').addEventListener('click', openSettingsModal);
 $('#btnCloseSettings').addEventListener('click', closeSettingsModal);
 
-// Escuta os controles do Modal (Fundo e Ícone)
 $('#toggleCardBgModal').addEventListener('change', (e) => {
   showCardBg = e.target.checked;
   localStorage.setItem(BG_KEY, showCardBg);
-  $('#toggleCardBg').checked = showCardBg; // Sincroniza com a aba Config
+  $('#toggleCardBg').checked = showCardBg;
   updateSliderRange();
   renderGames();
   buzz(10);
@@ -1352,55 +943,31 @@ $('#toggleCardBgModal').addEventListener('change', (e) => {
 $('#sliderIconSizeModal').addEventListener('input', (e) => {
   const px = parseInt(e.target.value, 10);
   applyIconSize(px);
-  $('#sliderIconSize').value = px; // Sincroniza com a aba Config
+  $('#sliderIconSize').value = px;
   renderGames();
 });
-
 
 function applyIconSize(px) {
   document.documentElement.style.setProperty('--icon-size', px + 'px');
   document.documentElement.style.setProperty('--icon-radius', Math.round(px * 0.3) + 'px');
   document.documentElement.style.setProperty('--icon-font', Math.round(px * 0.45) + 'px');
   localStorage.setItem(ICON_KEY, px);
-  
-  // Atualiza o texto tanto na aba Config quanto no Modal
-  const valEl = $('#iconSizeVal'); 
-  if (valEl) valEl.textContent = px + 'px';
-  
-  const valElModal = $('#iconSizeValModal'); 
-  if (valElModal) valElModal.textContent = px + 'px';
+  const valEl = $('#iconSizeVal'); if (valEl) valEl.textContent = px + 'px';
+  const valElModal = $('#iconSizeValModal'); if (valElModal) valElModal.textContent = px + 'px';
 }
 
 function updateSliderRange() {
   const slider = $('#sliderIconSize');
   const sliderModal = $('#sliderIconSizeModal');
-  
   const max = (currentLayout === 'default' || !showCardBg) ? 120 : 72;
-  
-  if (slider) {
-    slider.max = max;
-    if (parseInt(slider.value, 10) > max) {
-      slider.value = max;
-      applyIconSize(max);
-    }
-  }
-  
-  if (sliderModal) {
-    sliderModal.max = max;
-    if (parseInt(sliderModal.value, 10) > max) {
-      sliderModal.value = max;
-      applyIconSize(max);
-    }
-  }
+  if (slider) { slider.max = max; if (parseInt(slider.value, 10) > max) { slider.value = max; applyIconSize(max); } }
+  if (sliderModal) { sliderModal.max = max; if (parseInt(sliderModal.value, 10) > max) { sliderModal.value = max; applyIconSize(max); } }
 }
 
 function applyLayout(layout) {
   currentLayout = layout;
   localStorage.setItem(LAYOUT_KEY, layout);
-  
-  // Atualiza a bolinha verde em TODOS os botões de layout (Config e Modal)
   $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === layout));
-  
   const grid = $('#gamesGrid');
   const consoleGrid = $('#consoleLeft');
   [grid, consoleGrid].forEach(el => {
@@ -1417,22 +984,13 @@ function loadSettings() {
   const savedPx = localStorage.getItem(ICON_KEY);
   const px = savedPx ? parseInt(savedPx, 10) : 40;
   applyIconSize(px);
-
   showCardBg = localStorage.getItem(BG_KEY) !== 'false';
-  
-  // Sincroniza o Toggle na Aba Config E no Modal
   if ($('#toggleCardBg')) $('#toggleCardBg').checked = showCardBg;
   if ($('#toggleCardBgModal')) $('#toggleCardBgModal').checked = showCardBg;
-
-  // Sincroniza o Slider na Aba Config E no Modal
   if ($('#sliderIconSize')) $('#sliderIconSize').value = px;
   if ($('#sliderIconSizeModal')) $('#sliderIconSizeModal').value = px;
-
   currentLayout = localStorage.getItem(LAYOUT_KEY) || 'default';
-  
-  // Atualiza a bolinha verde em TODOS os botões de layout (Config e Modal)
   $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === currentLayout));
-
   const grid = $('#gamesGrid');
   const consoleGrid = $('#consoleLeft');
   [grid, consoleGrid].forEach(el => {
@@ -1440,12 +998,13 @@ function loadSettings() {
     el.classList.remove('default-layout', 'list-layout', 'small-layout');
     el.classList.add(currentLayout + '-layout');
   });
-
   updateSliderRange();
   loadEnginePrefs();
 }
 
-/* NAVEGAÇÃO */
+/* ============================================================
+   BLOCO 11: NAVEGAÇÃO E BROWSER (IN-APP NATIVO)
+   ============================================================ */
 const navBtns = $$('.nav-btn'); const panes = $$('.pane');
 async function switchTab(tab) {
   navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
@@ -1462,91 +1021,25 @@ async function switchTab(tab) {
   buzz(8);
 }
 navBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
-/* ============================================================
-   SISTEMA DE BUSCA INTEGRADA (terminal + modal + fallback)
-   ============================================================ */
-const browserModal = $('#browserModal');
-const browserFrame = $('#browserFrame');
-const browserUrl = $('#browserUrl');
-const browserLoading = $('#browserLoading');
-const browserContent = $('#browserContent');
 
-let browserLoadTimeout = null;
-let browserFallbackShown = false;
-let currentSearchUrl = '';
+// Função que usa o plugin InAppBrowser
+async function openBrowserModal(url, label) {
+  const InAppBrowser = getPlugin('InAppBrowser');
 
-function openBrowserModal(url, label) {
-  currentSearchUrl = url;
-  browserFallbackShown = false;
-  browserUrl.textContent = url;
-
-  // Remove fallback anterior, se existir
-  const oldFallback = browserContent.querySelector('.browser-fallback-view');
-  if (oldFallback) oldFallback.remove();
-
-  // Reset loading
-  browserFrame.style.display = '';
-  browserLoading.style.display = 'flex';
-  browserFrame.src = 'about:blank';
-  browserModal.classList.add('open');
-
-  // Pequeno delay para garantir "about:blank" aplicado antes do novo src
-  setTimeout(() => {
-    try { browserFrame.src = url; } catch(e) { showBrowserFallback(); }
-  }, 60);
-
-  // Timeout: se não carregar em 6s → assume bloqueio e cai no fallback
-  clearTimeout(browserLoadTimeout);
-  browserLoadTimeout = setTimeout(() => {
-    if (browserLoading.style.display !== 'none') showBrowserFallback();
-  }, 6000);
-}
-
-function closeBrowserModal() {
-  clearTimeout(browserLoadTimeout);
-  browserLoadTimeout = null;
-  browserModal.classList.remove('open');
-  try { browserFrame.src = 'about:blank'; } catch(e) {}
-  currentSearchUrl = '';
-}
-
-function showBrowserFallback() {
-  if (browserFallbackShown) return;
-  browserFallbackShown = true;
-  clearTimeout(browserLoadTimeout);
-
-  browserLoading.style.display = 'none';
-  browserFrame.style.display = 'none';
-
-  const oldFallback = browserContent.querySelector('.browser-fallback-view');
-  if (oldFallback) oldFallback.remove();
-
-  const fallback = document.createElement('div');
-  fallback.className = 'browser-fallback-view';
-  fallback.innerHTML = `
-    <div class="ico">⚠</div>
-    <h4>Site bloqueou a exibição interna</h4>
-    <p>Este site não permite ser carregado dentro de outro app. Abriremos no navegador do sistema para você continuar normalmente.</p>
-    <button class="browser-action" id="btnFallbackOpen">Abrir no navegador</button>
-  `;
-  browserContent.appendChild(fallback);
-
-  const btn = fallback.querySelector('#btnFallbackOpen');
-  if (btn) {
-    btn.addEventListener('click', async () => {
-      await openExternalUrl(currentSearchUrl);
-      closeBrowserModal();
-    });
+  if (InAppBrowser) {
+    try {
+      // Abre o WebView nativo sobre o app
+      await InAppBrowser.openInWebView({ url: url });
+      log('  [OK] Navegador Nativo Aberto', 'ok');
+      return;
+    } catch (error) {
+      log('  [ERR] Falha no InAppBrowser. Usando navegador externo...', 'err');
+      console.error(error);
+    }
   }
 
-  log('  [WARN] Site bloqueia iframe, usando navegador externo', 'warn');
-  toast('Abrindo no navegador do sistema...');
-
-  // Auto-dispara o fallback externo em ~800ms (para o usuário não precisar clicar)
-  setTimeout(() => {
-    if (!browserModal.classList.contains('open')) return;
-    openExternalUrl(currentSearchUrl).then(() => closeBrowserModal()).catch(() => {});
-  }, 800);
+  // Fallback para o @capacitor/browser (Chrome Custom Tabs)
+  await openExternalUrl(url);
 }
 
 async function openExternalUrl(url) {
@@ -1563,35 +1056,6 @@ async function openExternalUrl(url) {
   }
 }
 
-// Evento: iframe terminou de carregar
-browserFrame.addEventListener('load', () => {
-  try {
-    const href = browserFrame.contentWindow.location.href;
-    if (!href || href === 'about:blank') return;
-    
-    // NOVO: Detecta se o WebView carregou uma página de erro (bloqueio do site)
-    if (href.startsWith('chrome-error://') || href.startsWith('about:neterror')) {
-      showBrowserFallback();
-      return;
-    }
-  } catch(e) {
-    // Cross-origin: não conseguimos ler a URL, mas isso significa que o site abriu de verdade!
-  }
-  clearTimeout(browserLoadTimeout);
-  browserLoading.style.display = 'none';
-});
-
-// Botões do browser modal
-$('#browserClose').addEventListener('click', closeBrowserModal);
-$('#browserExternal').addEventListener('click', async () => {
-  if (!currentSearchUrl) return;
-  await openExternalUrl(currentSearchUrl);
-  closeBrowserModal();
-});
-
-/* ============================================================
-   FLUXO DE PESQUISA (terminal + abertura)
-   ============================================================ */
 let searchRunning = false;
 
 async function performSearch(query) {
@@ -1599,34 +1063,29 @@ async function performSearch(query) {
   searchRunning = true;
 
   const engine = currentEngine;
-  const engineLabel = ENGINE_LABELS[engine] || 'DuckDuckGo';
+  const engineLabel = ENGINE_LABELS[engine] || 'Bing';
   const url = ENGINE_URLS[engine](query);
 
-  // === SEQUÊNCIA DO TERMINAL ===
   log('', '');
   log('> Nova busca recebida', 'info');
   log('  → ' + query, 'ok');
   await sleep(280);
-
   log('> Iniciando protocolo de pesquisa...', 'warn');
   await sleep(320);
   log('  [OK] Motor: ' + engineLabel, 'ok');
   await sleep(220);
   log('  [OK] Conexão segura estabelecida', 'ok');
   await sleep(260);
-
   log('> Efetuando pesquisa: "' + query + '"', 'info');
   await sleep(500);
   log('  [OK] URL gerada: ' + url, 'ok');
   await sleep(240);
-
   log('> Pesquisa realizada com sucesso.', 'ok');
   await sleep(300);
   log('> Abrindo navegador integrado...', 'info');
   await sleep(360);
   log('  [OK] Interface pronta', 'ok');
 
-  // Se o usuário desativou o navegador interno → vai direto pro sistema
   if (!useInAppSearch) {
     log('  [WARN] Navegador interno desativado, abrindo externo', 'warn');
     await openExternalUrl(url);
@@ -1634,14 +1093,12 @@ async function performSearch(query) {
     return;
   }
 
-  // Caso contrário, abre o modal
   logCaret();
   await sleep(200);
-  openBrowserModal(url, engineLabel);
+  await openBrowserModal(url, engineLabel);
   searchRunning = false;
 }
 
-/* PESQUISA GOOGLE (agora DuckDuckGo/Google/Bing, dependendo da config) */
 $('#googleQuery').addEventListener('keydown', e => {
   if (e.key === 'Enter') {
     const q = e.target.value.trim();
@@ -1651,6 +1108,7 @@ $('#googleQuery').addEventListener('keydown', e => {
     buzz(15);
   }
 });
+
 $('#googleQuery').addEventListener('click', () => {
   if (!$('#googleQuery').value) {
     const model = $('#specModel').textContent || 'meu celular';
@@ -1659,9 +1117,6 @@ $('#googleQuery').addEventListener('click', () => {
   }
 });
 
-/* ============================================================
-   CONFIG — LISTENERS DE BUSCA
-   ============================================================ */
 $$('.engine-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     applyEngine(btn.dataset.engine);
@@ -1675,10 +1130,8 @@ $('#toggleInAppSearch').addEventListener('change', (e) => {
   try { localStorage.setItem(INAPP_KEY, useInAppSearch); } catch(err) {}
   toast(useInAppSearch ? 'Navegador integrado ativado' : 'Sempre usar navegador externo', 'ok');
   buzz(10);
-});
-
-/* ============================================================
-   HARDWARE SPEC
+});/* ============================================================
+   BLOCO 12: HARDWARE E STATUS MONITOR
    ============================================================ */
 async function loadDeviceSpecs() {
   const di = getDeviceInfoPlugin(); const dev = getDevicePlugin();
@@ -1711,9 +1164,6 @@ async function loadDeviceSpecs() {
 }
 $('#btnRefreshSpecs').addEventListener('click', () => { terminal.innerHTML = ''; loadDeviceSpecs(); toast('Atualizado', 'ok'); });
 
-/* ============================================================
-   STATUS MONITOR — CORRIGIDO (com fallback de bateria)
-   ============================================================ */
 let statusStarted = false;
 let statusListener = null;
 let statusPolling = null;
@@ -1729,9 +1179,7 @@ async function refreshStatusFromApi() {
   const dev = getDevicePlugin();
   let payload = null;
 
-  if (di && di.getInfo) {
-    try { payload = await di.getInfo(); } catch(e) {}
-  }
+  if (di && di.getInfo) { try { payload = await di.getInfo(); } catch(e) {} }
   if (payload) updateStatusUI(payload);
 
   if (dev && dev.getBatteryInfo) {
@@ -1753,12 +1201,8 @@ async function startLiveStatus() {
   const di = getDeviceInfoPlugin();
   await refreshStatusFromApi();
 
-  if (di && di.addListener) {
-    try { statusListener = await di.addListener('deviceInfoUpdate', updateStatusUI); } catch(e) {}
-  }
-  if (di && di.startMonitoring) {
-    try { await di.startMonitoring({ intervalMs: 2000 }); } catch(e) {}
-  }
+  if (di && di.addListener) { try { statusListener = await di.addListener('deviceInfoUpdate', updateStatusUI); } catch(e) {} }
+  if (di && di.startMonitoring) { try { await di.startMonitoring({ intervalMs: 2000 }); } catch(e) {} }
   statusPolling = setInterval(refreshStatusFromApi, 2500);
 }
 
@@ -1835,7 +1279,7 @@ function updateRing(pct, usedBytes, totalBytes) {
 }
 
 /* ============================================================
-   JOGOS
+   BLOCO 13: JOGOS
    ============================================================ */
 const GAMES_KEY = 'gamezone_games_v3';
 let games = []; let currentCat = 'Todos'; let searchQ = ''; let consoleSelectedIdx = -1;
@@ -1972,7 +1416,7 @@ function renderConsoleLandscape() {
 }
 
 /* ============================================================
-   MODAL DE JOGO
+   BLOCO 14: MODAL DE JOGO E BIBLIOTECA
    ============================================================ */
 const gameModal = $('#gameModal'); let modalMode = 'web'; let selectedApps = new Set();
 let modalFilter = 'all'; let cachedUserApps = [];
@@ -2001,7 +1445,6 @@ $('#btnAddGame').addEventListener('click', openModal);
 $('#btnAddGameLandscape').addEventListener('click', openModal);
 $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
 
-
 $('#sliderIconSize').addEventListener('input', (e) => {
   applyIconSize(parseInt(e.target.value, 10));
   renderGames();
@@ -2010,7 +1453,7 @@ $('#sliderIconSize').addEventListener('input', (e) => {
 $('#toggleCardBg').addEventListener('change', (e) => {
   showCardBg = e.target.checked;
   localStorage.setItem(BG_KEY, showCardBg);
-  if ($('#toggleCardBgModal')) $('#toggleCardBgModal').checked = showCardBg; // Adicione esta linha
+  if ($('#toggleCardBgModal')) $('#toggleCardBgModal').checked = showCardBg;
   updateSliderRange();
   renderGames();
   buzz(10);
@@ -2085,10 +1528,8 @@ $('#btnSaveGame').addEventListener('click', () => {
     });
   }
   saveGames(); renderGames(); gameModal.classList.remove('open'); toast('Salvo!', 'ok');
-});
-
-/* ============================================================
-   CLIMA
+});/* ============================================================
+   BLOCO 15: CLIMA E BOOT SEQUENCE
    ============================================================ */
 const WEATHER_ICONS = {113:'☀️',116:'⛅',119:'☁️',122:'☁️',143:'🌫️',248:'🌫️',260:'🌫️',176:'🌦️',263:'🌦️',266:'🌦️',293:'🌧️',296:'🌧️',299:'🌧️',302:'🌧️',305:'🌧️',308:'🌧️',200:'⛈️',386:'⛈️',389:'⛈️',392:'⛈️',395:'❄️',179:'❄️',182:'❄️',185:'❄️',227:'❄️',230:'❄️',317:'❄️',320:'❄️',323:'❄️',326:'❄️',329:'❄️',332:'❄️',335:'❄️',338:'❄️',350:'❄️',362:'❄️',365:'❄️',368:'❄️',371:'❄️',374:'❄️',377:'❄️'};
 const wIcon = c => WEATHER_ICONS[+c] || '🌡️';
@@ -2129,9 +1570,6 @@ async function buscarClima() {
 $('#wxBtn').addEventListener('click', buscarClima);
 $('#wxCity').addEventListener('keydown', e => { if (e.key === 'Enter') buscarClima(); });
 
-/* ============================================================
-   BOOT SEQUENCE
-   ============================================================ */
 async function bootSequence() {
   terminal.innerHTML = '';
   log('> GameZone Kernel v4.1.0', 'info');
@@ -2156,12 +1594,11 @@ async function bootSequence() {
 }
 
 /* ============================================================
-   CLEANUP + INIT
+   BLOCO 16: CLEANUP E INIT
    ============================================================ */
 window.addEventListener('beforeunload', async () => {
   try { await stopLiveStatus(); } catch(e){}
   if (statusPolling) { clearInterval(statusPolling); statusPolling = null; }
-  if (browserLoadTimeout) { clearTimeout(browserLoadTimeout); browserLoadTimeout = null; }
   toggleImmersiveMode(false);
 });
 
