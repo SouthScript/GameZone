@@ -933,7 +933,7 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
 
         <div class="config-row">
           <div class="config-row-label"><label>Modo de Exibição da Lista</label></div>
-          <div class="seg-selector">
+                   <div class="seg-selector">
             <button class="seg-btn layout-btn" data-layout="list">Lista</button>
             <button class="seg-btn layout-btn" data-layout="small">Bloco</button>
             <button class="seg-btn layout-btn active" data-layout="default">Padrão</button>
@@ -1110,9 +1110,54 @@ main { position: relative; z-index: 2; padding: 0 16px calc(var(--nav-h) + 34px 
   </div>
 </div>
 
+<!-- MODAL DE CONFIGURAÇÕES -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal" id="settingsModalSheet">
+    <div class="drag-handle" id="dragHandleSettings"></div>
+    <h3>⚙️ Configurações</h3>
+    <p class="sub">Ajustes visuais</p>
+
+    <div class="field" style="margin-top:20px;">
+      <label>Modo de Exibição da Lista</label>
+      <div class="seg-selector" style="grid-template-columns: repeat(3, 1fr); margin-top: 8px;">
+        <button class="seg-btn layout-btn" data-layout="list">Lista</button>
+        <button class="seg-btn layout-btn" data-layout="small">Bloco</button>
+        <button class="seg-btn layout-btn active" data-layout="default">Padrão</button>
+      </div>
+    </div>
+
+    <div class="field" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+      <label style="margin-bottom:0; font-size:12px; color:var(--text); text-transform:none;">Mostrar Fundo dos Cards</label>
+      <label class="switch">
+        <input type="checkbox" id="toggleCardBgModal" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="field" style="margin-top:20px;">
+      <label>Tamanho dos Ícones dos Jogos</label>
+      <div class="slider-group">
+        <span style="font-size:10px; color:var(--muted)">P</span>
+        <input type="range" id="sliderIconSizeModal" min="24" max="120" value="40">
+        <span style="font-size:10px; color:var(--muted)">G</span>
+      </div>
+      <div class="hw-sub" style="margin-top:6px">Valor atual: <span id="iconSizeValModal" style="color:var(--green)">40px</span></div>
+    </div>
+
+    <div class="modal-actions" style="grid-template-columns:1fr; margin-top:24px;">
+      <button class="btn-solid ghost" id="btnCloseSettings">Fechar</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
+  /* CONFIGURAÇÕES GERAIS */
+const ICON_KEY = 'gamezone_icon_size';
+const BG_KEY = 'gamezone_show_card_bg';
+const LAYOUT_KEY = 'gamezone_layout';
+let showCardBg = true;
+let currentLayout = 'default';
 (function(){
 'use strict';
 
@@ -1268,36 +1313,94 @@ function setupDraggableModal(modalId, handleId) {
   };
 }
 setupDraggableModal('gameModalSheet', 'dragHandleGame');
+setupDraggableModal('settingsModalSheet', 'dragHandleSettings');
 
-/* CONFIGURAÇÕES GERAIS */
-const ICON_KEY = 'gamezone_icon_size';
-const BG_KEY = 'gamezone_show_card_bg';
-const LAYOUT_KEY = 'gamezone_layout';
-let showCardBg = true;
-let currentLayout = 'default';
+/* ============================================================
+   CORREÇÃO DOS BOTÕES DE LAYOUT E CONFIGURAÇÕES
+   ============================================================ */
+// Escuta o clique em QUALQUER botão de layout (seja no modal ou na aba Config)
+$$('.layout-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLayout(btn.dataset.layout));
+});
+
+// Lógica para abrir e fechar o Modal de Configurações
+const settingsModal = $('#settingsModal');
+function openSettingsModal() {
+  loadSettings(); // Adicione esta linha para sincronizar tudo antes de abrir
+  settingsModal.classList.add('open');
+  if ($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
+}
+function closeSettingsModal() {
+  settingsModal.classList.remove('open');
+}
+
+// Troca os botões de engrenagem da aba Jogos para abrir o modal
+$('#btnSettings').addEventListener('click', openSettingsModal);
+$('#btnSettingsLandscape').addEventListener('click', openSettingsModal);
+$('#btnCloseSettings').addEventListener('click', closeSettingsModal);
+
+// Escuta os controles do Modal (Fundo e Ícone)
+$('#toggleCardBgModal').addEventListener('change', (e) => {
+  showCardBg = e.target.checked;
+  localStorage.setItem(BG_KEY, showCardBg);
+  $('#toggleCardBg').checked = showCardBg; // Sincroniza com a aba Config
+  updateSliderRange();
+  renderGames();
+  buzz(10);
+});
+
+$('#sliderIconSizeModal').addEventListener('input', (e) => {
+  const px = parseInt(e.target.value, 10);
+  applyIconSize(px);
+  $('#sliderIconSize').value = px; // Sincroniza com a aba Config
+  renderGames();
+});
+
 
 function applyIconSize(px) {
   document.documentElement.style.setProperty('--icon-size', px + 'px');
   document.documentElement.style.setProperty('--icon-radius', Math.round(px * 0.3) + 'px');
   document.documentElement.style.setProperty('--icon-font', Math.round(px * 0.45) + 'px');
   localStorage.setItem(ICON_KEY, px);
-  const valEl = $('#iconSizeVal'); if (valEl) valEl.textContent = px + 'px';
+  
+  // Atualiza o texto tanto na aba Config quanto no Modal
+  const valEl = $('#iconSizeVal'); 
+  if (valEl) valEl.textContent = px + 'px';
+  
+  const valElModal = $('#iconSizeValModal'); 
+  if (valElModal) valElModal.textContent = px + 'px';
 }
 
 function updateSliderRange() {
   const slider = $('#sliderIconSize');
-  if (!slider) return;
-  slider.max = (currentLayout === 'default' || !showCardBg) ? 120 : 72;
-  if (parseInt(slider.value, 10) > parseInt(slider.max, 10)) {
-    slider.value = slider.max;
-    applyIconSize(parseInt(slider.max, 10));
+  const sliderModal = $('#sliderIconSizeModal');
+  
+  const max = (currentLayout === 'default' || !showCardBg) ? 120 : 72;
+  
+  if (slider) {
+    slider.max = max;
+    if (parseInt(slider.value, 10) > max) {
+      slider.value = max;
+      applyIconSize(max);
+    }
+  }
+  
+  if (sliderModal) {
+    sliderModal.max = max;
+    if (parseInt(sliderModal.value, 10) > max) {
+      sliderModal.value = max;
+      applyIconSize(max);
+    }
   }
 }
 
 function applyLayout(layout) {
   currentLayout = layout;
   localStorage.setItem(LAYOUT_KEY, layout);
+  
+  // Atualiza a bolinha verde em TODOS os botões de layout (Config e Modal)
   $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === layout));
+  
   const grid = $('#gamesGrid');
   const consoleGrid = $('#consoleLeft');
   [grid, consoleGrid].forEach(el => {
@@ -1316,12 +1419,18 @@ function loadSettings() {
   applyIconSize(px);
 
   showCardBg = localStorage.getItem(BG_KEY) !== 'false';
-  const toggle = $('#toggleCardBg');
-  if (toggle) toggle.checked = showCardBg;
+  
+  // Sincroniza o Toggle na Aba Config E no Modal
+  if ($('#toggleCardBg')) $('#toggleCardBg').checked = showCardBg;
+  if ($('#toggleCardBgModal')) $('#toggleCardBgModal').checked = showCardBg;
 
-  const slider = $('#sliderIconSize'); if (slider) slider.value = px;
+  // Sincroniza o Slider na Aba Config E no Modal
+  if ($('#sliderIconSize')) $('#sliderIconSize').value = px;
+  if ($('#sliderIconSizeModal')) $('#sliderIconSizeModal').value = px;
 
   currentLayout = localStorage.getItem(LAYOUT_KEY) || 'default';
+  
+  // Atualiza a bolinha verde em TODOS os botões de layout (Config e Modal)
   $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === currentLayout));
 
   const grid = $('#gamesGrid');
@@ -1892,9 +2001,6 @@ $('#btnAddGame').addEventListener('click', openModal);
 $('#btnAddGameLandscape').addEventListener('click', openModal);
 $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
 
-// Gear na aba jogos → navega pra Config
-$('#btnSettings').addEventListener('click', () => switchTab('config'));
-$('#btnSettingsLandscape').addEventListener('click', () => switchTab('config'));
 
 $('#sliderIconSize').addEventListener('input', (e) => {
   applyIconSize(parseInt(e.target.value, 10));
@@ -1904,6 +2010,7 @@ $('#sliderIconSize').addEventListener('input', (e) => {
 $('#toggleCardBg').addEventListener('change', (e) => {
   showCardBg = e.target.checked;
   localStorage.setItem(BG_KEY, showCardBg);
+  if ($('#toggleCardBgModal')) $('#toggleCardBgModal').checked = showCardBg; // Adicione esta linha
   updateSliderRange();
   renderGames();
   buzz(10);
