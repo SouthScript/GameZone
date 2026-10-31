@@ -22,28 +22,67 @@
 
 :root {
   --bg: #0d1117;
-  --green: #00ffb4;
-  --cyan: #00e5ff;
-  --magenta: #ff2fb9;
   --amber: #ffd166;
   --red: #ff5d7a;
   --text: #c9d1d9;
   --muted: #7d8590;
   --panel: rgba(255, 255, 255, 0.045);
   --brd: rgba(255, 255, 255, 0.09);
-  
-  /* NAV BAR AUMENTADA */
   --nav-h: 72px;
-
   --icon-size: 40px;
   --icon-radius: 12px;
   --icon-font: 18px;
+
+  /* === Tema Verde (padrão) === */
+  --green: #00ffb4;
+  --green-rgb: 0 255 180;
+  --cyan: #00e5ff;
+  --cyan-rgb: 0 229 255;
+  --magenta: #ff2fb9;
+  --magenta-rgb: 255 47 185;
 }
 
-html, body {
-  width: 100%;
-  overflow-x: hidden;
+/* === Tema Roxo === */
+:root[data-theme="roxo"] {
+  --green: #b76bff;
+  --green-rgb: 183 107 255;
+  --cyan: #d17aff;
+  --cyan-rgb: 209 122 255;
+  --magenta: #ff2fb9;
+  --magenta-rgb: 255 47 185;
 }
+
+/* === Tema Vermelho === */
+:root[data-theme="vermelho"] {
+  --green: #ff4d4d;
+  --green-rgb: 255 77 77;
+  --cyan: #ff7a45;
+  --cyan-rgb: 255 122 69;
+  --magenta: #ff2fb9;
+  --magenta-rgb: 255 47 185;
+}
+
+/* === Tema Viva Magenta (Pantone 18-1750) === */
+:root[data-theme="magenta"] {
+  --green: #d41f5b;
+  --green-rgb: 212 31 91;
+  --cyan: #ff2fb9;
+  --cyan-rgb: 255 47 185;
+  --magenta: #bb2649;
+  --magenta-rgb: 187 38 73;
+}
+
+/* === Tema Azul === */
+:root[data-theme="azul"] {
+  --green: #00b0ff;
+  --green-rgb: 0 176 255;
+  --cyan: #4d7cff;
+  --cyan-rgb: 77 124 255;
+  --magenta: #ff2fb9;
+  --magenta-rgb: 255 47 185;
+}
+
+html, body { width: 100%; overflow-x: hidden; }
 
 body {
   font-family: 'Fira Code', 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
@@ -51,6 +90,7 @@ body {
   color: var(--text);
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease;
 }
 
 body::before {
@@ -59,9 +99,10 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(circle at 10% 4%, rgba(0, 255, 180, 0.13), transparent 45%),
-              radial-gradient(circle at 92% 10%, rgba(0, 229, 255, 0.11), transparent 42%),
-              radial-gradient(circle at 50% 104%, rgba(255, 47, 185, 0.13), transparent 55%);
+  background: radial-gradient(circle at 10% 4%, rgb(var(--green-rgb) / 0.13), transparent 45%),
+              radial-gradient(circle at 92% 10%, rgb(var(--cyan-rgb) / 0.11), transparent 42%),
+              radial-gradient(circle at 50% 104%, rgb(var(--magenta-rgb) / 0.13), transparent 55%);
+  transition: background 0.5s ease;
 }
 
 body::after {
@@ -71,46 +112,34 @@ body::after {
   z-index: 0;
   pointer-events: none;
   opacity: 0.5;
-  background-image: linear-gradient(rgba(0, 255, 180, 0.055) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0, 255, 180, 0.055) 1px, transparent 1px);
+  background-image: linear-gradient(rgb(var(--green-rgb) / 0.055) 1px, transparent 1px),
+                    linear-gradient(90deg, rgb(var(--green-rgb) / 0.055) 1px, transparent 1px);
   background-size: 44px 44px;
   -webkit-mask-image: radial-gradient(circle at 50% 25%, #000 0%, transparent 78%);
   mask-image: radial-gradient(circle at 50% 25%, #000 0%, transparent 78%);
+  transition: background-image 0.5s ease;
 }
 
 /* ============================================================
    CABEÇALHO
    ============================================================ */
 .app-header {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
   gap: 12px;
   padding: calc(14px + env(safe-area-inset-top)) 18px 14px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  min-width: 0;
-}
+.logo { display: flex; align-items: center; gap: 11px; min-width: 0; }
 
 .logo-mark {
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  border-radius: 13px;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  font-weight: 700;
-  color: #04120e;
+  width: 42px; height: 42px; flex: 0 0 42px;
+  border-radius: 13px; display: grid; place-items: center;
+  font-size: 20px; font-weight: 700; color: #04120e;
   background: linear-gradient(135deg, var(--green), var(--cyan));
   box-shadow: 0 0 22px -4px var(--green), inset 0 0 12px rgba(255, 255, 255, 0.35);
   animation: logoPulse 3.4s ease-in-out infinite;
+  transition: background 0.4s ease;
 }
 
 @keyframes logoPulse {
@@ -118,51 +147,26 @@ body::after {
   50% { box-shadow: 0 0 34px -2px var(--cyan), inset 0 0 12px rgba(255, 255, 255, 0.5); }
 }
 
-.logo h1 {
-  font-size: 15px;
-  letter-spacing: 0.06em;
-  font-weight: 700;
-  color: #eaf6f2;
-  white-space: nowrap;
-}
-
-.logo h1 span {
-  color: var(--green);
-  text-shadow: 0 0 12px rgba(0, 255, 180, 0.6);
-}
-
-.logo p {
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 3px;
-}
+.logo h1 { font-size: 15px; letter-spacing: 0.06em; font-weight: 700; color: #eaf6f2; white-space: nowrap; }
+.logo h1 span { color: var(--green); text-shadow: 0 0 12px rgb(var(--green-rgb) / 0.6); transition: color 0.4s, text-shadow 0.4s; }
+.logo p { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
 
 .status-pill {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  flex: 0 0 auto;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--green);
-  border: 1px solid rgba(0, 255, 180, 0.3);
-  background: rgba(0, 255, 180, 0.07);
+  display: flex; align-items: center; gap: 7px; flex: 0 0 auto;
+  padding: 8px 12px; border-radius: 999px; font-size: 10px;
+  letter-spacing: 0.14em; color: var(--green);
+  border: 1px solid rgb(var(--green-rgb) / 0.3);
+  background: rgb(var(--green-rgb) / 0.07);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  transition: color 0.4s, border-color 0.4s, background 0.4s;
 }
 
 .pulse {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 10px var(--green);
-  animation: pulse 1.5s ease-in-out infinite;
-  display: inline-block;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 10px var(--green);
+  animation: pulse 1.5s ease-in-out infinite; display: inline-block;
+  transition: background 0.4s, box-shadow 0.4s;
 }
 
 @keyframes pulse {
@@ -174,67 +178,40 @@ body::after {
    LAYOUT PRINCIPAL
    ============================================================ */
 main {
-  position: relative;
-  z-index: 2;
+  position: relative; z-index: 2;
   padding: 0 16px calc(var(--nav-h) + 34px + env(safe-area-inset-bottom));
-  max-width: 720px;
-  margin: 0 auto;
+  max-width: 720px; margin: 0 auto;
 }
 
-.pane {
-  display: none;
-}
-
-.pane.active {
-  display: block;
-  animation: paneIn 0.38s cubic-bezier(0.22, 0.85, 0.25, 1);
-}
+.pane { display: none; }
+.pane.active { display: block; animation: paneIn 0.38s cubic-bezier(0.22, 0.85, 0.25, 1); }
 
 @keyframes paneIn {
   from { opacity: 0; transform: translateY(16px) scale(0.985); }
   to { opacity: 1; transform: none; }
 }
 
-.section-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 6px 0 14px;
-}
-
-.section-title h2 {
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-}
-
-.section-title h2::before {
-  content: '// ';
-  color: var(--green);
-}
+.section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 6px 0 14px; }
+.section-title h2 { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.section-title h2::before { content: '// '; color: var(--green); transition: color 0.4s; }
 
 /* ============================================================
    TERMINAL E LOGS (HOME)
    ============================================================ */
 .terminal {
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 255, 180, 0.28);
+  border-radius: 18px; overflow: hidden;
+  border: 1px solid rgb(var(--green-rgb) / 0.28);
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.6));
-  box-shadow: 0 22px 48px -26px rgba(0, 255, 180, 0.55), inset 0 0 40px -20px rgba(0, 255, 180, 0.4);
+  box-shadow: 0 22px 48px -26px rgb(var(--green-rgb) / 0.55), inset 0 0 40px -20px rgb(var(--green-rgb) / 0.4);
   backdrop-filter: blur(10px);
+  transition: border-color 0.4s, box-shadow 0.4s;
 }
 
 .terminal-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 13px;
-  background: rgba(0, 255, 180, 0.06);
-  border-bottom: 1px solid rgba(0, 255, 180, 0.16);
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 13px; background: rgb(var(--green-rgb) / 0.06);
+  border-bottom: 1px solid rgb(var(--green-rgb) / 0.16);
+  transition: background 0.4s, border-color 0.4s;
 }
 
 .dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
@@ -243,28 +220,19 @@ main {
 .dot.g { background: #27c93f; box-shadow: 0 0 8px #27c93f; }
 
 .terminal-title {
-  margin-left: 8px;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: rgba(0, 255, 180, 0.75);
-  white-space: nowrap;
+  margin-left: 8px; font-size: 11px; letter-spacing: 0.08em;
+  color: rgb(var(--green-rgb) / 0.75); white-space: nowrap;
+  transition: color 0.4s;
 }
 
 .terminal-body {
-  height: 140px;
-  overflow-y: auto;
-  padding: 13px 14px;
-  font-size: 11.5px;
-  line-height: 1.6;
-  color: var(--green);
+  height: 140px; overflow-y: auto; padding: 13px 14px;
+  font-size: 11.5px; line-height: 1.6; color: var(--green);
   scrollbar-width: thin;
+  transition: color 0.4s;
 }
 
-.line {
-  white-space: pre-wrap;
-  word-break: break-word;
-  animation: lineIn 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
-}
+.line { white-space: pre-wrap; word-break: break-word; animation: lineIn 0.2s cubic-bezier(0.2, 0.9, 0.3, 1); }
 @keyframes lineIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
 
 .line.ok { color: var(--green); }
@@ -273,49 +241,23 @@ main {
 .line.err { color: var(--red); }
 
 .caret {
-  display: inline-block;
-  width: 8px;
-  height: 14px;
-  vertical-align: -2px;
-  background: var(--green);
-  box-shadow: 0 0 10px var(--green);
+  display: inline-block; width: 8px; height: 14px; vertical-align: -2px;
+  background: var(--green); box-shadow: 0 0 10px var(--green);
   animation: blink 1s steps(1) infinite;
+  transition: background 0.4s, box-shadow 0.4s;
 }
 @keyframes blink { 50% { opacity: 0; } }
 
 /* BARRA DE PESQUISA GOOGLE */
-.home-search {
-  margin-top: 16px;
-  position: relative;
-  display: flex;
-  gap: 8px;
-}
+.home-search { margin-top: 16px; position: relative; display: flex; gap: 8px; }
 .home-search input {
-  flex: 1;
-  padding: 14px 14px 14px 42px;
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--brd);
-  color: var(--text);
-  font-family: inherit;
-  font-size: 12px;
-  outline: none;
+  flex: 1; padding: 14px 14px 14px 42px; border-radius: 14px;
+  background: rgba(0, 0, 0, 0.4); border: 1px solid var(--brd);
+  color: var(--text); font-family: inherit; font-size: 12px; outline: none;
   transition: all 0.25s;
 }
-.home-search input:focus {
-  border-color: var(--cyan);
-  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
-}
-.home-search svg {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  stroke: var(--cyan);
-  pointer-events: none;
-}
+.home-search input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgb(var(--cyan-rgb) / 0.1); }
+.home-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; stroke: var(--cyan); pointer-events: none; transition: stroke 0.4s; }
 
 /* ============================================================
    CARDS DE HARDWARE
@@ -327,26 +269,21 @@ main {
 }
 .hw-card.full { grid-column: 1 / -1; }
 .hw-k { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.hw-v {
-  font-size: 18px; font-weight: 700; color: var(--green); text-shadow: 0 0 14px rgba(0, 255, 180, 0.45);
-  word-break: break-word; line-height: 1.2;
-}
+.hw-v { font-size: 18px; font-weight: 700; color: var(--green); text-shadow: 0 0 14px rgb(var(--green-rgb) / 0.45); word-break: break-word; line-height: 1.2; transition: color 0.4s, text-shadow 0.4s; }
 .hw-v small { font-size: 10px; font-weight: 400; color: var(--muted); margin-left: 4px; }
 .hw-sub { font-size: 9.5px; color: rgba(125, 133, 144, 0.8); margin-top: 5px; line-height: 1.4; }
-.hw-bar { height: 6px; border-radius: 4px; background: rgba(255, 255, 255, 0.07); margin-top: 9px; overflow: hidden; border: 1px solid rgba(0, 255, 180, 0.15); }
-.hw-bar-fill {
-  height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); border-radius: 4px;
-  box-shadow: 0 0 12px rgba(0, 255, 180, 0.6); transition: width 0.6s; width: 0;
-}
-.hw-card.cyan .hw-v { color: var(--cyan); text-shadow: 0 0 14px rgba(0, 229, 255, 0.45); }
+.hw-bar { height: 6px; border-radius: 4px; background: rgba(255, 255, 255, 0.07); margin-top: 9px; overflow: hidden; border: 1px solid rgb(var(--green-rgb) / 0.15); transition: border-color 0.4s; }
+.hw-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); border-radius: 4px; box-shadow: 0 0 12px rgb(var(--green-rgb) / 0.6); transition: width 0.6s, background 0.4s, box-shadow 0.4s; width: 0; }
+.hw-card.cyan .hw-v { color: var(--cyan); text-shadow: 0 0 14px rgb(var(--cyan-rgb) / 0.45); }
 .hw-card.cyan .hw-bar-fill { background: linear-gradient(90deg, var(--cyan), #7c5cff); }
-.hw-card.magenta .hw-v { color: var(--magenta); text-shadow: 0 0 14px rgba(255, 47, 185, 0.45); }
+.hw-card.magenta .hw-v { color: var(--magenta); text-shadow: 0 0 14px rgb(var(--magenta-rgb) / 0.45); }
 .hw-card.magenta .hw-bar-fill { background: linear-gradient(90deg, var(--magenta), #ff7a45); }
 .hw-card.amber .hw-v { color: var(--amber); text-shadow: 0 0 14px rgba(255, 209, 102, 0.45); }
 .hw-card.amber .hw-bar-fill { background: linear-gradient(90deg, var(--amber), var(--green)); }
 
+
 /* ============================================================
-   BOTÕES E NAV BAR (AUMENTADA)
+   BOTÕES E NAV BAR
    ============================================================ */
 .actions { display: grid; gap: 10px; margin-top: 14px; }
 .btn {
@@ -360,15 +297,17 @@ main {
 .btn .ico svg { width: 18px; height: 18px; }
 .btn .txt { display: flex; flex-direction: column; gap: 3px; }
 .btn .txt small { font-size: 9.5px; text-transform: uppercase; color: var(--muted); font-weight: 400; }
-.btn.green { border-color: rgba(0, 255, 180, 0.32); box-shadow: 0 0 28px -18px var(--green); }
-.btn.green .ico { color: var(--green); border-color: rgba(0, 255, 180, 0.3); background: rgba(0, 255, 180, 0.09); }
+.btn.green { border-color: rgb(var(--green-rgb) / 0.32); box-shadow: 0 0 28px -18px var(--green); transition: border-color 0.4s, box-shadow 0.4s; }
+.btn.green .ico { color: var(--green); border-color: rgb(var(--green-rgb) / 0.3); background: rgb(var(--green-rgb) / 0.09); transition: color 0.4s, border-color 0.4s, background 0.4s; }
 
 .bottom-nav {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 100; display: grid;
-  grid-template-columns: repeat(5, 1fr); gap: 2px; 
+  grid-template-columns: repeat(5, 1fr); gap: 2px;
   padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
   background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(20px) saturate(170%);
-  border-top: 1px solid rgba(0, 255, 180, 0.18); box-shadow: 0 -18px 44px -24px rgba(0, 255, 180, 0.5);
+  border-top: 1px solid rgb(var(--green-rgb) / 0.18);
+  box-shadow: 0 -18px 44px -24px rgb(var(--green-rgb) / 0.5);
+  transition: border-color 0.4s, box-shadow 0.4s;
 }
 
 .nav-btn {
@@ -379,11 +318,12 @@ main {
 }
 
 .nav-btn svg { width: 24px; height: 24px; stroke-width: 1.8; transition: transform 0.25s; }
-.nav-btn.active { color: var(--green); background: rgba(0, 255, 180, 0.085); }
-.nav-btn.active svg { transform: translateY(-2px); filter: drop-shadow(0 0 8px rgba(0, 255, 180, 0.75)); }
+.nav-btn.active { color: var(--green); background: rgb(var(--green-rgb) / 0.085); }
+.nav-btn.active svg { transform: translateY(-2px); filter: drop-shadow(0 0 8px rgb(var(--green-rgb) / 0.75)); }
 .nav-btn.active::after {
   content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%);
   width: 20px; height: 3px; border-radius: 3px; background: var(--green); box-shadow: 0 0 12px var(--green);
+  transition: background 0.4s, box-shadow 0.4s;
 }
 
 /* ============================================================
@@ -391,88 +331,235 @@ main {
    ============================================================ */
 .games-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 6px 0 10px; }
 .games-head h2 { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-.games-head h2::before { content: '// '; color: var(--cyan); }
+.games-head h2::before { content: '// '; color: var(--cyan); transition: color 0.4s; }
 .games-actions { display: flex; gap: 8px; align-items: center; }
 .btn-small { padding: 8px 12px; border-radius: 10px; font-family: inherit; font-size: 10px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: var(--text); }
-.fab { width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; cursor: pointer; border: 1px solid rgba(0, 255, 180, 0.45); background: linear-gradient(135deg, rgba(0, 255, 180, 0.2), rgba(0, 229, 255, 0.14)); color: var(--green); box-shadow: 0 0 24px -8px var(--green); }
+.fab {
+  width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid rgb(var(--green-rgb) / 0.45);
+  background: linear-gradient(135deg, rgb(var(--green-rgb) / 0.2), rgb(var(--cyan-rgb) / 0.14));
+  color: var(--green); box-shadow: 0 0 24px -8px var(--green);
+  transition: border-color 0.4s, background 0.4s, color 0.4s, box-shadow 0.4s;
+}
 .fab svg { width: 22px; height: 22px; stroke-width: 2.2; }
 .search-bar { position: relative; margin-bottom: 12px; }
 .search-bar input { width: 100%; padding: 13px 15px 13px 42px; border-radius: 14px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-family: inherit; font-size: 13px; outline: none; }
 .search-bar svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: var(--muted); }
 .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; }
 .chip { flex: 0 0 auto; padding: 8px 14px; border-radius: 999px; font-size: 10.5px; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); cursor: pointer; font-family: inherit; }
-.chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
+.chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; transition: background 0.4s; }
 
-/* CONTAINER DO GRID (Comporta os 3 layouts) */
+/* CONTAINER DO GRID */
 .games-grid { display: grid; gap: 12px; transition: all 0.3s; }
-.games-grid.default-layout { grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 540px) { .games-grid.default-layout { grid-template-columns: repeat(3, 1fr); } }
 
-/* Layout: LISTA */
+/* Layout: LISTA (mantido) */
 .games-grid.list-layout { display: flex; flex-direction: column; gap: 8px; }
 .games-grid.list-layout .game-card { flex-direction: row; justify-content: flex-start; padding: 10px 16px; min-height: 64px; gap: 15px; text-align: left; }
 .games-grid.list-layout .game-name { text-align: left; font-size: 14px; -webkit-line-clamp: 1; }
-.games-grid.list-layout .game-cat { display: none; } /* Esconde a categoria na lista para ficar limpo */
-.games-grid.list-layout .game-fav, .games-grid.list-layout .game-fav-img, .games-grid.list-layout .game-fav-fallback { width: 40px; height: 40px; flex: 0 0 40px; } /* Ícone fixo menor na lista */
+.games-grid.list-layout .game-cat { display: none; }
+.games-grid.list-layout .game-fav,
+.games-grid.list-layout .game-fav-img,
+.games-grid.list-layout .game-fav-fallback { width: 40px; height: 40px; flex: 0 0 40px; }
 
-/* Layout: BLOQUINHO */
+/* Layout: BLOQUINHO (mantido) */
 .games-grid.small-layout { grid-template-columns: repeat(4, 1fr); gap: 8px; }
 @media (min-width: 540px) { .games-grid.small-layout { grid-template-columns: repeat(5, 1fr); } }
 .games-grid.small-layout .game-card { min-height: 100px; padding: 12px 6px; gap: 6px; }
 .games-grid.small-layout .game-name { font-size: 9px; }
 .games-grid.small-layout .game-cat { display: none; }
 
-/* ESTILO BASE DO CARD */
-.game-card { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)); border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; transition: all 0.2s; }
+/* ============================================================
+   Layout: PADRÃO = APP DRAWER
+   (sem fundo, sem nome, ícones grandes, grade)
+   ============================================================ */
+.games-grid.default-layout {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  padding: 8px 4px;
+}
+@media (min-width: 540px) {
+  .games-grid.default-layout { grid-template-columns: repeat(5, 1fr); }
+}
 
-/* MODO SEM FUNDO (BORDERLESS) */
-.game-card.borderless {
+.games-grid.default-layout .game-card,
+.games-grid.default-layout .game-card.borderless {
   background: transparent;
   border-color: transparent;
   backdrop-filter: none;
-  padding: 0;
-  min-height: 90px; 
+  padding: 4px;
+  min-height: auto;
+  box-shadow: none;
+  transition: transform 0.15s ease;
 }
-.game-card.borderless .game-cat { display: none; } 
+.games-grid.default-layout .game-card:active { transform: scale(0.85); }
+.games-grid.default-layout .game-name,
+.games-grid.default-layout .game-cat { display: none; }
 
-.game-fav, .game-fav-fallback, .game-fav-img { width: var(--icon-size); height: var(--icon-size); border-radius: var(--icon-radius); object-fit: cover; box-shadow: 0 0 18px -6px var(--green); transition: all 0.3s; }
-.game-fav-fallback { display: grid; place-items: center; font-size: var(--icon-font); font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); text-transform: uppercase; }
-.game-fav-fallback.native { background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: #fff; box-shadow: 0 0 18px -6px var(--cyan); }
-.game-name { font-size: 11px; line-height: 1.35; text-align: center; color: var(--text); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.games-grid.default-layout .game-fav,
+.games-grid.default-layout .game-fav-img,
+.games-grid.default-layout .game-fav-fallback {
+  width: calc(var(--icon-size) * 1.4);
+  height: calc(var(--icon-size) * 1.4);
+  border-radius: calc(var(--icon-size) * 0.42);
+}
+
+/* ESTILO BASE DO CARD */
+.game-card {
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018));
+  border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; transition: all 0.2s;
+}
+
+/* MODO SEM FUNDO (BORDERLESS) */
+.game-card.borderless {
+  background: transparent; border-color: transparent;
+  backdrop-filter: none; padding: 0; min-height: 90px;
+}
+.game-card.borderless .game-cat { display: none; }
+
+.game-fav, .game-fav-fallback, .game-fav-img {
+  width: var(--icon-size); height: var(--icon-size);
+  border-radius: var(--icon-radius); object-fit: cover;
+  box-shadow: 0 0 18px -6px var(--green); transition: all 0.3s;
+}
+.game-fav-fallback {
+  display: grid; place-items: center; font-size: var(--icon-font); font-weight: 700;
+  color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); text-transform: uppercase;
+  transition: background 0.4s;
+}
+.game-fav-fallback.native {
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  color: #fff; box-shadow: 0 0 18px -6px var(--cyan);
+}
+.game-name {
+  font-size: 11px; line-height: 1.35; text-align: center; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 .game-cat { font-size: 8px; text-transform: uppercase; color: var(--muted); }
-.empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 20px; text-align: center; border: 1px dashed rgba(0, 255, 180, 0.22); border-radius: 18px; margin-top: 16px; }
-.empty .ico { font-size: 32px; color: rgba(0, 255, 180, 0.5); }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 48px 20px; text-align: center;
+  border: 1px dashed rgb(var(--green-rgb) / 0.22); border-radius: 18px; margin-top: 16px;
+  transition: border-color 0.4s;
+}
+.empty .ico { font-size: 32px; color: rgb(var(--green-rgb) / 0.5); transition: color 0.4s; }
 .empty p { font-size: 13px; color: var(--text); }
 .empty span { font-size: 10.5px; text-transform: uppercase; color: var(--muted); }
 
-/* CONSOLE MODE (PAISAGEM) */
+/* ============================================================
+   CONSOLE MODE (PAISAGEM)
+   ============================================================ */
 .console-container { display: none; }
+
 @media (orientation: landscape) {
   body, html { overflow: hidden; height: 100dvh; }
   main { max-width: 100%; padding: 0 12px 10px; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
   .app-header { padding: calc(8px + env(safe-area-inset-top)) 16px 8px; flex: 0 0 auto; }
-  
-  #pane-jogos.active .games-head, #pane-jogos.active .search-bar, #pane-jogos.active .chips, #pane-jogos.active .games-grid, #pane-jogos.active .empty { display: none !important; }
-  #pane-jogos.active .console-container { display: flex; flex-direction: row; gap: 12px; height: calc(100dvh - 130px); width: 100%; }
+
+  #pane-jogos.active .games-head,
+  #pane-jogos.active .search-bar,
+  #pane-jogos.active .chips,
+  #pane-jogos.active .games-grid,
+  #pane-jogos.active .empty { display: none !important; }
+
+  #pane-jogos.active .console-container {
+    display: flex; flex-direction: row; gap: 12px;
+    height: calc(100dvh - 130px); width: 100%;
+  }
 
   .console-left { flex: 0 0 35%; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
   .console-left-header { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 14px; border: 1px solid var(--brd); }
-  .console-left-header h2 { font-size: 11px; color: var(--cyan); text-transform: uppercase; }
-  .console-grid { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; overflow-y: auto; min-height: 0; }
-  .console-card { background: var(--panel); border: 1px solid var(--brd); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 6px; gap: 5px; cursor: pointer; }
-  
-  .console-card.borderless { background: transparent; border-color: transparent; }
-  .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgba(0,255,180,0.1); }
-  .console-card .game-fav-fallback, .console-card .game-fav-img { width: calc(var(--icon-size) * 0.8); height: calc(var(--icon-size) * 0.8); }
-  .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; }
+  .console-left-header h2 { font-size: 11px; color: var(--cyan); text-transform: uppercase; transition: color 0.4s; }
 
-  .console-right { flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,0.4); border: 1px solid var(--brd); border-radius: 18px; padding: 18px; overflow: hidden; min-height: 0; }
+  /* Correção 1: scroll mostra o último item inteiro */
+  .console-grid {
+    flex: 1; display: flex; flex-direction: column; gap: 8px;
+    overflow-y: auto; min-height: 0;
+    padding-right: 4px;
+    padding-bottom: 16px;
+  }
+
+  .console-card {
+    background: var(--panel); border: 1px solid var(--brd); border-radius: 14px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 8px 6px; gap: 5px; cursor: pointer; width: 100%;
+  }
+  .console-card .game-fav-fallback,
+  .console-card .game-fav-img { width: calc(var(--icon-size) * 0.8); height: calc(var(--icon-size) * 0.8); }
+  .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; width: 100%; }
+
+  .console-card.borderless { background: transparent; border-color: transparent; }
+  .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgb(var(--green-rgb) / 0.1); transition: border-color 0.4s, box-shadow 0.4s, background 0.4s; }
+
+  /* Modo Lista no Console */
+  .console-grid.list-layout .console-card { flex-direction: row; justify-content: flex-start; padding: 10px 12px; gap: 12px; }
+  .console-grid.list-layout .console-card .game-name { text-align: left; font-size: 12px; }
+  .console-grid.list-layout .console-card .game-fav-fallback,
+  .console-grid.list-layout .console-card .game-fav-img { width: 32px; height: 32px; flex: 0 0 32px; }
+
+  /* Modo Bloco no Console */
+  .console-grid.small-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .console-grid.small-layout .console-card { padding: 8px 4px; }
+  .console-grid.small-layout .console-card .game-fav-fallback,
+  .console-grid.small-layout .console-card .game-fav-img { width: 28px; height: 28px; }
+  .console-grid.small-layout .console-card .game-name { font-size: 8px; }
+
+  /* ============================================================
+     MODO PADRÃO no Console = App Drawer
+     ============================================================ */
+  .console-grid.default-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    align-content: start;
+  }
+  .console-grid.default-layout .console-card,
+  .console-grid.default-layout .console-card.borderless {
+    background: transparent; border-color: transparent;
+    padding: 6px; min-height: auto;
+    transition: transform 0.15s ease;
+  }
+  .console-grid.default-layout .console-card:active { transform: scale(0.85); }
+  .console-grid.default-layout .console-card .game-name { display: none; }
+
+  .console-grid.default-layout .console-card .game-fav,
+  .console-grid.default-layout .console-card .game-fav-fallback,
+  .console-grid.default-layout .console-card .game-fav-img {
+    width: calc(var(--icon-size) * 1.1);
+    height: calc(var(--icon-size) * 1.1);
+    border-radius: calc(var(--icon-size) * 0.33);
+  }
+  .console-grid.default-layout .console-card.active {
+    background: transparent; border-color: transparent; box-shadow: none;
+  }
+  .console-grid.default-layout .console-card.active .game-fav,
+  .console-grid.default-layout .console-card.active .game-fav-fallback,
+  .console-grid.default-layout .console-card.active .game-fav-img {
+    box-shadow: 0 0 0 3px var(--green), 0 0 20px var(--green);
+    transition: box-shadow 0.4s;
+  }
+
+  .console-right {
+    flex: 1; display: flex; flex-direction: column;
+    background: rgba(0,0,0,0.4); border: 1px solid var(--brd);
+    border-radius: 18px; padding: 18px; overflow: hidden; min-height: 0;
+  }
   .detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex: 0 0 auto; }
-  .detail-header .game-fav-fallback, .detail-header .game-fav-img { width: calc(var(--icon-size) * 1.3); height: calc(var(--icon-size) * 1.3); }
+  .detail-header .game-fav-fallback,
+  .detail-header .game-fav-img { width: calc(var(--icon-size) * 1.3); height: calc(var(--icon-size) * 1.3); }
   .detail-title h2 { font-size: 18px; color: #fff; }
   .detail-title p { font-size: 10px; color: var(--muted); text-transform: uppercase; }
   .detail-content { flex: 1; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; min-height: 0; }
-  .btn-start { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border-radius: 14px; border: none; background: linear-gradient(135deg, var(--green), var(--cyan)); color: #04120e; font-size: 15px; font-weight: 800; text-transform: uppercase; cursor: pointer; flex: 0 0 auto; margin-bottom: 8px; }
+  .btn-start {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px; border-radius: 14px; border: none;
+    background: linear-gradient(135deg, var(--green), var(--cyan));
+    color: #04120e; font-size: 15px; font-weight: 800; text-transform: uppercase;
+    cursor: pointer; flex: 0 0 auto; margin-bottom: 8px;
+    transition: background 0.4s;
+  }
   .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 10px; }
   .stat-box.full { grid-column: 1 / -1; }
@@ -490,40 +577,54 @@ main {
 .ring-pct { font-size: 22px; font-weight: 800; color: #fff; }
 .ring-label { font-size: 8px; text-transform: uppercase; color: var(--muted); }
 
-.btn-opt { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; border: 1px solid rgba(0, 229, 255, 0.4); background: rgba(0, 229, 255, 0.08); color: var(--cyan); font-family: inherit; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+.btn-opt {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px; border-radius: 12px;
+  border: 1px solid rgb(var(--cyan-rgb) / 0.4);
+  background: rgb(var(--cyan-rgb) / 0.08); color: var(--cyan);
+  font-family: inherit; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer;
+  transition: border-color 0.4s, background 0.4s, color 0.4s;
+}
 .btn-opt.optimizing { animation: optPulse 0.8s infinite alternate; border-color: var(--green); color: var(--green); }
-@keyframes optPulse { from { box-shadow: 0 0 5px rgba(0, 255, 180, 0.2); } to { box-shadow: 0 0 25px rgba(0, 255, 180, 0.6); } }
+@keyframes optPulse { from { box-shadow: 0 0 5px rgb(var(--green-rgb) / 0.2); } to { box-shadow: 0 0 25px rgb(var(--green-rgb) / 0.6); } }
+
 
 /* ============================================================
    CLIMA
    ============================================================ */
 .wx-search { display: flex; gap: 10px; margin-bottom: 16px; }
 .wx-search input { flex: 1; padding: 14px 16px; border-radius: 14px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.1); color: var(--text); font-family: inherit; font-size: 14px; outline: none; }
-.wx-search button { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; cursor: pointer; border: 1px solid rgba(0,229,255,.42); background: linear-gradient(135deg, rgba(0,229,255,.22), rgba(0,255,180,.12)); color: var(--cyan); }
-.wx-main { position: relative; overflow: hidden; padding: 30px 20px; border-radius: 22px; text-align: center; background: linear-gradient(150deg, rgba(0,229,255,.16), rgba(0,255,180,.06) 48%, rgba(255,255,255,.02)); border: 1px solid rgba(0,229,255,.28); }
+.wx-search button {
+  width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid rgb(var(--cyan-rgb) / 0.42);
+  background: linear-gradient(135deg, rgb(var(--cyan-rgb) / 0.22), rgb(var(--green-rgb) / 0.12));
+  color: var(--cyan);
+  transition: border-color 0.4s, background 0.4s, color 0.4s;
+}
+.wx-main { position: relative; overflow: hidden; padding: 30px 20px; border-radius: 22px; text-align: center; background: linear-gradient(150deg, rgb(var(--cyan-rgb) / 0.16), rgb(var(--green-rgb) / 0.06) 48%, rgba(255,255,255,.02)); border: 1px solid rgb(var(--cyan-rgb) / 0.28); transition: background 0.4s, border-color 0.4s; }
 .wx-city { font-size: 12px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.wx-city b { color: var(--cyan); }
+.wx-city b { color: var(--cyan); transition: color 0.4s; }
 .wx-icon { font-size: 48px; margin-bottom: 10px; }
-.wx-temp { font-size: 72px; font-weight: 700; background: linear-gradient(180deg, #fff, var(--cyan)); -webkit-background-clip: text; color: transparent; }
+.wx-temp { font-size: 72px; font-weight: 700; background: linear-gradient(180deg, #fff, var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; transition: background 0.4s; }
 .wx-temp sup { font-size: 28px; }
 .wx-desc { margin-top: 10px; font-size: 14px; text-transform: capitalize; }
 .wx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
 .wx-card { padding: 16px 12px; border-radius: 16px; background: var(--panel); border: 1px solid var(--brd); text-align: center; }
 .wx-card .k { font-size: 9px; text-transform: uppercase; color: var(--muted); }
-.wx-card .v { margin-top: 7px; font-size: 18px; font-weight: 700; color: var(--green); }
+.wx-card .v { margin-top: 7px; font-size: 18px; font-weight: 700; color: var(--green); transition: color 0.4s; }
 .wx-loading { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 46px 20px; color: var(--muted); font-size: 11.5px; text-transform: uppercase; }
-.spinner { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgba(0,255,180,.15); border-top-color: var(--green); animation: spin .85s linear infinite; }
+.spinner { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgb(var(--green-rgb) / 0.15); border-top-color: var(--green); animation: spin .85s linear infinite; transition: border-color 0.4s; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================
    SOBRE
    ============================================================ */
 .about-card { margin-top: 8px; padding: 26px 20px; border-radius: 22px; background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015)); border: 1px solid var(--brd); text-align: center; }
-.about-logo { width: 66px; height: 66px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); }
+.about-logo { width: 66px; height: 66px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); transition: background 0.4s; }
 .about-card h2 { font-size: 19px; color: #eaf6f2; }
-.about-card h2 span { color: var(--green); }
-.ver { display: inline-block; margin: 10px 0 0; padding: 6px 14px; border-radius: 999px; font-size: 10px; text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(0,229,255,.3); }
-.divider { height: 1px; margin: 22px 0; background: linear-gradient(90deg, transparent, rgba(0,255,180,.35), transparent); }
+.about-card h2 span { color: var(--green); transition: color 0.4s; }
+.ver { display: inline-block; margin: 10px 0 0; padding: 6px 14px; border-radius: 999px; font-size: 10px; text-transform: uppercase; color: var(--cyan); border: 1px solid rgb(var(--cyan-rgb) / 0.3); transition: color 0.4s, border-color 0.4s; }
+.divider { height: 1px; margin: 22px 0; background: linear-gradient(90deg, transparent, rgb(var(--green-rgb) / 0.35), transparent); transition: background 0.4s; }
 .about-text { margin: 0 0 20px; font-size: 12.5px; color: var(--muted); }
 .about-list { list-style: none; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); text-align: left; }
 .about-list li { display: flex; justify-content: space-between; padding: 13px 15px; font-size: 11.5px; background: rgba(255,255,255,0.028); }
@@ -532,10 +633,82 @@ main {
 .footer-note { margin: 22px 0 0; text-align: center; font-size: 9.5px; text-transform: uppercase; color: rgba(125,133,144,0.6); }
 
 /* ============================================================
+   SELETOR DE TEMAS (Aba Sobre)
+   ============================================================ */
+.theme-card {
+  margin-top: 16px;
+  padding: 18px 16px 20px;
+  border-radius: 22px;
+  background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015));
+  border: 1px solid var(--brd);
+  backdrop-filter: blur(14px);
+}
+
+.theme-title { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.theme-title h3 {
+  font-size: 12px; color: var(--green); text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700;
+  text-shadow: 0 0 10px rgb(var(--green-rgb) / 0.5);
+  transition: color 0.4s, text-shadow 0.4s;
+}
+.theme-title p { font-size: 9.5px; color: var(--muted); text-transform: uppercase; margin-top: 3px; letter-spacing: 0.08em; }
+.theme-icon { font-size: 22px; filter: drop-shadow(0 0 8px rgb(var(--green-rgb) / 0.7)); transition: filter 0.4s; }
+
+.theme-selector { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0 2px; }
+
+.theme-swatch-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  flex: 1; background: transparent; border: none; cursor: pointer; padding: 0;
+  font-family: inherit; -webkit-tap-highlight-color: transparent;
+}
+
+.theme-swatch {
+  width: 100%; max-width: 46px; aspect-ratio: 1;
+  border-radius: 14px;
+  background: var(--swatch);
+  position: relative;
+  transition: all 0.25s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 0 18px -6px var(--swatch), inset 0 0 20px rgba(255,255,255,0.15);
+}
+
+.theme-swatch-wrap:active .theme-swatch { transform: scale(0.9); }
+
+.theme-swatch-wrap.active .theme-swatch {
+  border-color: #fff;
+  box-shadow:
+    0 0 26px -2px var(--swatch),
+    0 0 0 3px rgb(var(--green-rgb) / 0.35),
+    inset 0 0 20px rgba(255,255,255,0.28);
+  transform: scale(1.08);
+}
+
+.theme-swatch-wrap.active .theme-swatch::after {
+  content: '✓';
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 18px; font-weight: 800; color: #fff;
+  text-shadow: 0 0 4px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.9);
+}
+
+.theme-label {
+  font-size: 8px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.03em; text-align: center; line-height: 1.2;
+  font-weight: 600; word-break: break-word;
+  transition: color 0.25s, text-shadow 0.25s;
+  min-height: 19px;
+}
+
+.theme-swatch-wrap.active .theme-label {
+  color: var(--green);
+  text-shadow: 0 0 8px rgb(var(--green-rgb) / 0.55);
+}
+
+/* ============================================================
    MODAIS (JANELA FLUTUANTE ARRASTÁVEL)
    ============================================================ */
 .modal-overlay {
-  position: fixed; inset: 0; z-index: 200; display: none; 
+  position: fixed; inset: 0; z-index: 200; display: none;
   align-items: center; justify-content: center;
   padding: 16px; background: rgba(3, 6, 10, 0.8); backdrop-filter: blur(8px);
 }
@@ -544,31 +717,28 @@ main {
 
 .modal {
   width: calc(100% - 32px); max-width: 460px; max-height: 80vh;
-  border-radius: 20px;
-  padding: 16px 20px 20px;
+  border-radius: 20px; padding: 16px 20px 20px;
   background: rgba(13, 17, 23, 0.98);
-  border: 1px solid rgba(0, 255, 180, 0.26);
+  border: 1px solid rgb(var(--green-rgb) / 0.26);
   box-shadow: 0 20px 70px -22px var(--green);
-  display: flex; flex-direction: column;
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform: translate(0px, 0px); 
+  display: flex; flex-direction: column; opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.4s, box-shadow 0.4s;
+  transform: translate(0px, 0px);
 }
 .modal-overlay.open .modal { opacity: 1; }
 
 .drag-handle {
   width: 50px; height: 5px; background: rgba(255, 255, 255, 0.2);
   border-radius: 5px; margin: 0 auto 15px; flex: 0 0 auto; cursor: grab;
-  padding: 10px 0; margin-top: -10px;
-  touch-action: none;
+  padding: 10px 0; margin-top: -10px; touch-action: none;
 }
 
-.modal h3 { font-size: 14px; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.modal h3 { font-size: 14px; text-transform: uppercase; color: var(--green); margin-bottom: 4px; transition: color 0.4s; }
 .modal .sub { font-size: 10.5px; color: var(--muted); text-transform: uppercase; }
 
 .mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 4px; }
 .mode-btn { padding: 13px 8px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); font-family: inherit; font-size: 11px; text-transform: uppercase; font-weight: 600; }
-.mode-btn.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
+.mode-btn.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; transition: background 0.4s; }
 
 .mode-pane { display: none; margin-top: 6px; flex: 1; overflow: hidden; flex-direction: column; }
 .mode-pane.active { display: flex; }
@@ -576,77 +746,56 @@ main {
 .field { margin-top: 14px; }
 .field label { display: block; margin-bottom: 7px; font-size: 10px; text-transform: uppercase; color: var(--muted); }
 .input { width: 100%; padding: 13px 14px; border-radius: 13px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.12); color: var(--text); font-family: inherit; font-size: 14px; outline: none; }
-.input:focus { border-color: rgba(0,255,180,0.6); }
+.input:focus { border-color: rgb(var(--green-rgb) / 0.6); }
 
 .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; flex: 0 0 auto; }
 .btn-solid { padding: 14px 12px; border-radius: 14px; border: 0; font-family: inherit; font-size: 12.5px; font-weight: 700; text-transform: uppercase; }
-.btn-solid.primary { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); }
+.btn-solid.primary { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); transition: background 0.4s; }
 .btn-solid.ghost { color: var(--muted); background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.1); }
 
 .app-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; overflow-y: auto; flex: 1; min-height: 0; padding-bottom: 10px; }
 .app-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--brd); }
-.app-item.selected { border-color: rgba(0,255,180,0.6); background: rgba(0,255,180,0.06); }
+.app-item.selected { border-color: rgb(var(--green-rgb) / 0.6); background: rgb(var(--green-rgb) / 0.06); }
 .app-icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); display: grid; place-items: center; font-size: 16px; font-weight: bold; color: #fff; object-fit: cover; }
 .app-info { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
 .app-name { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .app-pkg { font-size: 9.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
-.app-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid rgba(0,255,180,0.4); }
+.app-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid rgb(var(--green-rgb) / 0.4); transition: background 0.3s, border-color 0.3s; }
 .app-item.selected .app-check { background: var(--green); border-color: var(--green); }
 
 .modal-chips { display: flex; gap: 6px; margin-top: 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
 .modal-chip { padding: 6px 12px; border-radius: 999px; font-size: 9.5px; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
-.modal-chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
+.modal-chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; transition: background 0.4s; }
 
 .slider-group { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-.slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; }
+.slider-group input[type=range] { flex: 1; accent-color: var(--green); height: 6px; transition: accent-color 0.4s; }
 
-/* TOGGLE SWITCH (Para o fundo dos cards) */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 46px;
-  height: 24px;
-}
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+/* TOGGLE SWITCH */
+.switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255,255,255,0.1);
-  transition: .4s;
-  border-radius: 24px;
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 24px;
 }
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: #fff;
-  transition: .4s;
-  border-radius: 50%;
+  position: absolute; content: ""; height: 18px; width: 18px;
+  left: 3px; bottom: 3px; background-color: #fff; transition: .4s; border-radius: 50%;
 }
-input:checked + .slider {
-  background-color: var(--green);
-}
-input:checked + .slider:before {
-  transform: translateX(22px);
-}
+input:checked + .slider { background-color: var(--green); }
+input:checked + .slider:before { transform: translateX(22px); }
 
 /* TOAST */
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--nav-h) + 26px + env(safe-area-inset-bottom));
   transform: translate(-50%, 22px); z-index: 300; padding: 14px 20px; border-radius: 14px;
-  text-align: center; font-size: 12.5px; color: #ffd9ef; background: rgba(255,47,185,0.15);
-  border: 1px solid rgba(255,47,185,0.5); opacity: 0; pointer-events: none; transition: all 0.32s;
+  text-align: center; font-size: 12.5px; color: #ffd9ef;
+  background: rgb(var(--magenta-rgb) / 0.15);
+  border: 1px solid rgb(var(--magenta-rgb) / 0.5);
+  opacity: 0; pointer-events: none;
+  transition: all 0.32s, background 0.4s, border-color 0.4s;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
-.toast.ok { color: #c6ffec; background: rgba(0,255,180,0.13); border-color: rgba(0,255,180,0.5); }
+.toast.ok { color: #c6ffec; background: rgb(var(--green-rgb) / 0.13); border-color: rgb(var(--green-rgb) / 0.5); }
 </style>
 </head>
 <body>
@@ -666,7 +815,7 @@ input:checked + .slider:before {
   <!-- ABA 1: APARELHO -->
   <section class="pane active" id="pane-aparelho">
     <div class="section-title"><h2>Especificações do Aparelho</h2></div>
-    
+
     <div class="terminal">
       <div class="terminal-bar">
         <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -727,7 +876,7 @@ input:checked + .slider:before {
       <h2>Monitor em Tempo Real</h2>
       <div class="status-pill"><span class="pulse"></span>LIVE</div>
     </div>
-    
+
     <div class="hw-grid">
       <div class="hw-card full">
         <div class="hw-k">Uso de RAM</div>
@@ -815,7 +964,7 @@ input:checked + .slider:before {
   <!-- ABA 4: CLIMA -->
   <section class="pane" id="pane-clima">
     <div class="section-title"><h2>Previsão do Tempo</h2></div>
-    
+
     <div class="wx-search">
       <input type="text" id="wxCity" placeholder="Digite a cidade..." autocomplete="off">
       <button id="wxBtn">
@@ -826,14 +975,15 @@ input:checked + .slider:before {
     <div id="wxResult"></div>
   </section>
 
+  
   <!-- ABA 5: SOBRE -->
   <section class="pane" id="pane-sobre">
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.9.1</div>
+      <div class="ver">versão 4.0.0</div>
       <div class="divider"></div>
-      <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem e janelas flutuantes.</p>
+      <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem, janelas flutuantes e temas personalizáveis.</p>
       <ul class="about-list">
         <li><span>Stack</span><b>HTML · CSS · Vanilla JS</b></li>
         <li><span>Device Info</span><b>@capgo/capacitor-device-info</b></li>
@@ -842,6 +992,39 @@ input:checked + .slider:before {
         <li><span>Clima</span><b>wttr.in API</b></li>
       </ul>
       <p class="footer-note">// gamezone · feito para rodar no seu bolso //</p>
+    </div>
+
+    <!-- CARD DE TEMAS -->
+    <div class="theme-card">
+      <div class="theme-title">
+        <span class="theme-icon">🎨</span>
+        <div>
+          <h3>Paleta de Cores</h3>
+          <p>escolha o tema do app</p>
+        </div>
+      </div>
+      <div class="theme-selector">
+        <button class="theme-swatch-wrap" data-theme="verde" title="Verde (padrão)">
+          <span class="theme-swatch" style="--swatch: #00ffb4;"></span>
+          <span class="theme-label">Verde</span>
+        </button>
+        <button class="theme-swatch-wrap" data-theme="roxo" title="Roxo neon">
+          <span class="theme-swatch" style="--swatch: #b76bff;"></span>
+          <span class="theme-label">Roxo</span>
+        </button>
+        <button class="theme-swatch-wrap" data-theme="vermelho" title="Vermelho neon">
+          <span class="theme-swatch" style="--swatch: #ff4d4d;"></span>
+          <span class="theme-label">Vermelho</span>
+        </button>
+        <button class="theme-swatch-wrap" data-theme="magenta" title="Viva Magenta (Pantone 18-1750)">
+          <span class="theme-swatch" style="--swatch: #d41f5b;"></span>
+          <span class="theme-label">Viva Magenta</span>
+        </button>
+        <button class="theme-swatch-wrap" data-theme="azul" title="Azul neon">
+          <span class="theme-swatch" style="--swatch: #00b0ff;"></span>
+          <span class="theme-label">Azul</span>
+        </button>
+      </div>
     </div>
   </section>
 </main>
@@ -870,18 +1053,18 @@ input:checked + .slider:before {
   </button>
 </nav>
 
-<!-- MODAL DE JOGO (JANELA FLUTUANTE) -->
+<!-- MODAL DE JOGO -->
 <div class="modal-overlay" id="gameModal">
   <div class="modal" id="gameModalSheet">
     <div class="drag-handle" id="dragHandleGame"></div>
     <h3>+ Novo Jogo</h3>
     <p class="sub">adicionar à biblioteca</p>
-    
+
     <div class="mode-selector">
       <button class="mode-btn active" data-mode="web">🌐 Web</button>
       <button class="mode-btn" data-mode="installed">📱 Instalado</button>
     </div>
-    
+
     <div class="mode-pane active" id="modePane-web">
       <div class="field"><label>Nome do jogo</label><input class="input" id="gameName" type="text" placeholder="Ex: Roblox"></div>
       <div class="field"><label>Link (URL)</label><input class="input" id="gameUrl" type="url" placeholder="https://..."></div>
@@ -891,7 +1074,7 @@ input:checked + .slider:before {
         </select>
       </div>
     </div>
-    
+
     <div class="mode-pane" id="modePane-installed">
       <div class="modal-chips" id="modalFilterChips">
         <button class="modal-chip active" data-filter="all">Todos</button>
@@ -903,7 +1086,7 @@ input:checked + .slider:before {
         <div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Toque em "Instalado" para carregar</div>
       </div>
     </div>
-    
+
     <div class="modal-actions">
       <button class="btn-solid ghost" id="btnCancelGame">Fechar</button>
       <button class="btn-solid primary" id="btnSaveGame">Salvar</button>
@@ -911,14 +1094,13 @@ input:checked + .slider:before {
   </div>
 </div>
 
-<!-- MODAL DE CONFIGURAÇÕES (JANELA FLUTUANTE) -->
+<!-- MODAL DE CONFIGURAÇÕES -->
 <div class="modal-overlay" id="settingsModal">
   <div class="modal" id="settingsModalSheet">
     <div class="drag-handle" id="dragHandleSettings"></div>
     <h3>⚙️ Configurações</h3>
     <p class="sub">Ajustes visuais</p>
-    
-    <!-- Layout Selector -->
+
     <div class="field" style="margin-top:20px;">
       <label>Modo de Exibição da Lista</label>
       <div class="mode-selector" style="grid-template-columns: repeat(3, 1fr); margin-top: 8px;">
@@ -928,7 +1110,6 @@ input:checked + .slider:before {
       </div>
     </div>
 
-    <!-- Toggle para fundo dos cards -->
     <div class="field" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
       <label style="margin-bottom:0; font-size:12px; color:var(--text); text-transform:none;">Mostrar Fundo dos Cards</label>
       <label class="switch">
@@ -941,12 +1122,12 @@ input:checked + .slider:before {
       <label>Tamanho dos Ícones dos Jogos</label>
       <div class="slider-group">
         <span style="font-size:10px; color:var(--muted)">P</span>
-        <input type="range" id="sliderIconSize" min="24" max="72" value="40">
+        <input type="range" id="sliderIconSize" min="24" max="120" value="40">
         <span style="font-size:10px; color:var(--muted)">G</span>
       </div>
       <div class="hw-sub" style="margin-top:6px">Valor atual: <span id="iconSizeVal" style="color:var(--green)">40px</span></div>
     </div>
-    
+
     <div class="modal-actions" style="grid-template-columns:1fr; margin-top:24px;">
       <button class="btn-solid ghost" id="btnCloseSettings">Fechar</button>
     </div>
@@ -978,7 +1159,7 @@ const getNavBarPlugin = () => getPlugin('NavigationBar');
 async function toggleImmersiveMode(hide) {
   const nav = getNavBarPlugin();
   if (!nav) return;
-  try { await (hide ? nav.setNavigationBarVisibility({ isVisible: false }) : nav.setNavigationBarVisibility({ isVisible: true })); } 
+  try { await (hide ? nav.setNavigationBarVisibility({ isVisible: false }) : nav.setNavigationBarVisibility({ isVisible: true })); }
   catch (e) { try { await (hide ? nav.hide() : nav.show()); } catch(err){} }
 }
 
@@ -988,7 +1169,46 @@ function toast(m, t) {
   clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 3000);
 }
 
-// TERMINAL LOG
+/* ============================================================
+   SISTEMA DE TEMAS
+   ============================================================ */
+const THEME_KEY = 'gamezone_theme';
+const VALID_THEMES = ['verde', 'roxo', 'vermelho', 'magenta', 'azul'];
+
+function applyTheme(theme) {
+  if (!VALID_THEMES.includes(theme)) theme = 'verde';
+
+  if (theme === 'verde') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  try { localStorage.setItem(THEME_KEY, theme); } catch(e) {}
+
+  document.querySelectorAll('.theme-swatch-wrap').forEach(wrap => {
+    wrap.classList.toggle('active', wrap.dataset.theme === theme);
+  });
+}
+
+function loadTheme() {
+  let saved = 'verde';
+  try { saved = localStorage.getItem(THEME_KEY) || 'verde'; } catch(e) {}
+  applyTheme(saved);
+}
+
+function bindThemeSwatches() {
+  document.querySelectorAll('.theme-swatch-wrap').forEach(wrap => {
+    wrap.addEventListener('click', () => {
+      applyTheme(wrap.dataset.theme);
+      buzz(15);
+      const label = (wrap.querySelector('.theme-label') || {}).textContent || wrap.dataset.theme;
+      toast('Tema: ' + label, 'ok');
+    });
+  });
+}
+
+/* TERMINAL LOG */
 const terminal = $('#terminal');
 function log(text, type) {
   if (!terminal) return;
@@ -1005,13 +1225,12 @@ function logCaret() {
   l.appendChild(c); terminal.appendChild(l); terminal.scrollTop = terminal.scrollHeight;
 }
 
-// LÓGICA DE ARRASTAR O MODAL (X e Y) - FICA NO LUGAR
-function setupDraggableModal(modalId, handleId, overlayId) {
+/* DRAG DOS MODAIS (X e Y) */
+function setupDraggableModal(modalId, handleId) {
   const modal = document.getElementById(modalId);
   const handle = document.getElementById(handleId);
-  const overlay = document.getElementById(overlayId);
-  let startX = 0, startY = 0;
-  let currentX = 0, currentY = 0;
+  if (!modal || !handle) return;
+  let startX = 0, startY = 0, currentX = 0, currentY = 0;
 
   handle.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX - currentX;
@@ -1042,16 +1261,15 @@ function setupDraggableModal(modalId, handleId, overlayId) {
     setTimeout(() => { modal.style.transition = 'transform 0.3s ease, opacity 0.3s ease'; }, 50);
   };
 }
-setupDraggableModal('gameModalSheet', 'dragHandleGame', 'gameModal');
-setupDraggableModal('settingsModalSheet', 'dragHandleSettings', 'settingsModal');
+setupDraggableModal('gameModalSheet', 'dragHandleGame');
+setupDraggableModal('settingsModalSheet', 'dragHandleSettings');
 
-
-// CONFIGURAÇÕES (ÍCONE, FUNDO, LAYOUT)
+/* CONFIGURAÇÕES */
 const ICON_KEY = 'gamezone_icon_size';
 const BG_KEY = 'gamezone_show_card_bg';
 const LAYOUT_KEY = 'gamezone_layout';
 let showCardBg = true;
-let currentLayout = 'default'; // 'default', 'list', 'small'
+let currentLayout = 'default';
 
 function applyIconSize(px) {
   document.documentElement.style.setProperty('--icon-size', px + 'px');
@@ -1064,7 +1282,7 @@ function applyIconSize(px) {
 function updateSliderRange() {
   const slider = $('#sliderIconSize');
   if (!slider) return;
-  slider.max = showCardBg ? 72 : 120; // Permite maiores se não tiver fundo
+  slider.max = (currentLayout === 'default' || !showCardBg) ? 120 : 72;
   if (parseInt(slider.value, 10) > parseInt(slider.max, 10)) {
     slider.value = slider.max;
     applyIconSize(parseInt(slider.max, 10));
@@ -1074,49 +1292,54 @@ function updateSliderRange() {
 function applyLayout(layout) {
   currentLayout = layout;
   localStorage.setItem(LAYOUT_KEY, layout);
-  
-  // Atualiza botões
+
   $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === layout));
-  
-  // Atualiza Grid
+
   const grid = $('#gamesGrid');
-  grid.classList.remove('default-layout', 'list-layout', 'small-layout');
-  grid.classList.add(layout + '-layout');
-  
+  const consoleGrid = $('#consoleLeft');
+  [grid, consoleGrid].forEach(el => {
+    if (!el) return;
+    el.classList.remove('default-layout', 'list-layout', 'small-layout');
+    el.classList.add(layout + '-layout');
+  });
+
+  updateSliderRange();
   renderGames();
   buzz(10);
 }
 
 function loadSettings() {
-  // Ícone
   const savedPx = localStorage.getItem(ICON_KEY);
   const px = savedPx ? parseInt(savedPx, 10) : 40;
   applyIconSize(px);
-  
-  // Fundo
+
   showCardBg = localStorage.getItem(BG_KEY) !== 'false';
   const toggle = $('#toggleCardBg');
   if (toggle) toggle.checked = showCardBg;
-  
-  // Slider
-  const slider = $('#sliderIconSize'); if (slider) slider.value = px;
-  updateSliderRange();
 
-  // Layout
+  const slider = $('#sliderIconSize'); if (slider) slider.value = px;
+
   currentLayout = localStorage.getItem(LAYOUT_KEY) || 'default';
   $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === currentLayout));
+
   const grid = $('#gamesGrid');
-  grid.classList.remove('default-layout', 'list-layout', 'small-layout');
-  grid.classList.add(currentLayout + '-layout');
+  const consoleGrid = $('#consoleLeft');
+  [grid, consoleGrid].forEach(el => {
+    if (!el) return;
+    el.classList.remove('default-layout', 'list-layout', 'small-layout');
+    el.classList.add(currentLayout + '-layout');
+  });
+
+  updateSliderRange();
 }
 
-// NAVEGAÇÃO
+/* NAVEGAÇÃO */
 const navBtns = $$('.nav-btn'); const panes = $$('.pane');
 async function switchTab(tab) {
   navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   panes.forEach(p => p.classList.toggle('active', p.id === 'pane-' + tab));
   const so = getOrientationPlugin();
-  if (tab === 'jogos') { try { await so.lock({ orientation: 'landscape' }); } catch(e){} renderGames(); toggleImmersiveMode(true); } 
+  if (tab === 'jogos') { try { await so.lock({ orientation: 'landscape' }); } catch(e){} renderGames(); toggleImmersiveMode(true); }
   else { try { await so.unlock(); } catch(e){} toggleImmersiveMode(false); }
   if (tab === 'status') startLiveStatus(); else stopLiveStatus();
   if (tab === 'aparelho') loadDeviceSpecs();
@@ -1128,7 +1351,7 @@ async function switchTab(tab) {
 }
 navBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
 
-// PESQUISA GOOGLE
+/* PESQUISA GOOGLE */
 $('#googleQuery').addEventListener('keydown', e => {
   if (e.key === 'Enter') {
     const q = e.target.value.trim();
@@ -1145,86 +1368,165 @@ $('#googleQuery').addEventListener('click', () => {
   }
 });
 
-// HARDWARE ESPEC
+
+/* HARDWARE SPEC */
 async function loadDeviceSpecs() {
   const di = getDeviceInfoPlugin(); const dev = getDevicePlugin();
   if (!di && !dev) return;
   try {
     let info = di ? await di.getInfo() : null;
     let capInfo = dev ? await dev.getInfo() : null;
-    
+
     const model = (capInfo && capInfo.model) || (info && info.device && info.device.model) || 'Desconhecido';
     const manufacturer = (capInfo && capInfo.manufacturer) || (info && info.device && info.device.manufacturer) || '';
     $('#specModel').textContent = model;
     $('#specManufacturer').textContent = manufacturer || 'fabricante';
-    
+
     const cpu = (info && info.cpu) || {}; const cpuModel = cpu.model || cpu.processor || '—'; const cpuCores = cpu.cores || cpu.coreCount || null;
     $('#specCpu').textContent = cpuModel;
     $('#specCpuSub').textContent = (cpuCores ? cpuCores + ' núcleos' : 'núcleos n/d') + (cpu.architecture ? ' · ' + cpu.architecture : '');
-    
+
     const gpu = (info && info.gpu) || {}; const gpuModel = gpu.renderer || gpu.model || gpu.vendor || '—';
     $('#specGpu').textContent = gpuModel;
-    
+
     const mem = (info && info.memory) || {}; const ramTotal = mem.totalBytes || mem.total || null;
     $('#specRam').innerHTML = ramTotal ? fmtGB(ramTotal) : '<small>n/d</small>';
-    
+
     const st = (info && info.storage) || {}; const stTotal = st.totalBytes || st.total || null;
     $('#specStorage').innerHTML = stTotal ? fmtGB(stTotal) : '<small>n/d</small>';
-    
+
     const os = (info && info.os) || {}; const osName = os.name || (capInfo && capInfo.platform) || 'Android'; const osVer = os.version || (capInfo && capInfo.osVersion) || '';
     $('#specOs').textContent = (osName + ' ' + osVer).trim();
   } catch(e) {}
 }
 $('#btnRefreshSpecs').addEventListener('click', () => { terminal.innerHTML = ''; loadDeviceSpecs(); toast('Atualizado', 'ok'); });
 
-// STATUS E ANEL
-let statusStarted = false; let statusListener = null;
-async function startLiveStatus() {
-  if (statusStarted) return; statusStarted = true;
-  const di = getDeviceInfoPlugin(); if (!di) return;
-  try {
-    if (di.addListener) statusListener = await di.addListener('deviceInfoUpdate', updateStatusUI);
-    if (di.startMonitoring) await di.startMonitoring({ intervalMs: 2000 });
-  } catch(e) {}
+/* ============================================================
+   STATUS MONITOR — CORRIGIDO
+   Aceita múltiplos formatos de payload + fallback @capacitor/device
+   ============================================================ */
+let statusStarted = false;
+let statusListener = null;
+let statusPolling = null;
+
+function pick(obj, keys) {
+  if (!obj) return null;
+  for (const k of keys) if (obj[k] != null) return obj[k];
+  return null;
 }
+
+async function refreshStatusFromApi() {
+  const di = getDeviceInfoPlugin();
+  const dev = getDevicePlugin();
+  let payload = null;
+
+  // Fonte primária: device-info (CPU, RAM, thermal, storage)
+  if (di && di.getInfo) {
+    try { payload = await di.getInfo(); } catch(e) {}
+  }
+  if (payload) updateStatusUI(payload);
+
+  // Fallback: bateria via @capacitor/device
+  if (dev && dev.getBatteryInfo) {
+    try {
+      const b = await dev.getBatteryInfo();
+      if (b && b.batteryLevel != null) {
+        const batPct = Math.round(b.batteryLevel * 100);
+        $('#liveBattery').innerHTML = batPct + ' <small>%</small>';
+        $('#liveBatterySub').textContent = b.isCharging ? 'Carregando' : 'Descarregando';
+        $('#liveBatteryBar').style.width = batPct + '%';
+      }
+    } catch(e) {}
+  }
+}
+
+async function startLiveStatus() {
+  if (statusStarted) return;
+  statusStarted = true;
+
+  const di = getDeviceInfoPlugin();
+
+  // 1) Leitura imediata (resolve "tudo vazio ao abrir a aba")
+  await refreshStatusFromApi();
+
+  // 2) Listener nativo (se disponível)
+  if (di && di.addListener) {
+    try { statusListener = await di.addListener('deviceInfoUpdate', updateStatusUI); } catch(e) {}
+  }
+  if (di && di.startMonitoring) {
+    try { await di.startMonitoring({ intervalMs: 2000 }); } catch(e) {}
+  }
+
+  // 3) Polling de fallback (garante dados em plugins que não emitem evento)
+  statusPolling = setInterval(refreshStatusFromApi, 2500);
+}
+
 async function stopLiveStatus() {
-  if (!statusStarted) return; statusStarted = false;
+  if (!statusStarted) return;
+  statusStarted = false;
+
   if (statusListener) { try { await statusListener.remove(); } catch(e){} statusListener = null; }
-  const di = getDeviceInfoPlugin(); if (di && di.stopMonitoring) await di.stopMonitoring();
+  if (statusPolling) { clearInterval(statusPolling); statusPolling = null; }
+
+  const di = getDeviceInfoPlugin();
+  if (di && di.stopMonitoring) { try { await di.stopMonitoring(); } catch(e){} }
 }
 
 function updateStatusUI(sample) {
   if (!sample) return;
+
+  // RAM
   const mem = sample.memory || {};
-  if (mem.totalBytes) {
-    const used = mem.usedBytes || (mem.totalBytes - (mem.freeBytes || 0));
-    const pct = mem.usedPercent != null ? mem.usedPercent : (used / mem.totalBytes) * 100;
+  const memTotal = pick(mem, ['totalBytes', 'total']);
+  if (memTotal) {
+    const memFree = pick(mem, ['freeBytes', 'free', 'availableBytes']) || 0;
+    const used = pick(mem, ['usedBytes', 'used']) || (memTotal - memFree);
+    let pct = pick(mem, ['usedPercent', 'usagePercent']);
+    if (pct == null) pct = (used / memTotal) * 100;
     $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>';
-    $('#liveRamSub').textContent = 'de ' + fmtGB(mem.totalBytes) + ' · ' + pct.toFixed(1) + '%';
+    $('#liveRamSub').textContent = 'de ' + fmtGB(memTotal) + ' · ' + pct.toFixed(1) + '%';
     $('#liveRamBar').style.width = Math.min(100, pct) + '%';
-    updateRing(pct, used, mem.totalBytes);
+    updateRing(pct, used, memTotal);
   }
+
+  // CPU
   const cpu = sample.cpu || {};
-  if (cpu.usagePercent != null) {
-    $('#liveCpu').innerHTML = cpu.usagePercent.toFixed(1) + ' <small>%</small>';
-    $('#liveCpuSub').textContent = (cpu.cores || '?') + ' núcleos';
-    $('#liveCpuBar').style.width = cpu.usagePercent + '%';
+  const cpuPct = pick(cpu, ['usagePercent', 'usage', 'percent', 'load']);
+  if (cpuPct != null) {
+    $('#liveCpu').innerHTML = Number(cpuPct).toFixed(1) + ' <small>%</small>';
+    const cores = pick(cpu, ['cores', 'coreCount']);
+    $('#liveCpuSub').textContent = (cores || '?') + ' núcleos';
+    $('#liveCpuBar').style.width = Math.min(100, cpuPct) + '%';
   }
+
+  // Bateria (device-info pode vir em variações)
   const bat = sample.battery || {};
-  if (bat.level != null) {
-    const batPct = bat.level <= 1 ? Math.round(bat.level * 100) : Math.round(bat.level);
+  let batVal = pick(bat, ['level', 'batteryLevel', 'percent']);
+  if (batVal != null) {
+    const batPct = batVal <= 1 ? Math.round(batVal * 100) : Math.round(batVal);
+    const charging = pick(bat, ['isCharging', 'charging']);
     $('#liveBattery').innerHTML = batPct + ' <small>%</small>';
-    $('#liveBatterySub').textContent = bat.isCharging ? 'Carregando' : 'Descarregando';
+    $('#liveBatterySub').textContent = charging ? 'Carregando' : 'Descarregando';
     $('#liveBatteryBar').style.width = batPct + '%';
   }
+
+  // Temperatura
   const thermal = sample.thermal || {};
-  const tempC = thermal.cpuTemperatureC || thermal.batteryTemperatureC;
-  if (tempC != null) $('#liveTemp').innerHTML = tempC.toFixed(1) + ' <small>°C</small>';
+  const tempC = pick(thermal, ['cpuTemperatureC', 'batteryTemperatureC', 'temperature', 'tempC']);
+  if (tempC != null) {
+    $('#liveTemp').innerHTML = Number(tempC).toFixed(1) + ' <small>°C</small>';
+    $('#liveTempSub').textContent = 'térmico';
+  }
+
+  // Armazenamento
   const st = sample.storage || {};
-  if (st.totalBytes) {
-    const free = st.freeBytes || 0; const used = st.usedBytes || (st.totalBytes - free); const pct = (used / st.totalBytes) * 100;
+  const stTotal = pick(st, ['totalBytes', 'total']);
+  if (stTotal) {
+    const free = pick(st, ['freeBytes', 'free', 'availableBytes']) || 0;
+    const used = pick(st, ['usedBytes', 'used']) || (stTotal - free);
+    const pct = (used / stTotal) * 100;
     $('#liveStorage').innerHTML = fmtGB(free) + ' <small>livres</small>';
-    $('#liveStorageSub').textContent = 'de ' + fmtGB(st.totalBytes);
+    $('#liveStorageSub').textContent = 'de ' + fmtGB(stTotal);
     $('#liveStorageBar').style.width = pct + '%';
   }
 }
@@ -1238,7 +1540,7 @@ function updateRing(pct, usedBytes, totalBytes) {
   if ($('#ringGb')) $('#ringGb').textContent = fmtGB(usedBytes) + ' / ' + fmtGB(totalBytes);
 }
 
-// JOGOS
+/* JOGOS */
 const GAMES_KEY = 'gamezone_games_v3';
 let games = []; let currentCat = 'Todos'; let searchQ = ''; let consoleSelectedIdx = -1;
 
@@ -1262,18 +1564,19 @@ function getGameIconHtml(g, sizeClass) {
 function renderGames() {
   const grid = $('#gamesGrid'); const empty = $('#gamesEmpty');
   grid.innerHTML = ''; let list = games.slice();
-  if (currentCat === 'Favoritos') list = list.filter(g => g.fav); else if (currentCat !== 'Todos') list = list.filter(g => g.cat === currentCat);
+  if (currentCat === 'Favoritos') list = list.filter(g => g.fav);
+  else if (currentCat !== 'Todos') list = list.filter(g => g.cat === currentCat);
   if (searchQ) list = list.filter(g => (g.name || '').toLowerCase().includes(searchQ.toLowerCase()));
-  
-  if (!list.length) { 
-    grid.style.display = 'none'; 
-    empty.style.display = 'flex'; 
+
+  if (!list.length) {
+    grid.style.display = 'none';
+    empty.style.display = 'flex';
   } else {
-    grid.style.display = ''; // <<< CORREÇÃO AQUI: Deixa o CSS controlar o display
+    grid.style.display = '';
     empty.style.display = 'none';
     const frag = document.createDocumentFragment();
     list.forEach((g) => {
-      const card = document.createElement('div'); 
+      const card = document.createElement('div');
       card.className = 'game-card' + (showCardBg ? '' : ' borderless');
       card.innerHTML = getGameIconHtml(g, 'game-fav');
       const name = document.createElement('div'); name.className = 'game-name'; name.textContent = g.name;
@@ -1298,22 +1601,22 @@ async function openGame(g) {
 function renderConsoleLandscape() {
   const left = $('#consoleLeft'); const right = $('#consoleRight');
   left.innerHTML = '';
-  
+
   if (!games.length) {
     right.innerHTML = '<div class="console-empty"><div class="ico">◈</div><p>Nenhum jogo na biblioteca</p></div>';
     return;
   }
-  
+
   const frag = document.createDocumentFragment();
   games.forEach((g, idx) => {
-    const card = document.createElement('div'); 
+    const card = document.createElement('div');
     card.className = 'console-card' + (showCardBg ? '' : ' borderless') + (idx === consoleSelectedIdx ? ' active' : '');
     card.innerHTML = getGameIconHtml(g, 'game-fav') + `<div class="game-name">${esc(g.name)}</div>`;
     card.addEventListener('click', () => { consoleSelectedIdx = idx; renderConsoleLandscape(); });
     frag.appendChild(card);
   });
   left.appendChild(frag);
-  
+
   if (consoleSelectedIdx >= 0 && games[consoleSelectedIdx]) {
     const g = games[consoleSelectedIdx];
     right.innerHTML = `
@@ -1345,85 +1648,77 @@ function renderConsoleLandscape() {
     $('#btnOptimize').addEventListener('click', (e) => {
       const btn = e.currentTarget; btn.classList.add('optimizing'); btn.textContent = 'OTIMIZANDO...'; buzz([50,50,50]);
       setTimeout(() => {
-        const di = getDeviceInfoPlugin();
-        if (di && di.getInfo) {
-          di.getInfo().then(info => {
-            if (info.memory) {
-              const used = info.memory.usedBytes || 0; const total = info.memory.totalBytes || 1; const pct = (used/total)*100;
-              updateRing(pct, used, total);
-              if($('#liveRam')) $('#liveRam').innerHTML = fmtGB(used) + ' <small>usados</small>';
-              if($('#liveRamSub')) $('#liveRamSub').textContent = 'de ' + fmtGB(total) + ' · ' + pct.toFixed(1) + '%';
-              if($('#liveRamBar')) $('#liveRamBar').style.width = Math.min(100, pct) + '%';
-            }
-          });
-        }
-        btn.classList.remove('optimizing'); btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> LIMPAR NOVAMENTE`;
+        refreshStatusFromApi();
+        btn.classList.remove('optimizing');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> LIMPAR NOVAMENTE`;
         toast('Memória otimizada', 'ok');
       }, 1500);
     });
+
     const di = getDeviceInfoPlugin();
     if (di && di.getInfo) {
       di.getInfo().then(info => {
-        if (info.memory) { updateRing((info.memory.usedBytes/(info.memory.totalBytes||1))*100, info.memory.usedBytes, info.memory.totalBytes); }
+        if (info.memory) {
+          const total = info.memory.totalBytes || 1;
+          const used = info.memory.usedBytes || 0;
+          updateRing((used/total)*100, used, total);
+        }
         if (info.storage && $('#detailStorage')) $('#detailStorage').textContent = fmtGB(info.storage.freeBytes) + ' livres';
       });
     }
     const dev = getDevicePlugin();
     if (dev && dev.getBatteryInfo) {
-      dev.getBatteryInfo().then(b => { if($('#detailBat')) $('#detailBat').textContent = Math.round(b.batteryLevel*100) + '%'; });
+      dev.getBatteryInfo().then(b => {
+        if ($('#detailBat')) $('#detailBat').textContent = Math.round(b.batteryLevel * 100) + '%';
+      });
     }
   } else {
     right.innerHTML = '<div class="console-empty"><div class="ico">🎮</div><p>Selecione um jogo na lista</p></div>';
   }
 }
 
-// MODAIS
+/* MODAL DE JOGO */
 const gameModal = $('#gameModal'); let modalMode = 'web'; let selectedApps = new Set();
 let modalFilter = 'all'; let cachedUserApps = [];
 
 function setModalMode(mode) {
-  modalMode = mode; $$('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  $('#modePane-web').classList.toggle('active', mode === 'web'); $('#modePane-installed').classList.toggle('active', mode === 'installed');
+  modalMode = mode;
+  $$('.mode-btn[data-mode]').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('#modePane-web').classList.toggle('active', mode === 'web');
+  $('#modePane-installed').classList.toggle('active', mode === 'installed');
   if (mode === 'installed') loadAppsForModal();
 }
-// Nota: O listener de clique do mode-btn precisou ser ajustado para não conflitar com o seletor de Layout
+
 $$('.mode-btn').forEach(b => {
   b.addEventListener('click', () => {
-    if(b.classList.contains('layout-btn')) {
-      applyLayout(b.dataset.layout);
-    } else {
-      setModalMode(b.dataset.mode);
-    }
+    if (b.classList.contains('layout-btn')) applyLayout(b.dataset.layout);
+    else setModalMode(b.dataset.mode);
   });
 });
 
-function openModal() { 
-  gameModal.classList.add('open'); 
-  setModalMode('web'); 
-  if($('#gameModalSheet').resetPosition) $('#gameModalSheet').resetPosition();
+function openModal() {
+  gameModal.classList.add('open');
+  setModalMode('web');
+  if ($('#gameModalSheet').resetPosition) $('#gameModalSheet').resetPosition();
 }
 $('#btnAddGame').addEventListener('click', openModal);
 $('#btnAddGameLandscape').addEventListener('click', openModal);
 $('#btnCancelGame').addEventListener('click', () => gameModal.classList.remove('open'));
 
 const settingsModal = $('#settingsModal');
-$('#btnSettings').addEventListener('click', () => { 
-  settingsModal.classList.add('open'); loadSettings(); 
-  if($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
-});
-$('#btnSettingsLandscape').addEventListener('click', () => { 
-  settingsModal.classList.add('open'); loadSettings(); 
-  if($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
-});
+function openSettings() {
+  settingsModal.classList.add('open'); loadSettings();
+  if ($('#settingsModalSheet').resetPosition) $('#settingsModalSheet').resetPosition();
+}
+$('#btnSettings').addEventListener('click', openSettings);
+$('#btnSettingsLandscape').addEventListener('click', openSettings);
 $('#btnCloseSettings').addEventListener('click', () => settingsModal.classList.remove('open'));
 
-// Listener do Slider de Ícone
-$('#sliderIconSize').addEventListener('input', (e) => { 
-  applyIconSize(parseInt(e.target.value, 10)); 
-  renderGames(); 
+$('#sliderIconSize').addEventListener('input', (e) => {
+  applyIconSize(parseInt(e.target.value, 10));
+  renderGames();
 });
 
-// Listener do Toggle de Fundo
 $('#toggleCardBg').addEventListener('change', (e) => {
   showCardBg = e.target.checked;
   localStorage.setItem(BG_KEY, showCardBg);
@@ -1446,9 +1741,9 @@ function renderModalAppList() {
   const listEl = $('#modalAppList'); let filtered = cachedUserApps;
   if (modalFilter === 'browsers') filtered = filtered.filter(a => isBrowser(a.packageName));
   else if (modalFilter === 'installed') filtered = filtered.filter(a => !isBrowser(a.packageName));
-  
+
   if (!filtered.length) { listEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px">Nenhum app nesta categoria</div>'; return; }
-  
+
   listEl.innerHTML = filtered.map(app => {
     const sel = selectedApps.has(app.packageName) ? ' selected' : '';
     const iconHtml = app.icon ? `<img src="${esc(app.icon)}" style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex:0 0 38px">` : `<div class="app-icon">${esc(app.appName.charAt(0))}</div>`;
@@ -1456,7 +1751,7 @@ function renderModalAppList() {
       ${iconHtml} <div class="app-info"><div class="app-name">${esc(app.appName)}</div><div class="app-pkg">${esc(app.packageName)}</div></div><div class="app-check"></div>
     </div>`;
   }).join('');
-  
+
   listEl.querySelectorAll('.app-item').forEach(item => {
     item.addEventListener('click', () => {
       const pkg = item.dataset.pkg;
@@ -1475,7 +1770,10 @@ async function loadAppsForModal() {
     if (!granted) { await us.openUsageStatsSettings(); return; }
     const { packages } = await us.queryAllPackages({ includeIcon: true });
     const blacklist = ['com.android', 'android', 'com.samsung', 'com.motorola', 'com.sec', 'com.qualcomm', 'com.mediatek', 'com.miui', 'com.xiaomi', 'com.google.android.gms'];
-    cachedUserApps = packages.filter(p => { const pkg = p.packageName.toLowerCase(); return p.appName && !blacklist.some(b => pkg.startsWith(b)); }).sort((a,b) => a.appName.localeCompare(b.appName));
+    cachedUserApps = packages.filter(p => {
+      const pkg = p.packageName.toLowerCase();
+      return p.appName && !blacklist.some(b => pkg.startsWith(b));
+    }).sort((a,b) => a.appName.localeCompare(b.appName));
     renderModalAppList();
   } catch(e) { listEl.innerHTML = '<div style="color:var(--red)">Erro ao listar.</div>'; }
 }
@@ -1492,31 +1790,38 @@ $('#btnSaveGame').addEventListener('click', () => {
       const el = $('#modalAppList .app-item[data-pkg="' + CSS.escape(pkg) + '"]');
       const name = el ? el.dataset.name : pkg;
       const app = cachedUserApps.find(a => a.packageName === pkg);
-      if (!games.find(g => g.isNative && g.packageName === pkg)) games.push({ name, packageName: pkg, cat: 'Instalado', fav: false, isNative: true, added: Date.now(), iconBase64: app && app.icon ? app.icon : null });
+      if (!games.find(g => g.isNative && g.packageName === pkg)) {
+        games.push({ name, packageName: pkg, cat: 'Instalado', fav: false, isNative: true, added: Date.now(), iconBase64: app && app.icon ? app.icon : null });
+      }
     });
   }
   saveGames(); renderGames(); gameModal.classList.remove('open'); toast('Salvo!', 'ok');
 });
 
-// CLIMA
+/* CLIMA */
 const WEATHER_ICONS={113:'☀️',116:'⛅',119:'☁️',122:'☁️',143:'🌫️',248:'🌫️',260:'🌫️',176:'🌦️',263:'🌦️',266:'🌦️',293:'🌧️',296:'🌧️',299:'🌧️',302:'🌧️',305:'🌧️',308:'🌧️',200:'⛈️',386:'⛈️',389:'⛈️',392:'⛈️',395:'❄️',179:'❄️',182:'❄️',185:'❄️',227:'❄️',230:'❄️',317:'❄️',320:'❄️',323:'❄️',326:'❄️',329:'❄️',332:'❄️',335:'❄️',338:'❄️',350:'❄️',362:'❄️',365:'❄️',368:'❄️',371:'❄️',374:'❄️',377:'❄️'};
 const wIcon = c => WEATHER_ICONS[+c] || '🌡️';
 
 async function buscarClima() {
   const cidade = $('#wxCity').value.trim(); if (!cidade) return toast('Digite uma cidade');
-  const resEl = $('#wxResult'); resEl.innerHTML = '<div class="wx-loading"><div class="spinner"></div><span>consultando...</span></div>'; buzz(10);
+  const resEl = $('#wxResult');
+  resEl.innerHTML = '<div class="wx-loading"><div class="spinner"></div><span>consultando...</span></div>';
+  buzz(10);
   try {
     const res = await fetch(`https://wttr.in/${encodeURIComponent(cidade)}?format=j1&lang=pt`);
-    if (!res.ok) throw new Error('Erro'); const data = await res.json(); const cur = data.current_condition && data.current_condition[0];
+    if (!res.ok) throw new Error('Erro');
+    const data = await res.json(); const cur = data.current_condition && data.current_condition[0];
     if (!cur) throw new Error('sem dados');
     const area = (data.nearest_area && data.nearest_area[0]) || {};
     const areaName = (area.areaName && area.areaName[0].value) || cidade;
     const country = (area.country && area.country[0].value) || '';
-    const descPt = (cur.lang_pt && cur.lang_pt[0] && cur.lang_pt[0].value) || cur.weatherDesc[0].value || '—';
+    const descPt = (cur.lang_pt && cur.lang_pt[0] && cur.lang_pt[0].value) || (cur.weatherDesc && cur.weatherDesc[0] && cur.weatherDesc[0].value) || '—';
     resEl.innerHTML = `
       <div class="wx-main">
-        <div class="wx-city">${esc(areaName)} ${country ? '· <b>'+esc(country)+'</b>' : ''}</div><div class="wx-icon">${wIcon(cur.weatherCode)}</div>
-        <div class="wx-temp">${esc(cur.temp_C)}<sup>°C</sup></div><div class="wx-desc">${esc(descPt)}</div>
+        <div class="wx-city">${esc(areaName)} ${country ? '· <b>'+esc(country)+'</b>' : ''}</div>
+        <div class="wx-icon">${wIcon(cur.weatherCode)}</div>
+        <div class="wx-temp">${esc(cur.temp_C)}<sup>°C</sup></div>
+        <div class="wx-desc">${esc(descPt)}</div>
       </div>
       <div class="wx-grid">
         <div class="wx-card"><div class="k">Sensação</div><div class="v">${esc(cur.FeelsLikeC)}<small>°C</small></div></div>
@@ -1524,16 +1829,19 @@ async function buscarClima() {
         <div class="wx-card"><div class="k">Vento</div><div class="v">${esc(cur.windspeedKmph)}<small>km/h</small></div></div>
         <div class="wx-card"><div class="k">Pressão</div><div class="v">${esc(cur.pressure)}<small>hPa</small></div></div>
       </div>`;
-    localStorage.setItem('gz_last_city', cidade); toast('Clima atualizado', 'ok'); buzz([15,30,15]);
-  } catch(err) { resEl.innerHTML = ''; toast('Cidade não encontrada ou sem rede'); buzz([60,50,60]); }
+    localStorage.setItem('gz_last_city', cidade);
+    toast('Clima atualizado', 'ok'); buzz([15,30,15]);
+  } catch(err) {
+    resEl.innerHTML = ''; toast('Cidade não encontrada ou sem rede'); buzz([60,50,60]);
+  }
 }
 $('#wxBtn').addEventListener('click', buscarClima);
 $('#wxCity').addEventListener('keydown', e => { if (e.key === 'Enter') buscarClima(); });
 
-// BOOT SEQUENCE (TERMINAL ANIMADO)
+/* BOOT SEQUENCE */
 async function bootSequence() {
   terminal.innerHTML = '';
-  log('> GameZone Kernel v3.9.1', 'info');
+  log('> GameZone Kernel v4.0.0', 'info');
   await sleep(200);
   log('> Iniciando varredura de sistema...', 'warn');
   await sleep(300);
@@ -1552,18 +1860,22 @@ async function bootSequence() {
   logCaret();
 }
 
-// CLEANUP E INICIALIZAÇÃO
+/* CLEANUP E INICIALIZAÇÃO */
 window.addEventListener('beforeunload', async () => {
   try { await stopLiveStatus(); } catch(e){}
+  if (statusPolling) { clearInterval(statusPolling); statusPolling = null; }
   toggleImmersiveMode(false);
 });
 
 window.addEventListener('load', () => {
+  loadTheme();
+  bindThemeSwatches();
   loadSettings();
   loadGames();
   renderGames();
   bootSequence();
 });
+
 })();
 </script>
 </body>
