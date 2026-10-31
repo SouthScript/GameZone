@@ -402,10 +402,28 @@ main {
 .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; }
 .chip { flex: 0 0 auto; padding: 8px 14px; border-radius: 999px; font-size: 10.5px; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); cursor: pointer; font-family: inherit; }
 .chip.active { color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); border-color: transparent; }
-.games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-@media (min-width: 540px) { .games-grid { grid-template-columns: repeat(3, 1fr); } }
 
-.game-card { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 128px; padding: 18px 10px 14px; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)); border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; transition: all 0.2s; }
+/* CONTAINER DO GRID (Comporta os 3 layouts) */
+.games-grid { display: grid; gap: 12px; transition: all 0.3s; }
+.games-grid.default-layout { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 540px) { .games-grid.default-layout { grid-template-columns: repeat(3, 1fr); } }
+
+/* Layout: LISTA */
+.games-grid.list-layout { display: flex; flex-direction: column; gap: 8px; }
+.games-grid.list-layout .game-card { flex-direction: row; justify-content: flex-start; padding: 10px 16px; min-height: 64px; gap: 15px; text-align: left; }
+.games-grid.list-layout .game-name { text-align: left; font-size: 14px; -webkit-line-clamp: 1; }
+.games-grid.list-layout .game-cat { display: none; } /* Esconde a categoria na lista para ficar limpo */
+.games-grid.list-layout .game-fav, .games-grid.list-layout .game-fav-img, .games-grid.list-layout .game-fav-fallback { width: 40px; height: 40px; flex: 0 0 40px; } /* Ícone fixo menor na lista */
+
+/* Layout: BLOQUINHO */
+.games-grid.small-layout { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media (min-width: 540px) { .games-grid.small-layout { grid-template-columns: repeat(5, 1fr); } }
+.games-grid.small-layout .game-card { min-height: 100px; padding: 12px 6px; gap: 6px; }
+.games-grid.small-layout .game-name { font-size: 9px; }
+.games-grid.small-layout .game-cat { display: none; }
+
+/* ESTILO BASE DO CARD */
+.game-card { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)); border: 1px solid var(--brd); backdrop-filter: blur(14px); cursor: pointer; transition: all 0.2s; }
 
 /* MODO SEM FUNDO (BORDERLESS) */
 .game-card.borderless {
@@ -413,9 +431,9 @@ main {
   border-color: transparent;
   backdrop-filter: none;
   padding: 0;
-  min-height: 90px; /* Reduz o espaço extra */
+  min-height: 90px; 
 }
-.game-card.borderless .game-cat { display: none; } /* Opcional: esconde a categoria pra ficar mais limpo */
+.game-card.borderless .game-cat { display: none; } 
 
 .game-fav, .game-fav-fallback, .game-fav-img { width: var(--icon-size); height: var(--icon-size); border-radius: var(--icon-radius); object-fit: cover; box-shadow: 0 0 18px -6px var(--green); transition: all 0.3s; }
 .game-fav-fallback { display: grid; place-items: center; font-size: var(--icon-font); font-weight: 700; color: #04120e; background: linear-gradient(135deg, var(--green), var(--cyan)); text-transform: uppercase; }
@@ -443,12 +461,7 @@ main {
   .console-grid { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; overflow-y: auto; min-height: 0; }
   .console-card { background: var(--panel); border: 1px solid var(--brd); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 6px; gap: 5px; cursor: pointer; }
   
-  /* MODO SEM FUNDO (PAISAGEM) */
-  .console-card.borderless {
-    background: transparent;
-    border-color: transparent;
-  }
-
+  .console-card.borderless { background: transparent; border-color: transparent; }
   .console-card.active { border-color: var(--green); box-shadow: 0 0 15px -5px var(--green); background: rgba(0,255,180,0.1); }
   .console-card .game-fav-fallback, .console-card .game-fav-img { width: calc(var(--icon-size) * 0.8); height: calc(var(--icon-size) * 0.8); }
   .console-card .game-name { font-size: 9px; -webkit-line-clamp: 1; }
@@ -662,7 +675,6 @@ input:checked + .slider:before {
       <div class="terminal-body" id="terminal"></div>
     </div>
 
-    <!-- BARRA DE PESQUISA GOOGLE -->
     <div class="home-search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
       <input id="googleQuery" type="text" placeholder="Buscar no Google..." autocomplete="off">
@@ -771,7 +783,7 @@ input:checked + .slider:before {
       <input id="searchGames" type="text" placeholder="Buscar jogo...">
     </div>
     <div class="chips" id="chips"></div>
-    <div class="games-grid" id="gamesGrid"></div>
+    <div class="games-grid default-layout" id="gamesGrid"></div>
     <div class="empty" id="gamesEmpty">
       <div class="ico">◈</div>
       <p>Nenhum jogo ainda</p>
@@ -819,7 +831,7 @@ input:checked + .slider:before {
     <div class="about-card">
       <div class="about-logo">◈</div>
       <h2>Game<span>Zone</span></h2>
-      <div class="ver">versão 3.8.0</div>
+      <div class="ver">versão 3.9.0</div>
       <div class="divider"></div>
       <p class="about-text">Central de especificações, monitoramento e biblioteca com modo console para paisagem e janelas flutuantes.</p>
       <ul class="about-list">
@@ -906,6 +918,16 @@ input:checked + .slider:before {
     <h3>⚙️ Configurações</h3>
     <p class="sub">Ajustes visuais</p>
     
+    <!-- Layout Selector -->
+    <div class="field" style="margin-top:20px;">
+      <label>Modo de Exibição da Lista</label>
+      <div class="mode-selector" style="grid-template-columns: repeat(3, 1fr); margin-top: 8px;">
+        <button class="mode-btn layout-btn" data-layout="list">Lista</button>
+        <button class="mode-btn layout-btn" data-layout="small">Bloco</button>
+        <button class="mode-btn layout-btn active" data-layout="default">Padrão</button>
+      </div>
+    </div>
+
     <!-- Toggle para fundo dos cards -->
     <div class="field" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
       <label style="margin-bottom:0; font-size:12px; color:var(--text); text-transform:none;">Mostrar Fundo dos Cards</label>
@@ -983,7 +1005,7 @@ function logCaret() {
   l.appendChild(c); terminal.appendChild(l); terminal.scrollTop = terminal.scrollHeight;
 }
 
-// LÓGICA DE ARRASTAR O MODAL (X e Y) - CORRIGIDA PARA FICAR NO LUGAR
+// LÓGICA DE ARRASTAR O MODAL (X e Y) - FICA NO LUGAR
 function setupDraggableModal(modalId, handleId, overlayId) {
   const modal = document.getElementById(modalId);
   const handle = document.getElementById(handleId);
@@ -1005,20 +1027,14 @@ function setupDraggableModal(modalId, handleId, overlayId) {
 
   handle.addEventListener('touchend', () => {
     modal.style.transition = 'transform 0.3s ease';
-    
-    // Pega o tamanho do modal
     const rect = modal.getBoundingClientRect();
     const maxX = (window.innerWidth / 2) - (rect.width / 2) - 16;
     const maxY = (window.innerHeight / 2) - (rect.height / 2) - 16;
-
-    // Trava o valor para não passar dos limites
     currentX = Math.max(-maxX, Math.min(maxX, currentX));
     currentY = Math.max(-maxY, Math.min(maxY, currentY));
-    
     modal.style.transform = `translate(${currentX}px, ${currentY}px)`;
   });
 
-  // Função para resetar a posição ao abrir
   modal.resetPosition = () => {
     currentX = 0; currentY = 0;
     modal.style.transition = 'none';
@@ -1030,10 +1046,12 @@ setupDraggableModal('gameModalSheet', 'dragHandleGame', 'gameModal');
 setupDraggableModal('settingsModalSheet', 'dragHandleSettings', 'settingsModal');
 
 
-// CONFIGURAÇÕES DE ÍCONE E FUNDO
+// CONFIGURAÇÕES (ÍCONE, FUNDO, LAYOUT)
 const ICON_KEY = 'gamezone_icon_size';
 const BG_KEY = 'gamezone_show_card_bg';
+const LAYOUT_KEY = 'gamezone_layout';
 let showCardBg = true;
+let currentLayout = 'default'; // 'default', 'list', 'small'
 
 function applyIconSize(px) {
   document.documentElement.style.setProperty('--icon-size', px + 'px');
@@ -1046,29 +1064,50 @@ function applyIconSize(px) {
 function updateSliderRange() {
   const slider = $('#sliderIconSize');
   if (!slider) return;
-  if (showCardBg) {
-    slider.max = 72;
-  } else {
-    slider.max = 120; // Permite ícones gigantes quando o fundo está desligado
-  }
-  // Se o valor atual for maior que o novo máximo, ajusta
+  slider.max = showCardBg ? 72 : 120; // Permite maiores se não tiver fundo
   if (parseInt(slider.value, 10) > parseInt(slider.max, 10)) {
     slider.value = slider.max;
     applyIconSize(parseInt(slider.max, 10));
   }
 }
 
+function applyLayout(layout) {
+  currentLayout = layout;
+  localStorage.setItem(LAYOUT_KEY, layout);
+  
+  // Atualiza botões
+  $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === layout));
+  
+  // Atualiza Grid
+  const grid = $('#gamesGrid');
+  grid.classList.remove('default-layout', 'list-layout', 'small-layout');
+  grid.classList.add(layout + '-layout');
+  
+  renderGames();
+  buzz(10);
+}
+
 function loadSettings() {
+  // Ícone
   const savedPx = localStorage.getItem(ICON_KEY);
   const px = savedPx ? parseInt(savedPx, 10) : 40;
   applyIconSize(px);
   
+  // Fundo
   showCardBg = localStorage.getItem(BG_KEY) !== 'false';
   const toggle = $('#toggleCardBg');
   if (toggle) toggle.checked = showCardBg;
   
+  // Slider
   const slider = $('#sliderIconSize'); if (slider) slider.value = px;
   updateSliderRange();
+
+  // Layout
+  currentLayout = localStorage.getItem(LAYOUT_KEY) || 'default';
+  $$('.layout-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.layout === currentLayout));
+  const grid = $('#gamesGrid');
+  grid.classList.remove('default-layout', 'list-layout', 'small-layout');
+  grid.classList.add(currentLayout + '-layout');
 }
 
 // NAVEGAÇÃO
@@ -1344,7 +1383,16 @@ function setModalMode(mode) {
   $('#modePane-web').classList.toggle('active', mode === 'web'); $('#modePane-installed').classList.toggle('active', mode === 'installed');
   if (mode === 'installed') loadAppsForModal();
 }
-$$('.mode-btn').forEach(b => b.addEventListener('click', () => setModalMode(b.dataset.mode)));
+// Nota: O listener de clique do mode-btn precisou ser ajustado para não conflitar com o seletor de Layout
+$$('.mode-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    if(b.classList.contains('layout-btn')) {
+      applyLayout(b.dataset.layout);
+    } else {
+      setModalMode(b.dataset.mode);
+    }
+  });
+});
 
 function openModal() { 
   gameModal.classList.add('open'); 
@@ -1482,7 +1530,7 @@ $('#wxCity').addEventListener('keydown', e => { if (e.key === 'Enter') buscarCli
 // BOOT SEQUENCE (TERMINAL ANIMADO)
 async function bootSequence() {
   terminal.innerHTML = '';
-  log('> GameZone Kernel v3.8', 'info');
+  log('> GameZone Kernel v3.9', 'info');
   await sleep(200);
   log('> Iniciando varredura de sistema...', 'warn');
   await sleep(300);
